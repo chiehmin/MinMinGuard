@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/pref_title_ad_control">
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_jptt_ad"
+	        android:title="@string/pref_title_block_jptt_ad" />
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_gogotalk_ad"
+	        android:title="@string/pref_title_block_gogotalk_ad" />
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_gpsstatus_ad"
+	        android:title="@string/pref_title_block_gpsstatus_ad" />
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_backgroundsHD_ad"
+	        android:title="@string/pref_title_block_backgroundsHD_ad" />
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_train_ad"
+	        android:title="@string/pref_title_block_train_ad" />
+    	<CheckBoxPreference 
+	        android:defaultValue="true"
+	        android:key="block_ecdict_ad"
+	        android:title="@string/pref_title_block_ecdict_ad" />
+    	    
+    </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="@string/pref_title_others">
+    	
+        <CheckBoxPreference 
+            android:defaultValue="true"
+            android:key="anti_tos_cheat_detect"
+            android:title="@string/pref_title_anti_tos_cheat_detect" />
+        
+    </PreferenceCategory>
+    
+</PreferenceScreen>
