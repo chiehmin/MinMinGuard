@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed;
+package tw.fatminmin.xposed.minminguard;
 
 import android.view.View;
 import android.widget.RelativeLayout;

@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed;
+package tw.fatminmin.xposed.minminguard;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;

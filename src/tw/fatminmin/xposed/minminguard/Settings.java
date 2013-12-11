@@ -1,5 +1,6 @@
-package tw.fatminmin.xposed;
+package tw.fatminmin.xposed.minminguard;
 
+import tw.fatminmin.xposed.R;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;

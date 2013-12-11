@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed;
+package tw.fatminmin.xposed.minminguard;
 
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
