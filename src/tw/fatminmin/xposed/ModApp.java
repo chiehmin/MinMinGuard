@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed;
 
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;

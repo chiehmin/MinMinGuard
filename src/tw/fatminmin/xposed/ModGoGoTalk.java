@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed;
 
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,4 +1,4 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import android.webkit.WebView;
