@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory 
+        android:key="block_ad_cat"
         android:title="@string/pref_title_ad_control">
+        
+        <!-- 
     	<CheckBoxPreference 
 	        android:defaultValue="true"
 	        android:key="block_jptt_ad"
@@ -26,6 +29,7 @@
 	        android:defaultValue="true"
 	        android:key="block_ecdict_ad"
 	        android:title="@string/pref_title_block_ecdict_ad" />
+	         -->
     	    
     </PreferenceCategory>
     <PreferenceCategory 
