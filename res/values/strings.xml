@@ -15,5 +15,28 @@
     
     <string name="pref_title_others">Others</string>
     <string name="pref_title_anti_tos_cheat_detect">反神魔之塔作弊偵測</string>
+    <string name="menu_about">About</string>
+    <string name="str_thank_you">Thank you!!</string>
+    <string name="str_donation">Donation</string>
+    <string name="app_version">MinMinGuard version: 1.0</string>
+    <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="usd">USD</string>
+    <string name="str_donate">Donate</string>
+    <string name="msg_first"><b>This is an app for you to remove ads from various ad networks i.e. Admob, Vpon, KuAd.
+         But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
+         \n\nHave fun with <i>MinMinGuard</i>.</b></string>
+    
+    <string name="str_select_all">Select All</string>
+    
+    <string name="msg_thank_you"><b>I am really appreciate for your donation! Your financial support helps me continue 
+        in my development. You can do multiple donations by clicking the donation button.
+        Thank you very much again!</b>\n\nBest regards, \n\n<i>Chieh-Min Wang(FatMinMin)</i></string>
+        
+    <string name="msg_donation_number"><b>How much do you want to donate?</b></string>
+    
+    <string-array name="drawer_list">
+        <item>Donate</item>
+        <item>About</item>
+    </string-array>
 
 </resources>

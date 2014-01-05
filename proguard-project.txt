@@ -18,3 +18,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-libraryjars libs/android-support-v4.jar
+-libraryjars libs/libGoogleAnalyticsServices.jar
+-libraryjars /home/fatminmin/workspace/XposedLibrary/XposedBridgeApi.jar
+-libraryjars /home/fatminmin/workspace/XposedLibrary/lib/full_framework_15.jar
+-libraryjars /home/fatminmin/workspace/XposedLibrary/bin/xposedlibrary.jar
+-keep class com.**
+-keep class android.**
+-keep class com.android.vending.billing.**
+-keep class de.robv.android.exposed.**
+-keep class com.google.analytics.**

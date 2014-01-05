@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
     <PreferenceCategory 
         android:key="block_ad_cat"
         android:title="@string/pref_title_ad_control">
+    	
+        <CheckBoxPreference android:defaultValue="false"
+	        android:icon="@drawable/ic_action_select_all_2"
+	        android:key="select_all"
+	        android:title="@string/str_select_all"/>
         
         <!-- 
     	<CheckBoxPreference 
@@ -31,15 +38,6 @@
 	        android:title="@string/pref_title_block_ecdict_ad" />
 	         -->
     	    
-    </PreferenceCategory>
-    <PreferenceCategory 
-        android:title="@string/pref_title_others">
-    	
-        <CheckBoxPreference 
-            android:defaultValue="true"
-            android:key="anti_tos_cheat_detect"
-            android:title="@string/pref_title_anti_tos_cheat_detect" />
-        
     </PreferenceCategory>
     
 </PreferenceScreen>
