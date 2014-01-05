@@ -2,14 +2,7 @@ package tw.fatminmin.xposed.minminguard;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
-import static de.robv.android.xposed.XposedHelpers.findField;
-import static de.robv.android.xposed.XposedHelpers.findMethodBestMatch;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -191,85 +184,6 @@ public class Main implements IXposedHookZygoteInit,
 			}
 		}
 		
-	}
-	
-	void modTosRoot(LoadPackageParam lpparam) {
-		if(!lpparam.packageName.equals("com.madhead.tos.zh"))
-			return;
-		
-		XposedBridge.log("Hacking tos");
-		
-		Class<?> acs = findClass("com.madhead.tos.plugins.acs.AntiCheatSystem", lpparam.classLoader);
-		
-		
-		findAndHookMethod(acs, "isDeviceRooted", new XC_MethodHook() {
-			
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				
-				XposedBridge.log("Set isDeviceRooted result false");
-				
-				param.setResult(Boolean.valueOf(false));
-			}
-			
-		});
-		
-		findAndHookMethod(acs, "isSecure", "java.lang.String", new XC_MethodHook() {
-			
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				
-				XposedBridge.log("Set isSecure result true");
-				
-				param.setResult(Boolean.valueOf(true));
-			}
-			
-		});
-		
-		findAndHookMethod(acs, "getRunningProcess", new XC_MethodHook() {
-			
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				
-				XposedBridge.log("Set getRunningProcess result empty string");
-				
-				param.setResult(new String(""));
-			}
-			
-		});
-		
-	}
-	
-	void modEcdict(LoadPackageParam lpparam) {
-		if(!lpparam.packageName.equals("com.csst.ecdict"))
-			return;
-		
-		
-		XposedBridge.log("we are in ecdict!");
-		
-		
-		final Class<?> c = findClass("com.csst.ecdict.DetailActivity", lpparam.classLoader);
-		
-		final Field f = findField(c, "i");
-		
-		final Class<?> adc = findClass("com.google.ads.AdView", lpparam.classLoader);
-		final Method adm = findMethodBestMatch(adc, "removeAllViews", new Class[]{});
-				
-		
-		findAndHookMethod("com.csst.ecdict.DetailActivity", lpparam.classLoader, "onCreate", "android.os.Bundle", new XC_MethodHook() {
-			
-			@Override
-			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				
-				XposedBridge.log("End of detail activity");
-				
-				f.setAccessible(true);
-				Object ad = f.get(param.thisObject);
-				if(ad != null) {
-					adm.invoke(ad, new Object[0]);
-				}
-			}
-		});
 	}
 
 	@Override

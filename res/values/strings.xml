@@ -6,15 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="pref_title_ad_control">Block Ads Options</string>
     
-    <string name="pref_title_block_jptt_ad">Block Ads in JPTT</string>
-    <string name="pref_title_block_gogotalk_ad">Block Ads in WhosCall</string>
-    <string name="pref_title_block_gpsstatus_ad">Block Ads in GPS Status</string>
-    <string name="pref_title_block_backgroundsHD_ad">Block Ads in Backgrounds HD</string>
-    <string name="pref_title_block_train_ad">Block Ads in 雙鐵時刻表</string>
-    <string name="pref_title_block_ecdict_ad">Block Ads in 英漢字典</string>
-    
     <string name="pref_title_others">Others</string>
-    <string name="pref_title_anti_tos_cheat_detect">反神魔之塔作弊偵測</string>
     <string name="menu_about">About</string>
     <string name="str_thank_you">Thank you!!</string>
     <string name="str_donation">Donation</string>
