@@ -126,6 +126,8 @@ public class Settings extends Activity {
         bindService(new Intent("com.android.vending.billing.InAppBillingService.BIND"),
                         mServiceConn, Context.BIND_AUTO_CREATE);
         
+        
+		BlockUrl.saveUrlsAsPreference(Settings.this);
 	}
 	
 	@Override

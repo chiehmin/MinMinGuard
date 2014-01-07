@@ -26,6 +26,8 @@
         
     <string name="msg_donation_number"><b>How much do you want to donate?</b></string>
     
+    <string name="str_init">Initializing&#8230;</string>
+    
     <string-array name="drawer_list">
         <item>Donate</item>
         <item>About</item>

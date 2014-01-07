@@ -1,12 +1,13 @@
 package tw.fatminmin.xposed.minminguard;
 
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
+
+import java.util.Set;
+
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.webkit.WebView;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -25,11 +26,14 @@ public class Main implements IXposedHookZygoteInit,
 	
 	public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
 	private static XSharedPreferences pref;
-	
+	private static Set<String> urls;
 	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		pref = new XSharedPreferences(MY_PACKAGE_NAME);
+		urls = pref.getStringSet("urls", null);
+		
+		XposedBridge.log("Number of Urls " + urls.size());
 	}
 	
 	@Override
@@ -151,21 +155,39 @@ public class Main implements IXposedHookZygoteInit,
 	private void removeWebViewAds(final String packageName, LoadPackageParam lpparam) {
 		
 		try {
-			Class<?> vg = findClass("android.view.ViewGroup", lpparam.classLoader);
 			
-			findAndHookMethod(vg, "addView", "android.view.View",
-				new XC_MethodHook() {
-					@Override
-					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						if(param.args[0] instanceof WebView) {
-							
-							XposedBridge.log("Remove WebView in " + packageName);
-							
+			Class<?> adView = findClass("android.webkit.WebView", lpparam.classLoader);
+			XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					
+					
+					String data = (String) param.args[0];
+					XposedBridge.log("Data: " + data);
+					
+//					param.setResult(new Object());
+//					removeAdView((View) param.thisObject);
+				}
+			});
+			
+			XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					
+					XposedBridge.log("Prevent Ads in " + packageName);
+					
+					String data = (String) param.args[1];
+					
+					for(String url : urls) {
+						
+						if(data.contains(url)) {
 							param.setResult(new Object());
+							removeAdView((View) param.thisObject);
+							break;
 						}
 					}
-			
-				});
+				}
+			});
 		}
 		catch(ClassNotFoundError e) {
 			XposedBridge.log(packageName + "can not clear webview ads");
@@ -180,6 +202,7 @@ public class Main implements IXposedHookZygoteInit,
 		if(parent instanceof ViewGroup) {
 			ViewGroup vg = (ViewGroup) parent;
 			if(vg.getChildCount() == 1) {
+				vg.removeAllViewsInLayout();
 				removeAdView(vg);
 			}
 		}
