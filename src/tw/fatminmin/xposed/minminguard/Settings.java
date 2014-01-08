@@ -16,6 +16,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -50,6 +52,7 @@ public class Settings extends Activity {
     private ListView mDrawerList;
 	
     private IInAppBillingService mService;
+    static private SharedPreferences pref;
 
     private ServiceConnection mServiceConn = new ServiceConnection() {
        @Override
@@ -116,6 +119,7 @@ public class Settings extends Activity {
         
         // Display the fragment as the main content.
         
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
         fragment = new PrefsFragment();
         
         if (savedInstanceState == null) {
@@ -342,6 +346,27 @@ public class Settings extends Activity {
 					cp.setTitle(pm.getApplicationLabel(info));
 					cp.setKey(info.packageName);
 					cp.setIcon(pm.getApplicationIcon(info));
+					
+					
+					boolean admob, vpon, kuad, others;
+					admob = pref.getBoolean(info.packageName + "admob", false);
+					vpon = pref.getBoolean(info.packageName + "vpon", false);
+					kuad = pref.getBoolean(info.packageName + "kuad", false);
+					others = pref.getBoolean(info.packageName + "others", false);
+					
+					if(admob) {
+						cp.setSummary("Admob detected.");
+					}
+					if(vpon) {
+						cp.setSummary("Vpon detected.");
+					}
+					if(kuad) {
+						cp.setSummary("KuAd detected.");
+					}
+					if(others) {
+						cp.setSummary("others detected.");
+					}
+					
 					prefList.add(cp);
 				}
 			}

@@ -2,9 +2,13 @@ package tw.fatminmin.xposed.minminguard;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
+import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.content.res.XModuleResources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -25,17 +29,30 @@ public class Main implements IXposedHookZygoteInit,
 	
 	
 	public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
+	private static String MODULE_PATH = null;
 	private static XSharedPreferences pref;
-	private static Set<String> urls;
+	public static Set<String> urls;
+	
 	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		pref = new XSharedPreferences(MY_PACKAGE_NAME);
-		urls = pref.getStringSet("urls", null);
+		MODULE_PATH = startupParam.modulePath;
+		XposedBridge.log(MODULE_PATH);
 		
-		XposedBridge.log("Number of Urls " + urls.size());
+		Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+		byte[] array = XposedHelpers.assetAsByteArray(res, "host/output_file");
+		String decoded = new String(array);
+		String[] sUrls = decoded.split("\n");
+		
+		urls = new HashSet<String>();
+		for(String url : sUrls) {
+			urls.add(url);
+		}
+		XposedBridge.log("Block url size: " + urls.size());
 	}
 	
+	@SuppressLint("SdCardPath")
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		
@@ -43,22 +60,17 @@ public class Main implements IXposedHookZygoteInit,
 		
 		final String packageName = lpparam.packageName;
 		
+		
 		if(pref.getBoolean(packageName, false)) {
-			
-			boolean blocked = false;
-			
-			blocked |= handleAdmobAds(packageName, lpparam);
-			blocked |= handleVponAds(packageName, lpparam);
-			blocked |= handleKuAds(packageName, lpparam);
-			
-			if(blocked == false) {
-				removeWebViewAds(packageName, lpparam);
-			}
+			handleAdmobAds(packageName, lpparam, false);
+			handleVponAds(packageName, lpparam, false);
+			handleKuAds(packageName, lpparam, false);
+			removeWebViewAds(packageName, lpparam, false);
 		}
 	}
 	
 	
-	private boolean handleAdmobAds(final String packageName, LoadPackageParam lpparam) {
+	private boolean handleAdmobAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			
 			Class<?> admobBanner = findClass("com.google.ads.AdView", lpparam.classLoader);
@@ -68,11 +80,13 @@ public class Main implements IXposedHookZygoteInit,
 				
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							XposedBridge.log("Prevent Admob loadAd in " + packageName);
 							
-							param.setResult(new Object());
+							XposedBridge.log("Detect Admob loadAd in " + packageName);
 							
-							removeAdView((View) param.thisObject);
+							if(!test) {
+								param.setResult(new Object());
+								removeAdView((View) param.thisObject);
+							}
 						}
 					
 					});
@@ -83,18 +97,19 @@ public class Main implements IXposedHookZygoteInit,
 		}
 		return true;
 	}
-	private boolean handleVponAds(final String packageName, LoadPackageParam lpparam) {
+	private boolean handleVponAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			XposedHelpers.findAndHookMethod("com.vpon.ads.VponBanner", lpparam.classLoader, "loadAd"
 					, "com.vpon.ads.VponAdRequest" ,new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Prevent VponBanner loadAd in " + packageName);
+							XposedBridge.log("Detect VponBanner loadAd in " + packageName);
 							
-							param.setResult(new Object());
-							
-							removeAdView((View) param.thisObject);
+							if(!test) {
+								param.setResult(new Object());
+								removeAdView((View) param.thisObject);
+							}
 						}
 					});
 		}
@@ -104,7 +119,7 @@ public class Main implements IXposedHookZygoteInit,
 		}
 		return true;
 	}
-	private boolean handleKuAds(final String packageName, LoadPackageParam lpparam) {
+	private boolean handleKuAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			
 			Class<?> wsBanner = findClass("com.waystorm.ads.WSAdBanner", lpparam.classLoader);
@@ -115,11 +130,12 @@ public class Main implements IXposedHookZygoteInit,
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Prevent WSAdBanner setWSAdListener " + packageName);
+							XposedBridge.log("Detect WSAdBanner setWSAdListener " + packageName);
 							
-							param.setResult(new Object());
-							
-							removeAdView((View) param.thisObject);
+							if(!test) {
+								param.setResult(new Object());
+								removeAdView((View) param.thisObject);
+							}
 						}
 					});
 			
@@ -128,20 +144,23 @@ public class Main implements IXposedHookZygoteInit,
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Prevent WSAdBanner setApplicationId " + packageName);
+							XposedBridge.log("Detect WSAdBanner setApplicationId " + packageName);
 							
-							param.setResult(new Object());
-							
-							removeAdView((View) param.thisObject);
+							if(!test) {
+								param.setResult(new Object());
+								removeAdView((View) param.thisObject);
+							}
 						}
 					});
 			XposedHelpers.findAndHookMethod(wsListener, "onReceived", new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						
-						XposedBridge.log("Prevent WSDlistener onreceived " + packageName);
+						XposedBridge.log("Detect WSDlistener onreceived " + packageName);
 						
-						param.setResult(new Object());
+						if(!test) {
+							param.setResult(new Object());
+						}
 					}
 				});
 		}
@@ -152,7 +171,9 @@ public class Main implements IXposedHookZygoteInit,
 		return true;
 	}
 	
-	private void removeWebViewAds(final String packageName, LoadPackageParam lpparam) {
+	
+	boolean adExist = false;
+	private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		
 		try {
 			
@@ -170,19 +191,23 @@ public class Main implements IXposedHookZygoteInit,
 				}
 			});
 			
+			
 			XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Prevent Ads in " + packageName);
+					XposedBridge.log("Detect Ads in " + packageName);
 					
 					String data = (String) param.args[1];
 					
 					for(String url : urls) {
 						
 						if(data.contains(url)) {
-							param.setResult(new Object());
-							removeAdView((View) param.thisObject);
+							if(!test) {
+								param.setResult(new Object());
+								removeAdView((View) param.thisObject);
+								adExist = true;
+							}
 							break;
 						}
 					}
@@ -191,7 +216,9 @@ public class Main implements IXposedHookZygoteInit,
 		}
 		catch(ClassNotFoundError e) {
 			XposedBridge.log(packageName + "can not clear webview ads");
+			return false;
 		}
+		return adExist;
 	}
 	
 	private void removeAdView(View view) {

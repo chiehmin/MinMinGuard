@@ -1,29 +1,27 @@
 package tw.fatminmin.xposed.minminguard;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.PrintWriter;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.view.Window;
 
 public class BlockUrl {
 	public static Context mContext;
-	private static SharedPreferences pref; 
 	
+	@SuppressLint("SdCardPath")
 	public static void saveUrlsAsPreference(Context context) {
 		
 		mContext = context;
-		pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 		
-		if(pref.getStringSet("urls", null) == null) {
+		if(!(new File("/sdcard/minminguard.txt")).exists()) {
 			new InitTask().execute(new Object[]{});
 		}
 	}
@@ -47,6 +45,7 @@ public class BlockUrl {
 			dlgInit.dismiss();
 		}
 		
+		@SuppressLint("SdCardPath")
 		@Override
 		protected Void doInBackground(Object... params) {
 			
@@ -54,16 +53,12 @@ public class BlockUrl {
 			try {
 				in = mContext.getAssets().open("host/output_file");
 				BufferedReader br = new BufferedReader(new InputStreamReader(in));
-				
-				Set<String> set = new HashSet<String>();
+				PrintWriter pw = new PrintWriter(new File("/sdcard/minminguard.txt"));
 				String url;
 				while((url = br.readLine()) != null) {
-					set.add(url);
+					pw.println(url);
 				}
-				
-				pref.edit()
-					.putStringSet("urls", set)
-					.commit();
+				pw.close();
 				br.close();
 			} catch (IOException e) {
 				e.printStackTrace();
