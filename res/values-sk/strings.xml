@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MinMinGuard</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="pref_title_ad_control">Možnosti blokovania reklám</string>
+    
+    <string name="pref_title_others">Iné</string>
+    <string name="menu_about">O aplikácii</string>
+    <string name="str_thank_you">Ďakujem!!</string>
+    <string name="str_donation">Podporiť</string>
+    <string name="app_version">MinMinGuard verzia: 1.0</string>
+    <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="usd">USD</string>
+    <string name="str_donate">Podporiť</string>
+    <string name="msg_first"><b>Táto aplikácia umožňuje blokovať reklamy z viacerých sietí, napr. Admob, Vpon, KuAd.
+         Ale nezabudnite občas podporiť vývojárov aplikácií vypnutím <i>MinMinGuard</i> a kliknutím na reklamy.
+         \n\nVeľa zábavy s <i>MinMinGuard</i>.</b></string>
+    
+    <string name="str_select_all">Vybrať všetky</string>
+    
+    <string name="msg_thank_you"><b>Naozaj si vážim Váš príspevok! Váša finančná podpora pomôže pokračovať
+        v ďalšom vývoji tejto aplikácie. Môžete darovať viackrát kliknutím na Podporiť.
+        Ďakujem Vám ešte raz!</b>\n\nS pozdravom, \n\n<i>Chieh-Min Wang(FatMinMin)</i></string>
+        
+    <string name="msg_donation_number"><b>Akou sumou by ste ma chceli podporiť?</b></string>
+    
+    <string-array name="drawer_list">
+        <item>Podporiť</item>
+        <item>O aplikácii</item>
+    </string-array>
+
+</resources>
