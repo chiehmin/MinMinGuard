@@ -10,13 +10,17 @@ import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -33,6 +37,7 @@ public class Main implements IXposedHookZygoteInit,
 	private static String MODULE_PATH = null;
 	private static XSharedPreferences pref;
 	private static Set<String> urls;
+	private static Resources res;
 	
 	
 	@Override
@@ -41,7 +46,7 @@ public class Main implements IXposedHookZygoteInit,
 		MODULE_PATH = startupParam.modulePath;
 		XposedBridge.log(MODULE_PATH);
 		
-		Resources res = XModuleResources.createInstance(MODULE_PATH, null);
+		res = XModuleResources.createInstance(MODULE_PATH, null);
 		byte[] array = XposedHelpers.assetAsByteArray(res, "host/output_file");
 		String decoded = new String(array);
 		String[] sUrls = decoded.split("\n");
@@ -86,7 +91,7 @@ public class Main implements IXposedHookZygoteInit,
 							
 							if(!test) {
 								param.setResult(new Object());
-								removeAdView((View) param.thisObject);
+								removeAdView((View) param.thisObject, true);
 							}
 						}
 					
@@ -110,7 +115,7 @@ public class Main implements IXposedHookZygoteInit,
 							
 							if(!test) {
 								param.setResult(new Object());
-								removeAdView((View) param.thisObject);
+								removeAdView((View) param.thisObject, true);
 							}
 						}
 					});
@@ -136,7 +141,7 @@ public class Main implements IXposedHookZygoteInit,
 							
 							if(!test) {
 								param.setResult(new Object());
-								removeAdView((View) param.thisObject);
+								removeAdView((View) param.thisObject, true);
 							}
 						}
 					});
@@ -150,7 +155,7 @@ public class Main implements IXposedHookZygoteInit,
 							
 							if(!test) {
 								param.setResult(new Object());
-								removeAdView((View) param.thisObject);
+								removeAdView((View) param.thisObject, true);
 							}
 						}
 					});
@@ -180,39 +185,24 @@ public class Main implements IXposedHookZygoteInit,
 		try {
 			
 			Class<?> adView = findClass("android.webkit.WebView", lpparam.classLoader);
+			
 			XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
+				
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					
 					String data = (String) param.args[0];
-					XposedBridge.log("Data: " + data);
-			
-					param.setResult(new Object());
-					removeAdView((View) param.thisObject);
+					adExist = urlFiltering(data, param, packageName, test);
 				}
+				
 			});
-			
 			
 			XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					String data = (String) param.args[1];
-					
-					for(String url : urls) {
-						
-						if(data.contains(url)) {
-							
-							XposedBridge.log("Detect Ads in " + packageName);
-							if(!test) {
-								param.setResult(new Object());
-								removeAdView((View) param.thisObject);
-								adExist = true;
-							}
-							break;
-						}
-					}
+					adExist = urlFiltering(data, param, packageName, test);
 				}
 			});
 			
@@ -224,19 +214,73 @@ public class Main implements IXposedHookZygoteInit,
 		return adExist;
 	}
 	
-	public static void removeAdView(View view) {
+	private boolean urlFiltering(String data, MethodHookParam param, String packageName, boolean test) {
+		
+		boolean article = data.contains("title") && data.contains("body") && data.contains("head") && data.length() > 500;
+		
+		if(!article) {
+			
+			XposedBridge.log("Url filtering");
+			
+			String[] array = data.split("[/\\s)]");
+			
+			for(String hostname : array) {
+				
+				hostname = hostname.trim();
+				
+				if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
+				
+					if(urls.contains(hostname)) {
+						
+						XposedBridge.log("Detect Ads with hostname: " + hostname + " in " + packageName);
+						if(!test) {
+							param.setResult(new Object());
+							removeAdView((View) param.thisObject, false);
+							return true;
+						}
+						break;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static void removeAdView(View view, final boolean apiBased) {
 		
 		view.setVisibility(View.GONE);
-//		XposedBridge.log("remove view id" + view.getId());
 		
-		ViewParent parent = view.getParent();
+		final ViewParent parent = view.getParent();
 		if(parent instanceof ViewGroup) {
-			ViewGroup vg = (ViewGroup) parent;
+			final ViewGroup vg = (ViewGroup) parent;
 			if(vg.getChildCount() == 1) {
-				removeAdView(vg);
+				removeAdView(vg, apiBased);
+			}
+			else if(!apiBased){
+				
+				ViewTreeObserver observer= vg.getViewTreeObserver();
+				observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+		            @Override
+		            public void onGlobalLayout() {
+		            	float heightDp = convertPixelsToDp(vg.getHeight()); 
+						if(heightDp <= 55) {
+							
+							for(int i = 0; i < vg.getChildCount(); i++)
+								vg.getChildAt(i).setVisibility(View.GONE);
+							
+							removeAdView(vg, apiBased);
+						}
+		            }
+		        });
 			}
 		}
 		
+	}
+	
+	private static float convertPixelsToDp(float px){
+	    DisplayMetrics metrics = res.getDisplayMetrics();
+	    float dp = px / (metrics.densityDpi / 160f);
+	    return dp;
 	}
 
 	@Override

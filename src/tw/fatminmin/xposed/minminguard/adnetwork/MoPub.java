@@ -23,7 +23,7 @@ public class MoPub {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject);
+								Main.removeAdView((View) param.thisObject, true);
 							}
 						}
 					
