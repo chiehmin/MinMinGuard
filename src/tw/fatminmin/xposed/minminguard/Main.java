@@ -185,9 +185,9 @@ public class Main implements IXposedHookZygoteInit,
 					
 					String data = (String) param.args[0];
 					XposedBridge.log("Data: " + data);
-					
-//					param.setResult(new Object());
-//					removeAdView((View) param.thisObject);
+			
+					param.setResult(new Object());
+					removeAdView((View) param.thisObject);
 				}
 			});
 			
@@ -213,6 +213,7 @@ public class Main implements IXposedHookZygoteInit,
 					}
 				}
 			});
+			
 		}
 		catch(ClassNotFoundError e) {
 			XposedBridge.log(packageName + "can not clear webview ads");
