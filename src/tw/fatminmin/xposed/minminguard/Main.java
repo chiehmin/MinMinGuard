@@ -5,6 +5,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.HashSet;
 import java.util.Set;
 
+import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -31,7 +32,7 @@ public class Main implements IXposedHookZygoteInit,
 	public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
 	private static String MODULE_PATH = null;
 	private static XSharedPreferences pref;
-	public static Set<String> urls;
+	private static Set<String> urls;
 	
 	
 	@Override
@@ -60,9 +61,9 @@ public class Main implements IXposedHookZygoteInit,
 		
 		final String packageName = lpparam.packageName;
 		
-		
 		if(pref.getBoolean(packageName, false)) {
 			handleAdmobAds(packageName, lpparam, false);
+			MoPub.handleLoadPackage(packageName, lpparam, false);
 			handleVponAds(packageName, lpparam, false);
 			handleKuAds(packageName, lpparam, false);
 			removeWebViewAds(packageName, lpparam, false);
@@ -90,6 +91,7 @@ public class Main implements IXposedHookZygoteInit,
 						}
 					
 					});
+			XposedBridge.log(packageName + " uses Admob");
 		}
 		catch(ClassNotFoundError e) {
 			XposedBridge.log(packageName + " does not use Admob");
@@ -196,13 +198,13 @@ public class Main implements IXposedHookZygoteInit,
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect Ads in " + packageName);
-					
 					String data = (String) param.args[1];
 					
 					for(String url : urls) {
 						
 						if(data.contains(url)) {
+							
+							XposedBridge.log("Detect Ads in " + packageName);
 							if(!test) {
 								param.setResult(new Object());
 								removeAdView((View) param.thisObject);
@@ -222,15 +224,15 @@ public class Main implements IXposedHookZygoteInit,
 		return adExist;
 	}
 	
-	private void removeAdView(View view) {
+	public static void removeAdView(View view) {
 		
 		view.setVisibility(View.GONE);
+//		XposedBridge.log("remove view id" + view.getId());
 		
 		ViewParent parent = view.getParent();
 		if(parent instanceof ViewGroup) {
 			ViewGroup vg = (ViewGroup) parent;
 			if(vg.getChildCount() == 1) {
-				vg.removeAllViewsInLayout();
 				removeAdView(vg);
 			}
 		}
