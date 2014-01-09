@@ -7,11 +7,13 @@
     
     <string name="pref_title_others">Iné</string>
     <string name="menu_about">O aplikácii</string>
-    <string name="app_version">MinMinGuard verzia: : 1.1.2</string>
+    <string name="app_version">MinMinGuard verzia: : 1.1.3</string>
     <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="msg_first"><b>Táto aplikácia umožňuje blokovať reklamy z viacerých sietí.
          Ale nezabudnite občas podporiť vývojárov aplikácií vypnutím <i>MinMinGuard</i> a kliknutím na reklamy.
          \n\nVeľa zábavy s <i>MinMinGuard</i>.</b></string>
+    
+    <string name="str_select_all">Vybrať všetky</string>
     
     <string-array name="drawer_list">
         <item>O aplikácii</item>
