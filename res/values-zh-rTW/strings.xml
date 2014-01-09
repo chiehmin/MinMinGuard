@@ -9,9 +9,8 @@
     <string name="menu_about">關於</string>
     <string name="app_version">MinMinGuard version: 1.1.2</string>
     <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
-    <string name="msg_first"><b>它可以在你不想看到廣告的時候幫你擋廣告～～～但是對於認真的免費App作者還是盡量不要使用這個軟體，
-        要多支持免費App作者喔～～
-         \n\nHave fun with <i>MinMinGuard</i>.</b></string>
+    <string name="msg_first"><b>它可以在你不想看到廣告的時候幫你擋廣告，但是對於認真的免費App作者還是盡量不要使用這個軟體，
+        要多支持免費App作者喔:) \n\n 祝您使用愉快！！</b></string>
     
     <string name="str_select_all">全選</string>
     

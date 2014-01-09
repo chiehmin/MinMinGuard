@@ -57,9 +57,10 @@ public class Settings extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
-				TextView tv = (TextView) view;
-				if(tv.getText().equals("About")) {
+				switch(position) {
+				case 0:
 					optionAbout();
+					break;
 				}
 			}
 		});
