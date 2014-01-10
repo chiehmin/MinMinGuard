@@ -8,7 +8,7 @@ Index
 
 * [Description](https://github.com/chiehmin/MinMinGuard/#description)
 * [Features](https://github.com/chiehmin/MinMinGuard/#features)
-* [How does it work?](https://github.com/chiehmin/MinMinGuard/#howdoesitwork)
+* [How does it work?](https://github.com/chiehmin/MinMinGuard/#how-does-it-work)
 
 Description
 -----------
@@ -25,3 +25,7 @@ Features
 
 How does it work?
 -----------------
+
+* **API based blocking:** Block function call to the advertisement network sdk. Then recursively remove the ad space. Now supported advertisement network for this approach are "Admob", "MoPub", "Vpon", and "KuAd".
+
+* **URL based blocking:** Block webviews that contains prohibited urls. ~~For this way I still can not remove the empty space. That's why for some apps the empty space is still there.~~ From v1.2.0, MinMinGuard can also clear empty space for some app by using url filtering approach.
