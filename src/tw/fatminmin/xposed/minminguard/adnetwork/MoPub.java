@@ -28,6 +28,21 @@ public class MoPub {
 						}
 					
 					});
+			Class<?> banner = findClass("com.mopub.mobileads.MraidBanner", lpparam.classLoader);
+			XposedBridge.hookAllMethods(banner, "loadBanner", new XC_MethodHook() {
+				
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					
+					XposedBridge.log("Detect MoPub loadBanner in " + packageName);
+					
+					if(!test) {
+						param.setResult(new Object());
+						Main.removeAdView((View) param.thisObject, true);
+					}
+				}
+			
+			});
 			XposedBridge.log(packageName + " uses MoPub");
 		}
 		catch(ClassNotFoundError e) {

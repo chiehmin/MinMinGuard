@@ -53,9 +53,6 @@ public class ModTrain {
 		if(!resparam.packageName.equals(pkg))
 			return;
 		
-		XposedBridge.log("Hacking " + pkg + "'s Layouts");
-		
-		
 		resparam.res.hookLayout("idv.nightgospel.TWRailScheduleLookUp", "layout", "adlayout", new XC_LayoutInflated() {
 			
 			@Override

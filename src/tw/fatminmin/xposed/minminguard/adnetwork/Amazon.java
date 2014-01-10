@@ -1,0 +1,39 @@
+package tw.fatminmin.xposed.minminguard.adnetwork;
+
+import tw.fatminmin.xposed.minminguard.Main;
+import android.view.View;
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
+
+public class Amazon {
+	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+		try {
+			Class<?> adView = XposedHelpers.findClass("com.amazon.device.ads.AdLayout", lpparam.classLoader);
+			
+			XposedBridge.hookAllMethods(adView, "loadAd", new XC_MethodHook() {
+				
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					
+					XposedBridge.log("Detect Amazon loadAd in " + packageName);
+					
+					if(!test) {
+						param.setResult(new Object());
+						Main.removeAdView((View) param.thisObject, true);
+					}
+					
+				}
+			});
+			
+			XposedBridge.log(packageName + " uses Amazon");
+		}
+		catch(ClassNotFoundError e) {
+			XposedBridge.log(packageName + " does not use Amazon");
+			return false;
+		}
+		return true;
+	}
+}

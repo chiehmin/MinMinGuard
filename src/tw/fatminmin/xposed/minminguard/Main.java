@@ -6,8 +6,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
+import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
+import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
@@ -86,6 +89,9 @@ public class Main implements IXposedHookZygoteInit,
 		KuAd.handleLoadPackage(packageName, lpparam, false);
 		OpenX.handleLoadPackage(packageName, lpparam, false);
 		Flurry.handleLoadPackage(packageName, lpparam, false);
+		Madvertise.handleLoadPackage(packageName, lpparam, false);
+		Amazon.handleLoadPackage(packageName, lpparam, false);
+		Inmobi.handleLoadPackage(packageName, lpparam, false);
 	}
 	private static void appSpecific(String packageName, LoadPackageParam lpparam) {
 		_2chMate.handleLoadPackage(packageName, lpparam, false);
@@ -199,5 +205,6 @@ public class Main implements IXposedHookZygoteInit,
 	@Override
 	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
 		new ModTrain().modLayout(resparam);
+//		AppSales.handleInitPackageResources(resparam);
 	}
 }
