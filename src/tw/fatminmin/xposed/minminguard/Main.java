@@ -5,7 +5,10 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.HashSet;
 import java.util.Set;
 
+import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
+import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -67,115 +70,12 @@ public class Main implements IXposedHookZygoteInit,
 		final String packageName = lpparam.packageName;
 		
 		if(pref.getBoolean(packageName, false)) {
-			handleAdmobAds(packageName, lpparam, false);
+			Admob.handleLoadPackage(packageName, lpparam, false);
 			MoPub.handleLoadPackage(packageName, lpparam, false);
-			handleVponAds(packageName, lpparam, false);
-			handleKuAds(packageName, lpparam, false);
+			Vpon.handleLoadPackage(packageName, lpparam, false);
+			KuAd.handleLoadPackage(packageName, lpparam, false);
 			removeWebViewAds(packageName, lpparam, false);
 		}
-	}
-	
-	
-	private boolean handleAdmobAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
-		try {
-			
-			Class<?> admobBanner = findClass("com.google.ads.AdView", lpparam.classLoader);
-			
-			XposedHelpers.findAndHookMethod(admobBanner, "loadAd", 
-					"com.google.ads.AdRequest", new XC_MethodHook() {
-				
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							XposedBridge.log("Detect Admob loadAd in " + packageName);
-							
-							if(!test) {
-								param.setResult(new Object());
-								removeAdView((View) param.thisObject, true);
-							}
-						}
-					
-					});
-			XposedBridge.log(packageName + " uses Admob");
-		}
-		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Admob");
-			return false;
-		}
-		return true;
-	}
-	private boolean handleVponAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
-		try {
-			XposedHelpers.findAndHookMethod("com.vpon.ads.VponBanner", lpparam.classLoader, "loadAd"
-					, "com.vpon.ads.VponAdRequest" ,new XC_MethodHook() {
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							XposedBridge.log("Detect VponBanner loadAd in " + packageName);
-							
-							if(!test) {
-								param.setResult(new Object());
-								removeAdView((View) param.thisObject, true);
-							}
-						}
-					});
-		}
-		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Vpon");
-			return false;
-		}
-		return true;
-	}
-	private boolean handleKuAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
-		try {
-			
-			Class<?> wsBanner = findClass("com.waystorm.ads.WSAdBanner", lpparam.classLoader);
-			Class<?> wsListener = findClass("com.waystorm.ads.WSAdListener", lpparam.classLoader);
-			
-			XposedHelpers.findAndHookMethod(wsBanner, "setWSAdListener", "com.waystorm.ads.WSAdListener", 
-					new XC_MethodHook() {
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							XposedBridge.log("Detect WSAdBanner setWSAdListener " + packageName);
-							
-							if(!test) {
-								param.setResult(new Object());
-								removeAdView((View) param.thisObject, true);
-							}
-						}
-					});
-			
-			XposedHelpers.findAndHookMethod(wsBanner, "setApplicationId", "java.lang.String",  
-					new XC_MethodHook() {
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							XposedBridge.log("Detect WSAdBanner setApplicationId " + packageName);
-							
-							if(!test) {
-								param.setResult(new Object());
-								removeAdView((View) param.thisObject, true);
-							}
-						}
-					});
-			XposedHelpers.findAndHookMethod(wsListener, "onReceived", new XC_MethodHook() {
-					@Override
-					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						
-						XposedBridge.log("Detect WSDlistener onreceived " + packageName);
-						
-						if(!test) {
-							param.setResult(new Object());
-						}
-					}
-				});
-		}
-		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use kuAd");
-			return false;
-		}
-		return true;
 	}
 	
 	
