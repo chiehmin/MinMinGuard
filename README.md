@@ -33,7 +33,7 @@ Frequently asked questions
 --------------------------
 
 **Q: Why it is not work for some apps?**
-A: You can take a look at "how does it work" section. For url based blocking, ~~this approach still can not remove the empty space.~~there is still a few apps contains empty space that can not be removed. I hope in the following updates I can support more advertisement network with API based blocking.
+A: You can take a look at "how does it work" section. For url based blocking, there is still a few apps contains empty space that can not be removed. I hope in the following updates I can support more advertisement network with API based blocking.
 
 **Q: Can AdAway or Adblock remove the empty space cause by ads?**
 A: I tested AdAway and Adblock. They both can not remove the empty space. If there is any other app that can remove the empty space, please tell me and I will mention here.
