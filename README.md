@@ -9,6 +9,7 @@ Index
 * [Features](https://github.com/chiehmin/MinMinGuard/#features)
 * [How does it work?](https://github.com/chiehmin/MinMinGuard/#how-does-it-work)
 * [Frequently asked questions](https://github.com/chiehmin/MinMinGuard/#frequently-asked-questions)
+* [Thanks to](https://github.com/chiehmin/MinMinGuard/#thanks-to)
 
 Description
 -----------
@@ -43,3 +44,10 @@ A: No, Never. I hope everyone can use full functioned version with free price.
 
 **Q: How can I donate you?**
 A: I am really really appreciate for people who want to donate me. But now I think this is an opensource project, I should not take any money from it. Because maybe someday I will be too busy to update it and somebody will take my place to keep update it. And there may be some translators contribute for this module. So I can not take all the credits.
+
+Thanks to
+---------
+[rovo89](http://forum.xda-developers.com/member.php?u=4419114) for his awesome work on Xposed framework and Mods.
+[PonsAsinorem](http://forum.xda-developers.com/member.php?u=2910818) for improving this project.
+[ja-som](https://github.com/ja-som) for Slovak translation.
+[maksnogin](http://forum.xda-developers.com/member.php?u=5645639) for Russian translation.
