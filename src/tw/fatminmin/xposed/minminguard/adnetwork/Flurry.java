@@ -8,15 +8,28 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class OpenX {
+public class Flurry {
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
-			Class<?> adView = XposedHelpers.findClass("com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView", lpparam.classLoader);
-			XposedBridge.hookAllMethods(adView, "loadAd", new XC_MethodHook() {
+			Class<?> adView = XposedHelpers.findClass("com.flurry.android.FlurryAds", lpparam.classLoader);
+			XposedBridge.hookAllMethods(adView, "fetchAd", new XC_MethodHook() {
 				
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					XposedBridge.log("Detect OXMAdBannerView loadAd in " + packageName);
+					XposedBridge.log("Detect FlurryAds fetchAd in " + packageName);
+					
+					if(!test) {
+						param.setResult(new Object());
+					}
+				}
+				
+			});
+			
+			XposedBridge.hookAllMethods(adView, "displayAd", new XC_MethodHook() {
+				
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					XposedBridge.log("Detect FlurryAds displayAd in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -25,10 +38,10 @@ public class OpenX {
 				}
 				
 			});
-			XposedBridge.log(packageName + " uses OpenX");
+			XposedBridge.log(packageName + " uses FlurryAds");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use OpenX");
+			XposedBridge.log(packageName + " does not use FlurryAds");
 			return false;
 		}
 		return true;

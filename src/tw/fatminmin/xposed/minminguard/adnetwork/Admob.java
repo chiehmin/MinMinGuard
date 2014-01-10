@@ -5,7 +5,6 @@ import tw.fatminmin.xposed.minminguard.Main;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -15,8 +14,7 @@ public class Admob {
 			
 			Class<?> admobBanner = findClass("com.google.ads.AdView", lpparam.classLoader);
 			
-			XposedHelpers.findAndHookMethod(admobBanner, "loadAd", 
-					"com.google.ads.AdRequest", new XC_MethodHook() {
+			XposedBridge.hookAllMethods(admobBanner, "loadAd", new XC_MethodHook() {
 				
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

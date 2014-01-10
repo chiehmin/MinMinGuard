@@ -11,8 +11,10 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Vpon {
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
-			XposedHelpers.findAndHookMethod("com.vpon.ads.VponBanner", lpparam.classLoader, "loadAd"
-					, "com.vpon.ads.VponAdRequest" ,new XC_MethodHook() {
+			
+			Class<?> adView = XposedHelpers.findClass("com.vpon.ads.VponBanner", lpparam.classLoader);
+			
+			XposedBridge.hookAllMethods(adView, "loadAd" ,new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							

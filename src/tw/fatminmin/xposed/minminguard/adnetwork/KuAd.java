@@ -5,7 +5,6 @@ import tw.fatminmin.xposed.minminguard.Main;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -16,8 +15,7 @@ public class KuAd {
 			Class<?> wsBanner = findClass("com.waystorm.ads.WSAdBanner", lpparam.classLoader);
 			Class<?> wsListener = findClass("com.waystorm.ads.WSAdListener", lpparam.classLoader);
 			
-			XposedHelpers.findAndHookMethod(wsBanner, "setWSAdListener", "com.waystorm.ads.WSAdListener", 
-					new XC_MethodHook() {
+			XposedBridge.hookAllMethods(wsBanner, "setWSAdListener", new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
@@ -30,8 +28,7 @@ public class KuAd {
 						}
 					});
 			
-			XposedHelpers.findAndHookMethod(wsBanner, "setApplicationId", "java.lang.String",  
-					new XC_MethodHook() {
+			XposedBridge.hookAllMethods(wsBanner, "setApplicationId", new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
@@ -43,7 +40,7 @@ public class KuAd {
 							}
 						}
 					});
-			XposedHelpers.findAndHookMethod(wsListener, "onReceived", new XC_MethodHook() {
+			XposedBridge.hookAllMethods(wsListener, "onReceived", new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						

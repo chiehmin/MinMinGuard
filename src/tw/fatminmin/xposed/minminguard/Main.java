@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
+import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import android.annotation.SuppressLint;
@@ -74,6 +76,8 @@ public class Main implements IXposedHookZygoteInit,
 			MoPub.handleLoadPackage(packageName, lpparam, false);
 			Vpon.handleLoadPackage(packageName, lpparam, false);
 			KuAd.handleLoadPackage(packageName, lpparam, false);
+			OpenX.handleLoadPackage(packageName, lpparam, false);
+			Flurry.handleLoadPackage(packageName, lpparam, false);
 			removeWebViewAds(packageName, lpparam, false);
 		}
 	}
