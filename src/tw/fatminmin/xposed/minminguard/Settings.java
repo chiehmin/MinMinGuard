@@ -10,7 +10,9 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -114,13 +116,25 @@ public class Settings extends Activity {
 	
 	
 	private void optionAbout() {
+		
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.menu_about));
 		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setCancelable(true);
-		dlgAbout.show();
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
+		
+		try {
+			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			TextView tv = (TextView) dlgAbout.findViewById(R.id.tvVersion);
+			tv.setText(String.format(getString(R.string.app_version), pInfo.versionName));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		dlgAbout.show();
+		
 	}
 	
 	public static class PrefsFragment extends PreferenceFragment {

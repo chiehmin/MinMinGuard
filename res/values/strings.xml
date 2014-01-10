@@ -7,7 +7,7 @@
     
     <string name="pref_title_others">Others</string>
     <string name="menu_about">About</string>
-    <string name="app_version">MinMinGuard version: 1.1.3</string>
+    <string name="app_version">MinMinGuard version: %s</string>
     <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="msg_first"><b>This is an app for you to remove ads from various ad networks.
          But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
