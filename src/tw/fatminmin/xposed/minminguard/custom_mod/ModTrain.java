@@ -8,12 +8,11 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class ModTrain extends ModApp {
+public class ModTrain {
 	
 	
 	protected static String pkg = "idv.nightgospel.TWRailScheduleLookUp";
 	
-	@Override
 	public void modMethod(LoadPackageParam lpparam) {
 		if(!lpparam.packageName.equals(pkg))
 			return;
@@ -50,7 +49,6 @@ public class ModTrain extends ModApp {
 			});
 	}
 	
-	@Override
 	public void modLayout(InitPackageResourcesParam resparam) {
 		if(!resparam.packageName.equals(pkg))
 			return;

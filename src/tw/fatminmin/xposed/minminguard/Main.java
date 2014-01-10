@@ -12,7 +12,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
-import android.annotation.SuppressLint;
+import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.util.DisplayMetrics;
@@ -63,7 +63,6 @@ public class Main implements IXposedHookZygoteInit,
 		XposedBridge.log("Block url size: " + urls.size());
 	}
 	
-	@SuppressLint("SdCardPath")
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		
@@ -72,14 +71,24 @@ public class Main implements IXposedHookZygoteInit,
 		final String packageName = lpparam.packageName;
 		
 		if(pref.getBoolean(packageName, false)) {
-			Admob.handleLoadPackage(packageName, lpparam, false);
-			MoPub.handleLoadPackage(packageName, lpparam, false);
-			Vpon.handleLoadPackage(packageName, lpparam, false);
-			KuAd.handleLoadPackage(packageName, lpparam, false);
-			OpenX.handleLoadPackage(packageName, lpparam, false);
-			Flurry.handleLoadPackage(packageName, lpparam, false);
+			
+			adNetwork(packageName, lpparam);
+			appSpecific(packageName, lpparam);
+			
 			removeWebViewAds(packageName, lpparam, false);
 		}
+	}
+	
+	private static void adNetwork(String packageName, LoadPackageParam lpparam) {
+		Admob.handleLoadPackage(packageName, lpparam, false);
+		MoPub.handleLoadPackage(packageName, lpparam, false);
+		Vpon.handleLoadPackage(packageName, lpparam, false);
+		KuAd.handleLoadPackage(packageName, lpparam, false);
+		OpenX.handleLoadPackage(packageName, lpparam, false);
+		Flurry.handleLoadPackage(packageName, lpparam, false);
+	}
+	private static void appSpecific(String packageName, LoadPackageParam lpparam) {
+		_2chMate.handleLoadPackage(packageName, lpparam, false);
 	}
 	
 	
