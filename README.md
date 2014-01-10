@@ -49,5 +49,7 @@ Thanks to
 ---------
 * [rovo89](http://forum.xda-developers.com/member.php?u=4419114) for his awesome work on Xposed framework and Mods.
 * [PonsAsinorem](http://forum.xda-developers.com/member.php?u=2910818) for improving this project.
-* [ja-som](https://github.com/ja-som) for Slovak translation.
+* [WedyDQ10](https://github.com/WedyDQ10) for Japanese translation
 * [maksnogin](http://forum.xda-developers.com/member.php?u=5645639) for Russian translation.
+* [ja-som](https://github.com/ja-som) for Slovak translation.
+
