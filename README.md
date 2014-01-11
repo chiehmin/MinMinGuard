@@ -52,4 +52,5 @@ Thanks to
 * [WedyDQ10](https://github.com/WedyDQ10) for Japanese translation
 * [maksnogin](http://forum.xda-developers.com/member.php?u=5645639) for Russian translation.
 * [ja-som](https://github.com/ja-som) for Slovak translation.
+* [Alienz](https://github.com/alienyd) for Vietnamese translation
 
