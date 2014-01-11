@@ -98,8 +98,9 @@ public class Main implements IXposedHookZygoteInit,
 	}
 	
 	
-	boolean adExist = false;
-	private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	static boolean adExist = false;
+	static private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
+		
 		
 		try {
 			
@@ -111,7 +112,7 @@ public class Main implements IXposedHookZygoteInit,
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					String data = (String) param.args[0];
-					adExist = urlFiltering(data, param, packageName, test);
+					adExist = urlFiltering("", data, param, packageName, test);
 				}
 				
 			});
@@ -119,9 +120,9 @@ public class Main implements IXposedHookZygoteInit,
 			XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
+					String url = (String) param.args[0];
 					String data = (String) param.args[1];
-					adExist = urlFiltering(data, param, packageName, test);
+					adExist = urlFiltering(url, data, param, packageName, test);
 				}
 			});
 			
@@ -133,15 +134,40 @@ public class Main implements IXposedHookZygoteInit,
 		return adExist;
 	}
 	
-	private boolean urlFiltering(String data, MethodHookParam param, String packageName, boolean test) {
+	static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
+				
+			
+		XposedBridge.log("Url filtering");
+		String[] array;
 		
-		boolean article = data.contains("title") && data.contains("body") && data.contains("head") && data.length() > 500;
+		if(url == null) 
+			url = "";
+		array = url.split("[/\\s):]");
+		for(String hostname : array) {
+			
+			hostname = hostname.trim();
+			
+			if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
+			
+				if(urls.contains(hostname)) {
+					
+					XposedBridge.log("Detect Ads(url) with hostname: " + hostname + " in " + packageName);
+					if(!test) {
+						param.setResult(new Object());
+						removeAdView((View) param.thisObject, false);
+						return true;
+					}
+					break;
+				}
+			}
+		}
 		
+		
+		boolean article = data.contains("<html") && data.contains("<head") && data.contains("<body") && 
+				(data.contains("<span") || data.contains("div"));
+		XposedBridge.log(data);
 		if(!article) {
-			
-			XposedBridge.log("Url filtering");
-			
-			String[] array = data.split("[/\\s)]");
+			array = data.split("[/\\s):]");
 			
 			for(String hostname : array) {
 				
@@ -151,7 +177,7 @@ public class Main implements IXposedHookZygoteInit,
 				
 					if(urls.contains(hostname)) {
 						
-						XposedBridge.log("Detect Ads with hostname: " + hostname + " in " + packageName);
+						XposedBridge.log("Detect Ads(data) with hostname: " + hostname + " in " + packageName);
 						if(!test) {
 							param.setResult(new Object());
 							removeAdView((View) param.thisObject, false);
