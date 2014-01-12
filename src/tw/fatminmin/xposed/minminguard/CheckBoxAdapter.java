@@ -60,25 +60,23 @@ public class CheckBoxAdapter extends BaseAdapter {
 		
 		final String sTitle = (String) mItemList.get(position).get("title");
 		final String sSummary = (String) mItemList.get(position).get("summary");
-		final String packageName = (String) mItemList.get(position).get("key");
+		final String key = (String) mItemList.get(position).get("key");
 		final Drawable dIcon = (Drawable) mItemList.get(position).get("icon");
 		
 		title.setText(sTitle);
 		summary.setText(sSummary);
 		icon.setImageDrawable(dIcon);
-		checkBox.setChecked(pref.getBoolean(packageName, false));
-		
+		checkBox.setChecked(pref.getBoolean(key, false));
 		
 		checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				pref.edit()
-					.putBoolean(packageName, isChecked)
+					.putBoolean(key, isChecked)
 					.commit();
 			}
 		});
-		
 		
 		return convertView;
 	}

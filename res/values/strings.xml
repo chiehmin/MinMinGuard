@@ -14,7 +14,8 @@
          \n\nHave fun with <i>MinMinGuard</i>.</b></string>
     
     <string name="str_select_all">Select All</string>
-    
+    <string name="str_selecting_all">selecting all&#8230;</string>
+    <string name="str_deselecting_all">deselecting all&#8230;</string>
     <string-array name="drawer_list">
         <item>About</item>
     </string-array>

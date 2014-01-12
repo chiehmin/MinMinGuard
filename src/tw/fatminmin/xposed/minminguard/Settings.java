@@ -15,6 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class Settings extends SherlockFragmentActivity {
@@ -39,8 +41,7 @@ public class Settings extends SherlockFragmentActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     
-    @SuppressWarnings("unused")
-    private SharedPreferences pref;
+    static public SharedPreferences pref;
     
 	@SuppressLint("WorldReadableFiles")
     @SuppressWarnings("deprecation")
@@ -117,15 +118,33 @@ public class Settings extends SherlockFragmentActivity {
 	}
 	
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    getSupportMenuInflater().inflate(R.menu.main, menu);
+	    return true;
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
-	    if (item.getItemId() == android.R.id.home) {
-
+	    switch(item.getItemId()) {
+	    case android.R.id.home:
 	        if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-	            mDrawerLayout.closeDrawer(mDrawerList);
-	        } else {
-	            mDrawerLayout.openDrawer(mDrawerList);
-	        }
+                mDrawerLayout.closeDrawer(mDrawerList);
+            } else {
+                mDrawerLayout.openDrawer(mDrawerList);
+            }
+	        break;
+	    case R.id.select_all:
+	        
+	        String key = "select_all";
+	        boolean value = !pref.getBoolean(key, false);
+	        pref.edit()
+	            .putBoolean(key, value)
+	            .commit();
+	        
+	        SelectAllAsyncTask.setup(Settings.this, new Handler());
+	        new SelectAllAsyncTask(value).execute(new Object());
+	        break;
 	    }
 		
 		return super.onOptionsItemSelected(item);
@@ -156,25 +175,13 @@ public class Settings extends SherlockFragmentActivity {
 	
 	public static class PrefsFragment extends Fragment {
 		
-	    private ListView listView;
+	    static public ListView listView;
 	    private List<Map<String, Object>> itemList;
 	    
         @Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-
-			
+			super.onCreate(savedInstanceState);			
 			setupAppList();
-			
-//			CheckBoxPreference selectAll = (CheckBoxPreference) findPreference("select_all");
-//			selectAll.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//				@Override
-//				public boolean onPreferenceChange(Preference preference, Object newValue) {
-//					setChecked((Boolean) newValue);
-//					return (Boolean) newValue;
-//				}
-//				
-//			});
 		}
         
         @Override
@@ -220,16 +227,11 @@ public class Settings extends SherlockFragmentActivity {
                     return s1.compareTo(s2);
                 }
 			});
+			
 		}
 		
-//		private void setChecked(boolean value) {
-//			for(int i = 0; i < pc.getPreferenceCount(); i++) {
-//				Preference pref = pc.getPreference(i);
-//				if(pref instanceof CheckBoxPreference) {
-//					CheckBoxPreference check = (CheckBoxPreference) pref;
-//					check.setChecked(value);
-//				}
-//			}
-//		}
+		static public void setChecked(boolean value) {
+			
+		}
 	}
 }
