@@ -13,6 +13,20 @@ public class Amazon {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.amazon.device.ads.AdLayout", lpparam.classLoader);
 			
+			XposedBridge.hookAllMethods(adView, "setListener", new XC_MethodHook() {
+			   
+			    @Override
+			    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+			        
+			        XposedBridge.log("Prevent amazon setlistener");
+			        
+			        if(!test) {
+                        param.setResult(new Object());
+                        Main.removeAdView((View) param.thisObject, true);
+                    }
+			    }
+            });
+			
 			XposedBridge.hookAllMethods(adView, "loadAd", new XC_MethodHook() {
 				
 				@Override
@@ -21,10 +35,9 @@ public class Amazon {
 					XposedBridge.log("Detect Amazon loadAd in " + packageName);
 					
 					if(!test) {
-						param.setResult(new Object());
+						param.setResult(Boolean.valueOf(true));
 						Main.removeAdView((View) param.thisObject, true);
 					}
-					
 				}
 			});
 			

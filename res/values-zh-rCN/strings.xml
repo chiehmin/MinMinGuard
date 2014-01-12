@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MinMinGuard</string>
+    <string name="action_settings">设定</string>
+    <string name="pref_title_ad_control">屏蔽广告选项</string>
+    
+    <string name="pref_title_others">其他</string>
+    <string name="menu_about">关于</string>
+    <string name="app_version">MinMinGuard 版本: %s</string>
+    <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="msg_first"><b>它可以在你不想看到广告的时候帮你屏蔽广告，但是对于认真的免费App作者还是尽量不要使用这个软体，
+        要多支持免费App作者喔:) \n\n 祝您使用愉快！！</b></string>
+    
+    <string name="str_select_all">全选</string>
+    
+    <string-array name="drawer_list">
+        <item>关于</item>
+    </string-array>
+
+</resources>
