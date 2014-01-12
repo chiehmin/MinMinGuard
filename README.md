@@ -1,6 +1,8 @@
 MinMinGuard
 ===========
-AD REMOVER! The best alternative!
+AD REMOVER! The best alternative!  
+ [XDA discussion thread](http://forum.xda-developers.com/showthread.php?p=49112940#post49112940)  
+ [XDA News - Selectively Block Ads on Certain Apps with Xposed Module](http://www.xda-developers.com/android/selectively-block-ads-on-certain-apps-with-xposed-module/)   
 
 Index
 -----
@@ -52,4 +54,5 @@ Thanks to
 * [WedyDQ10](https://github.com/WedyDQ10) for Japanese translation
 * [maksnogin](http://forum.xda-developers.com/member.php?u=5645639) for Russian translation.
 * [ja-som](https://github.com/ja-som) for Slovak translation.
+* [Alienz](https://github.com/alienyd) for Vietnamese translation
 

@@ -37,200 +37,200 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Main implements IXposedHookZygoteInit,
-							 IXposedHookLoadPackage, 
-							 IXposedHookInitPackageResources {
-	
-	
-	public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
-	private static String MODULE_PATH = null;
-	private static XSharedPreferences pref;
-	private static Set<String> urls;
-	private static Resources res;
-	
-	
-	@Override
-	public void initZygote(StartupParam startupParam) throws Throwable {
-		pref = new XSharedPreferences(MY_PACKAGE_NAME);
-		MODULE_PATH = startupParam.modulePath;
-		XposedBridge.log(MODULE_PATH);
-		
-		res = XModuleResources.createInstance(MODULE_PATH, null);
-		byte[] array = XposedHelpers.assetAsByteArray(res, "host/output_file");
-		String decoded = new String(array);
-		String[] sUrls = decoded.split("\n");
-		
-		urls = new HashSet<String>();
-		for(String url : sUrls) {
-			urls.add(url);
-		}
-		XposedBridge.log("Block url size: " + urls.size());
-	}
-	
-	@Override
-	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-		
-		pref.reload();
-		
-		final String packageName = lpparam.packageName;
-		
-		if(pref.getBoolean(packageName, false)) {
-			
-			adNetwork(packageName, lpparam);
-			appSpecific(packageName, lpparam);
-			
-			removeWebViewAds(packageName, lpparam, false);
-		}
-	}
-	
-	private static void adNetwork(String packageName, LoadPackageParam lpparam) {
-		Admob.handleLoadPackage(packageName, lpparam, false);
-		MoPub.handleLoadPackage(packageName, lpparam, false);
-		Vpon.handleLoadPackage(packageName, lpparam, false);
-		KuAd.handleLoadPackage(packageName, lpparam, false);
-		OpenX.handleLoadPackage(packageName, lpparam, false);
-		Flurry.handleLoadPackage(packageName, lpparam, false);
-		Madvertise.handleLoadPackage(packageName, lpparam, false);
-		Amazon.handleLoadPackage(packageName, lpparam, false);
-		Inmobi.handleLoadPackage(packageName, lpparam, false);
-	}
-	private static void appSpecific(String packageName, LoadPackageParam lpparam) {
-		_2chMate.handleLoadPackage(packageName, lpparam, false);
-	}
-	
-	
-	static boolean adExist = false;
-	static private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
-		
-		
-		try {
-			
-			Class<?> adView = findClass("android.webkit.WebView", lpparam.classLoader);
-			
-			XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
-				
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
-					String data = (String) param.args[0];
-					adExist = urlFiltering("", data, param, packageName, test);
-				}
-				
-			});
-			
-			XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					String url = (String) param.args[0];
-					String data = (String) param.args[1];
-					adExist = urlFiltering(url, data, param, packageName, test);
-				}
-			});
-			
-		}
-		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + "can not clear webview ads");
-			return false;
-		}
-		return adExist;
-	}
-	
-	static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
-				
-			
-		XposedBridge.log("Url filtering");
-		String[] array;
-		
-		if(url == null) 
-			url = "";
-		array = url.split("[/\\s):]");
-		for(String hostname : array) {
-			
-			hostname = hostname.trim();
-			
-			if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-			
-				if(urls.contains(hostname)) {
-					
-					XposedBridge.log("Detect Ads(url) with hostname: " + hostname + " in " + packageName);
-					if(!test) {
-						param.setResult(new Object());
-						removeAdView((View) param.thisObject, false);
-						return true;
-					}
-					break;
-				}
-			}
-		}
-		
-		
-		boolean article = data.contains("<html") && data.contains("<head") && data.contains("<body") && 
-				(data.contains("<span") || data.contains("div"));
-//		XposedBridge.log(data);
-		if(!article) {
-			array = data.split("[/\\s):]");
-			
-			for(String hostname : array) {
-				
-				hostname = hostname.trim();
-				
-				if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-				
-					if(urls.contains(hostname)) {
-						
-						XposedBridge.log("Detect Ads(data) with hostname: " + hostname + " in " + packageName);
-						if(!test) {
-							param.setResult(new Object());
-							removeAdView((View) param.thisObject, false);
-							return true;
-						}
-						break;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public static void removeAdView(View view, final boolean apiBased) {
-		
-		view.setVisibility(View.GONE);
-		
-		final ViewParent parent = view.getParent();
-		if(parent instanceof ViewGroup) {
-			final ViewGroup vg = (ViewGroup) parent;
-			if(vg.getChildCount() == 1) {
-				removeAdView(vg, apiBased);
-			}
-			else if(!apiBased){
-				
-				ViewTreeObserver observer= vg.getViewTreeObserver();
-				observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-		            @Override
-		            public void onGlobalLayout() {
-		            	float heightDp = convertPixelsToDp(vg.getHeight()); 
-						if(heightDp <= 55) {
-							
-							for(int i = 0; i < vg.getChildCount(); i++)
-								vg.getChildAt(i).setVisibility(View.GONE);
-							
-							removeAdView(vg, apiBased);
-						}
-		            }
-		        });
-			}
-		}
-		
-	}
-	
-	private static float convertPixelsToDp(float px){
-	    DisplayMetrics metrics = res.getDisplayMetrics();
-	    float dp = px / (metrics.densityDpi / 160f);
-	    return dp;
-	}
+                             IXposedHookLoadPackage,
+                             IXposedHookInitPackageResources {
 
-	@Override
-	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
-		new ModTrain().modLayout(resparam);
-//		AppSales.handleInitPackageResources(resparam);
-	}
+
+    public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
+    private static String MODULE_PATH = null;
+    private static XSharedPreferences pref;
+    private static Set<String> urls;
+    private static Resources res;
+
+
+    @Override
+    public void initZygote(StartupParam startupParam) throws Throwable {
+        pref = new XSharedPreferences(MY_PACKAGE_NAME);
+        MODULE_PATH = startupParam.modulePath;
+        XposedBridge.log(MODULE_PATH);
+
+        res = XModuleResources.createInstance(MODULE_PATH, null);
+        byte[] array = XposedHelpers.assetAsByteArray(res, "host/output_file");
+        String decoded = new String(array);
+        String[] sUrls = decoded.split("\n");
+
+        urls = new HashSet<String>();
+        for(String url : sUrls) {
+            urls.add(url);
+        }
+        XposedBridge.log("Block url size: " + urls.size());
+    }
+
+    @Override
+    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+
+        pref.reload();
+
+        final String packageName = lpparam.packageName;
+
+        if(pref.getBoolean(packageName, false)) {
+
+            adNetwork(packageName, lpparam);
+            appSpecific(packageName, lpparam);
+
+            removeWebViewAds(packageName, lpparam, false);
+        }
+    }
+
+    private static void adNetwork(String packageName, LoadPackageParam lpparam) {
+        Admob.handleLoadPackage(packageName, lpparam, false);
+        Amazon.handleLoadPackage(packageName, lpparam, false);
+        Flurry.handleLoadPackage(packageName, lpparam, false);
+        KuAd.handleLoadPackage(packageName, lpparam, false);
+        Inmobi.handleLoadPackage(packageName, lpparam, false);
+        Madvertise.handleLoadPackage(packageName, lpparam, false);
+        MoPub.handleLoadPackage(packageName, lpparam, false);
+        OpenX.handleLoadPackage(packageName, lpparam, false);
+        Vpon.handleLoadPackage(packageName, lpparam, false);
+    }
+
+    private static void appSpecific(String packageName, LoadPackageParam lpparam) {
+        _2chMate.handleLoadPackage(packageName, lpparam, false);
+    }
+
+
+    static boolean adExist = false;
+    static private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
+
+
+        try {
+
+            Class<?> adView = findClass("android.webkit.WebView", lpparam.classLoader);
+
+            XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String data = (String) param.args[0];
+                    adExist = urlFiltering("", data, param, packageName, test);
+                }
+
+            });
+
+            XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    String url = (String) param.args[0];
+                    String data = (String) param.args[1];
+                    adExist = urlFiltering(url, data, param, packageName, test);
+                }
+            });
+
+        }
+        catch(ClassNotFoundError e) {
+            XposedBridge.log(packageName + "can not clear webview ads");
+            return false;
+        }
+        return adExist;
+    }
+
+    static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
+
+
+        XposedBridge.log("Url filtering");
+        String[] array;
+
+        if(url == null) 
+            url = "";
+        array = url.split("[/\\s):]");
+        for(String hostname : array) {
+
+            hostname = hostname.trim();
+
+            if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
+
+                if(urls.contains(hostname)) {
+
+                    XposedBridge.log("Detect Ads(url) with hostname: " + hostname + " in " + packageName);
+                    if(!test) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject, false);
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+
+
+        boolean article = data.contains("<html") && data.contains("<head") && data.contains("<body") && 
+                (data.contains("<span") || data.contains("div"));
+        XposedBridge.log(data);
+        if(!article) {
+            array = data.split("[/\\s):]");
+
+            for(String hostname : array) {
+
+                hostname = hostname.trim();
+
+                if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
+
+                    if(urls.contains(hostname)) {
+
+                        XposedBridge.log("Detect Ads(data) with hostname: " + hostname + " in " + packageName);
+                        if(!test) {
+                            param.setResult(new Object());
+                            removeAdView((View) param.thisObject, false);
+                            return true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void removeAdView(View view, final boolean apiBased) {
+
+        view.setVisibility(View.GONE);
+
+        final ViewParent parent = view.getParent();
+        if(parent instanceof ViewGroup) {
+            final ViewGroup vg = (ViewGroup) parent;
+            if(vg.getChildCount() == 1) {
+                removeAdView(vg, apiBased);
+            }
+            else if(!apiBased){
+
+                ViewTreeObserver observer= vg.getViewTreeObserver();
+                observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        float heightDp = convertPixelsToDp(vg.getHeight()); 
+                        if(heightDp <= 55) {
+
+                            for(int i = 0; i < vg.getChildCount(); i++)
+                                vg.getChildAt(i).setVisibility(View.GONE);
+
+                            removeAdView(vg, apiBased);
+                        }
+    	            }
+                });
+            }
+        }
+
+    }
+
+    private static float convertPixelsToDp(float px){
+        DisplayMetrics metrics = res.getDisplayMetrics();
+        float dp = px / (metrics.densityDpi / 160f);
+        return dp;
+    }
+
+    @Override
+    public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
+        new ModTrain().modLayout(resparam);
+    }
 }
