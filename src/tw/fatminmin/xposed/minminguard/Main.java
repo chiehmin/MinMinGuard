@@ -165,7 +165,7 @@ public class Main implements IXposedHookZygoteInit,
 		
 		boolean article = data.contains("<html") && data.contains("<head") && data.contains("<body") && 
 				(data.contains("<span") || data.contains("div"));
-		XposedBridge.log(data);
+//		XposedBridge.log(data);
 		if(!article) {
 			array = data.split("[/\\s):]");
 			
