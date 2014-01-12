@@ -39,7 +39,7 @@
             android:layout_alignLeft="@android:id/title"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:maxLines="2" android:text="Summary"/> 
- 
+ 		
     </RelativeLayout> 
     
     <!-- Preference should place its actual preference widget here. --> 
@@ -47,7 +47,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+        <ImageButton android:id="@+id/edit"
+           android:layout_width="48dp"
+           android:layout_height="48dp"
+           android:visibility="gone"
+           android:background="@drawable/ic_action_edit_black"
+           android:padding="5dp" />
         <CheckBox android:id="@+id/chkCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" />
     </LinearLayout> 
 </LinearLayout> 

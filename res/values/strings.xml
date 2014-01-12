@@ -16,6 +16,7 @@
     <string name="str_select_all">Select All</string>
     <string name="str_selecting_all">selecting all&#8230;</string>
     <string name="str_deselecting_all">deselecting all&#8230;</string>
+    <string name="enable_url_filtering_data">Enable Url filtering in WebView data</string>
     <string-array name="drawer_list">
         <item>About</item>
     </string-array>

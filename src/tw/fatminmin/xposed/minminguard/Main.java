@@ -163,11 +163,10 @@ public class Main implements IXposedHookZygoteInit,
             }
         }
 
-
-        boolean article = data.contains("<html") && data.contains("<head") && data.contains("<body") && 
-                (data.contains("<span") || data.contains("div"));
-        XposedBridge.log(data);
-        if(!article) {
+        if(pref.getBoolean(packageName + "_url", true)) {
+            
+            XposedBridge.log(data);
+            
             array = data.split("[/\\s):]");
 
             for(String hostname : array) {
