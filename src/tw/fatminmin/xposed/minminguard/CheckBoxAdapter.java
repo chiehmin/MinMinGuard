@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -77,6 +76,7 @@ public class CheckBoxAdapter extends BaseAdapter {
 		}
 		else {
 		    checkBox.setChecked(false);
+		    imgEdit.setVisibility(View.GONE);
 		}
 		
 		imgEdit.setOnClickListener(new View.OnClickListener() {
@@ -88,12 +88,17 @@ public class CheckBoxAdapter extends BaseAdapter {
                 
                 checkBox.setChecked(pref.getBoolean(key + "_url", true));
                 
-                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                checkBox.setOnClickListener(new View.OnClickListener() {
+
                     @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    public void onClick(View v) {
+                        CheckBox cb = (CheckBox) v;
+                        boolean value = cb.isChecked();
                         pref.edit()
-                            .putBoolean(key + "_url", isChecked)
+                            .putBoolean(key + "_url", value)
                             .commit();
+                        
+                        
                     }
                 });
                 checkBox.setText(mContext.getString(R.string.enable_url_filtering_data));
@@ -113,20 +118,23 @@ public class CheckBoxAdapter extends BaseAdapter {
             }
         });
 		
-		checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		checkBox.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				pref.edit()
-					.putBoolean(key, isChecked)
-					.commit();
-				if(isChecked) {
-				    imgEdit.setVisibility(View.VISIBLE);
-				}
-				else {
-				    imgEdit.setVisibility(View.GONE);
-				}
-			}
+            @Override
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                
+                boolean value = cb.isChecked();
+                pref.edit()
+                    .putBoolean(key, value)
+                    .commit();
+                if(value) {
+                    imgEdit.setVisibility(View.VISIBLE);
+                }
+                else {
+                    imgEdit.setVisibility(View.GONE);
+                }
+            }
 		});
 		
 		return convertView;

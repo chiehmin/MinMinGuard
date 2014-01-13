@@ -167,7 +167,7 @@ public class Main implements IXposedHookZygoteInit,
 
         if(pref.getBoolean(packageName + "_url", true)) {
             
-            XposedBridge.log(data);
+//            XposedBridge.log(data);
             
             array = data.split("[/\\s):]");
 

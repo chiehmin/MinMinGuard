@@ -13,7 +13,9 @@
         要多支持免费App作者喔:) \n\n 祝您使用愉快！！</b></string>
     
     <string name="str_select_all">全选</string>
-    
+    <string name="str_selecting_all">正在选择全部&#8230;</string>
+    <string name="str_deselecting_all">正在取消选择全部&#8230;</string>
+    <string name="enable_url_filtering_data">在WebView资料中启用URL过滤</string>
     <string-array name="drawer_list">
         <item>关于</item>
     </string-array>
