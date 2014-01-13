@@ -64,7 +64,8 @@ public class Main implements IXposedHookZygoteInit,
 		if(pref.getBoolean(packageName, false)) {
 			handleAdmobAds(packageName, lpparam, false);
 			handleVponAds(packageName, lpparam, false);
-			handleKuAds(packageName, lpparam, false);
+            handleKuAds(packageName, lpparam, false);
+            handleNendAds(packageName, lpparam, false);
 			removeWebViewAds(packageName, lpparam, false);
 		}
 	}
@@ -170,7 +171,29 @@ public class Main implements IXposedHookZygoteInit,
 		}
 		return true;
 	}
-	
+    private boolean handleNendAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
+        try {
+            XposedHelpers.findAndHookMethod("net.nend.android.NendAdView", lpparam.classLoader, "loadAd"
+                    , new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    XposedBridge.log("Detect NendAdView loadAd in " + packageName);
+
+                    if(!test) {
+                        param.setResult(new Object());
+                        removeAdView((View) param.thisObject);
+                    }
+                }
+            });
+        }
+        catch(ClassNotFoundError e) {
+            XposedBridge.log(packageName + " does not use Nend");
+            return false;
+        }
+        return true;
+    }
+
 	
 	boolean adExist = false;
 	private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
