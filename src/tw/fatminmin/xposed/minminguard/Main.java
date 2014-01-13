@@ -5,7 +5,16 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.HashSet;
 import java.util.Set;
 
-import tw.fatminmin.xposed.minminguard.adnetwork.*;
+import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
+import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
+import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
+import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
+import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
+import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
+import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
+import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;

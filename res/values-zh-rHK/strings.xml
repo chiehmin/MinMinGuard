@@ -10,7 +10,7 @@
     <string name="app_version">MinMinGuard 版本: %s</string>
     <string name="app_copyright">版權所有 \u00A9 2014 <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="msg_first">它可以在你不想看到廣告的時候幫你擋廣告，但是對於認真的免費App作者還是盡量不要使用這個軟體，
-        要多支持免費App作者喔:) \n\n 祝您使用愉快！！</string>
+        要多支持免費App作者喔:) \n\n 祝您使用愉快！！</b></string>
     
     <string name="str_select_all">選擇全部</string>
     <string name="str_selecting_all">正在選擇全部&#8230;</string>
