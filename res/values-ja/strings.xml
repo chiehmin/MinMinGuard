@@ -8,15 +8,17 @@
     <string name="pref_title_others">その他</string>
     <string name="menu_about">情報</string>
     <string name="app_version">MinMinGuardバージョン: %s</string>
+    
     <string name="msg_first"><b>これは複数の広告ネットワークの広告をブロックするモジュールです。
          ですが、もしよろしければ<i>MinMinGuard</i>では無効にして広告をタップして開発をサポートしてください。
-         \n\nさあ、<i>MinMinGuard</i>の設定をしましょう!</b></string>
+         \n\n<i>MinMinGuard</i>をよろしくお願いします!</b></string>
     
     <string name="str_select_all">全て選択</string>
-    
+    <string name="str_selecting_all">全て選択中&#8230;</string>
+    <string name="str_deselecting_all">全て選択解除中&#8230;</string>
+    <string name="enable_url_filtering_data">WebViewデータでURLブロックを有効化</string>
     <string-array name="drawer_list">
         <item>情報</item>
     </string-array>
 
 </resources>
-
