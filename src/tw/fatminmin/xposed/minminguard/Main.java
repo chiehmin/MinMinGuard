@@ -5,15 +5,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.HashSet;
 import java.util.Set;
 
-import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
-import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
-import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
-import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
-import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
-import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
-import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
-import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
-import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
+import tw.fatminmin.xposed.minminguard.adnetwork.*;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;
@@ -90,6 +82,7 @@ public class Main implements IXposedHookZygoteInit,
         Inmobi.handleLoadPackage(packageName, lpparam, false);
         Madvertise.handleLoadPackage(packageName, lpparam, false);
         MoPub.handleLoadPackage(packageName, lpparam, false);
+        Nend.handleLoadPackage(packageName, lpparam, false);
         OpenX.handleLoadPackage(packageName, lpparam, false);
         Vpon.handleLoadPackage(packageName, lpparam, false);
     }

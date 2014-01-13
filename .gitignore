@@ -19,3 +19,9 @@ local.properties
 .classpath
 .project
 .settings/
+
+# Intellij project files
+*.iml
+*.ipr
+*.iws
+.idea/
