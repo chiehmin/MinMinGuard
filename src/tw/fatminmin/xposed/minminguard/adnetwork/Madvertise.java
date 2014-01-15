@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import android.view.ViewGroup;
 import de.robv.android.xposed.XC_MethodHook;
@@ -21,7 +22,7 @@ public class Madvertise {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect Madvertise loadAd in " + packageName);
+					Util.log(packageName, "Detect Madvertise loadAd in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -31,10 +32,10 @@ public class Madvertise {
 				}
 			});
 			
-			XposedBridge.log(packageName + " uses Madvertise");
+			Util.log(packageName, packageName + " uses Madvertise");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Madvertise");
+			Util.log(packageName, packageName + " does not use Madvertise");
 			return false;
 		}
 		return true;
@@ -55,7 +56,7 @@ public class Madvertise {
 				@Override
 				public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 					
-					XposedBridge.log("Set view gone");
+					Util.log(packageName, "Set view gone");
 					final ViewGroup root = (ViewGroup) liparam.view.findViewById(
 							liparam.res.getIdentifier("ll_adcontainer", "id", packageName));
 					

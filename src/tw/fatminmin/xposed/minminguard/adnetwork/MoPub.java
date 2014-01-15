@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -19,7 +20,7 @@ public class MoPub {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Detect MoPub loadAd in " + packageName);
+							Util.log(packageName, "Detect MoPub loadAd in " + packageName);
 							
 							if(!test) {
 								param.setResult(new Object());
@@ -34,7 +35,7 @@ public class MoPub {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect MoPub loadBanner in " + packageName);
+					Util.log(packageName, "Detect MoPub loadBanner in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -43,10 +44,10 @@ public class MoPub {
 				}
 			
 			});
-			XposedBridge.log(packageName + " uses MoPub");
+			Util.log(packageName, packageName + " uses MoPub");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use MoPub");
+			Util.log(packageName, packageName + " does not use MoPub");
 			return false;
 		}
 		return true;

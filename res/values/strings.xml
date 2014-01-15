@@ -12,12 +12,16 @@
     <string name="msg_first"><b>This is an app for you to remove ads from various ad networks.
          But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
          \n\nHave fun with <i>MinMinGuard</i>.</b></string>
+    <string name="msg_restart_app"><i>You must restart the app for the changes to take effect.</i></string>
     
     <string name="str_select_all">Select All</string>
     <string name="str_selecting_all">selecting all&#8230;</string>
     <string name="str_deselecting_all">deselecting all&#8230;</string>
     <string name="enable_url_filtering_data">Enable Url filtering in WebView data</string>
+    <string name="enable_log">Enable logging for this app</string>
     <string-array name="drawer_list">
+        <item>App Settings</item>
+        <item>Log</item>
         <item>About</item>
     </string-array>
 

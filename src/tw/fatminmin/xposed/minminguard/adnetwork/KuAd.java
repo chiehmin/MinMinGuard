@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -19,7 +20,7 @@ public class KuAd {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Detect WSAdBanner setWSAdListener " + packageName);
+							Util.log(packageName, "Detect WSAdBanner setWSAdListener " + packageName);
 							
 							if(!test) {
 								param.setResult(new Object());
@@ -32,7 +33,7 @@ public class KuAd {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Detect WSAdBanner setApplicationId " + packageName);
+							Util.log(packageName, "Detect WSAdBanner setApplicationId " + packageName);
 							
 							if(!test) {
 								param.setResult(new Object());
@@ -44,7 +45,7 @@ public class KuAd {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 						
-						XposedBridge.log("Detect WSDlistener onreceived " + packageName);
+						Util.log(packageName, "Detect WSDlistener onreceived " + packageName);
 						
 						if(!test) {
 							param.setResult(new Object());
@@ -53,7 +54,7 @@ public class KuAd {
 				});
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use kuAd");
+			Util.log(packageName, packageName + " does not use kuAd");
 			return false;
 		}
 		return true;

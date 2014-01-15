@@ -1,8 +1,8 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed.minminguard.ui;
 
 import java.util.Map;
 
-import tw.fatminmin.xposed.minminguard.Settings.PrefsFragment;
+import tw.fatminmin.xposed.minminguard.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -19,7 +20,7 @@ public class Inmobi {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect inmobi loadBanner in " + packageName);
+					Util.log(packageName, "Detect inmobi loadBanner in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -34,7 +35,7 @@ public class Inmobi {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect IMInterstitial loadInterstitial in " + packageName);
+					Util.log(packageName, "Detect IMInterstitial loadInterstitial in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -48,7 +49,7 @@ public class Inmobi {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect IMInterstitial show in " + packageName);
+					Util.log(packageName, "Detect IMInterstitial show in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -57,10 +58,10 @@ public class Inmobi {
 				}
 			});
 			
-			XposedBridge.log(packageName + " uses inmobi");
+			Util.log(packageName, packageName + " uses inmobi");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use inmobi");
+			Util.log(packageName, packageName + " does not use inmobi");
 			return false;
 		}
 		return true;

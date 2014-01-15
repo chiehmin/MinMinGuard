@@ -1,9 +1,9 @@
 package tw.fatminmin.xposed.minminguard.custom_mod;
 
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -17,7 +17,7 @@ public class ModTrain {
 		if(!lpparam.packageName.equals(pkg))
 			return;
 		
-		XposedBridge.log("Hacking " + pkg + "'s Methods");
+		Util.log(pkg, "Hacking " + pkg + "'s Methods");
 		
 		
 		
@@ -27,7 +27,7 @@ public class ModTrain {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				
-				XposedBridge.log("Prevent VponBanner loadAd " + pkg);
+				Util.log(pkg, "Prevent VponBanner loadAd " + pkg);
 				
 				param.setResult(new Object());
 				
@@ -41,7 +41,7 @@ public class ModTrain {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Prevent WSAdBanner setWSAdListener " + pkg);
+					Util.log(pkg, "Prevent WSAdBanner setWSAdListener " + pkg);
 					
 					param.setResult(new Object());
 					
@@ -58,7 +58,7 @@ public class ModTrain {
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
 				
-				XposedBridge.log("Handle train ad layout");
+				Util.log(pkg, "Handle train ad layout");
 				
 				View ad = (View) liparam.view.findViewById(
 						liparam.res.getIdentifier("adLayout", "id", "idv.nightgospel.TWRailScheduleLookUp"));

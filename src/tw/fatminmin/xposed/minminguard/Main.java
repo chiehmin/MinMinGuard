@@ -51,9 +51,11 @@ public class Main implements IXposedHookZygoteInit,
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
+        
         pref = new XSharedPreferences(MY_PACKAGE_NAME);
+        Util.pref = pref;
+        
         MODULE_PATH = startupParam.modulePath;
-        XposedBridge.log(MODULE_PATH);
 
         res = XModuleResources.createInstance(MODULE_PATH, null);
         byte[] array = XposedHelpers.assetAsByteArray(res, "host/output_file");
@@ -64,7 +66,6 @@ public class Main implements IXposedHookZygoteInit,
         for(String url : sUrls) {
             urls.add(url);
         }
-        XposedBridge.log("Block url size: " + urls.size());
     }
 
     @Override
@@ -131,7 +132,7 @@ public class Main implements IXposedHookZygoteInit,
 
         }
         catch(ClassNotFoundError e) {
-            XposedBridge.log(packageName + "can not clear webview ads");
+            Util.log(packageName, packageName + "can not clear webview ads");
             return false;
         }
         return adExist;
@@ -140,7 +141,7 @@ public class Main implements IXposedHookZygoteInit,
     static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
 
 
-        XposedBridge.log("Url filtering");
+        Util.log(packageName, "Url filtering");
         String[] array;
 
         if(url == null) 
@@ -154,7 +155,7 @@ public class Main implements IXposedHookZygoteInit,
 
                 if(urls.contains(hostname)) {
 
-                    XposedBridge.log("Detect Ads(url) with hostname: " + hostname + " in " + packageName);
+                    Util.log(packageName, "Detect Ads(url) with hostname: " + hostname + " in " + packageName);
                     if(!test) {
                         param.setResult(new Object());
                         removeAdView((View) param.thisObject, false);
@@ -167,7 +168,7 @@ public class Main implements IXposedHookZygoteInit,
 
         if(pref.getBoolean(packageName + "_url", true)) {
             
-//            XposedBridge.log(data);
+            Util.log(packageName, data);
             
             array = data.split("[/\\s):]");
 
@@ -179,7 +180,7 @@ public class Main implements IXposedHookZygoteInit,
 
                     if(urls.contains(hostname)) {
 
-                        XposedBridge.log("Detect Ads(data) with hostname: " + hostname + " in " + packageName);
+                        Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
                         if(!test) {
                             param.setResult(new Object());
                             removeAdView((View) param.thisObject, false);

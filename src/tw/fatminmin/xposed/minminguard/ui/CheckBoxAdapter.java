@@ -1,8 +1,9 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed.minminguard.ui;
 
 import java.util.List;
 import java.util.Map;
 
+import tw.fatminmin.xposed.minminguard.R;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -82,13 +83,17 @@ public class CheckBoxAdapter extends BaseAdapter {
 		imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View checkBoxView = View.inflate(mContext, R.layout.settings, null);
-                CheckBox checkBox = (CheckBox) checkBoxView.findViewById(R.id.checkbox);
+                View checkBoxView = View.inflate(mContext, R.layout.per_app_settings, null);
+                CheckBox urlFilter = (CheckBox) checkBoxView.findViewById(R.id.enable_url_filter);
+                CheckBox log = (CheckBox) checkBoxView.findViewById(R.id.enable_log);
                 
+                urlFilter.setChecked(pref.getBoolean(key + "_url", true));
+                urlFilter.setText(mContext.getString(R.string.enable_url_filtering_data));
                 
-                checkBox.setChecked(pref.getBoolean(key + "_url", true));
+                log.setChecked(pref.getBoolean(key + "_log", false));
+                log.setText(mContext.getString(R.string.enable_log));
                 
-                checkBox.setOnClickListener(new View.OnClickListener() {
+                urlFilter.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -97,14 +102,23 @@ public class CheckBoxAdapter extends BaseAdapter {
                         pref.edit()
                             .putBoolean(key + "_url", value)
                             .commit();
-                        
-                        
                     }
                 });
-                checkBox.setText(mContext.getString(R.string.enable_url_filtering_data));
+                
+                log.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckBox cb = (CheckBox) v;
+                        boolean value = cb.isChecked();
+                        pref.edit()
+                            .putBoolean(key + "_log", value)
+                            .commit();
+                    }
+                });
+                
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle("Setting")
+                    builder.setTitle(mContext.getString(R.string.action_settings))
                            .setIcon(R.drawable.ic_launcher)
                            .setView(checkBoxView)
                            .setCancelable(false)

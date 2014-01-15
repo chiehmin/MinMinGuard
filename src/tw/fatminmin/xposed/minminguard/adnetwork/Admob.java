@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -20,7 +21,7 @@ public class Admob {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Detect AdmobBanner loadAd in " + packageName);
+							Util.log(packageName, "Detect AdmobBanner loadAd in " + packageName);
 							
 							if(!test) {
 								param.setResult(new Object());
@@ -35,7 +36,7 @@ public class Admob {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect Admob InterstitialAd loadAd in " + packageName);
+					Util.log(packageName, "Detect Admob InterstitialAd loadAd in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -48,7 +49,7 @@ public class Admob {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect Admob InterstitialAd show in " + packageName);
+					Util.log(packageName, "Detect Admob InterstitialAd show in " + packageName);
 					
 					if(!test) {
 						param.setResult(new Object());
@@ -57,10 +58,10 @@ public class Admob {
 			});
 			
 			
-			XposedBridge.log(packageName + " uses Admob");
+			Util.log(packageName, packageName + " uses Admob");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Admob");
+			Util.log(packageName, packageName + " does not use Admob");
 			return false;
 		}
 		return true;

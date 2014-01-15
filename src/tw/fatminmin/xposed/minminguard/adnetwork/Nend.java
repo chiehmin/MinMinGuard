@@ -1,12 +1,13 @@
 package tw.fatminmin.xposed.minminguard.adnetwork;
 
+import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-import tw.fatminmin.xposed.minminguard.Main;
 
 public class Nend {
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
@@ -18,7 +19,7 @@ public class Nend {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
-							XposedBridge.log("Detect NendAdView loadAd in " + packageName);
+							Util.log(packageName, "Detect NendAdView loadAd in " + packageName);
 							
 							if(!test) {
 								param.setResult(new Object());
@@ -28,7 +29,7 @@ public class Nend {
 					});
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Nend");
+			Util.log(packageName, packageName + " does not use Nend");
 			return false;
 		}
 		return true;

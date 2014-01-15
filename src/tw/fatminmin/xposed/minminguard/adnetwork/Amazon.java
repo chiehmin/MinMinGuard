@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -18,7 +19,7 @@ public class Amazon {
 			    @Override
 			    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 			        
-			        XposedBridge.log("Prevent amazon setlistener");
+			        Util.log(packageName, "Prevent amazon setlistener");
 			        
 			        if(!test) {
                         param.setResult(new Object());
@@ -32,7 +33,7 @@ public class Amazon {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
-					XposedBridge.log("Detect Amazon loadAd in " + packageName);
+					Util.log(packageName, "Detect Amazon loadAd in " + packageName);
 					
 					if(!test) {
 						param.setResult(Boolean.valueOf(true));
@@ -41,10 +42,10 @@ public class Amazon {
 				}
 			});
 			
-			XposedBridge.log(packageName + " uses Amazon");
+			Util.log(packageName, packageName + " uses Amazon");
 		}
 		catch(ClassNotFoundError e) {
-			XposedBridge.log(packageName + " does not use Amazon");
+			Util.log(packageName, packageName + " does not use Amazon");
 			return false;
 		}
 		return true;

@@ -1,27 +1,18 @@
-package tw.fatminmin.xposed.minminguard;
+package tw.fatminmin.xposed.minminguard.ui;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import tw.fatminmin.xposed.minminguard.R;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,7 +26,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Settings extends SherlockFragmentActivity {
 	
-	private Fragment fragment;
+	private ListFragment fragment;
+	private Fragment logFragment;
 	
 	private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -53,7 +45,13 @@ public class Settings extends SherlockFragmentActivity {
         // are in the same package, they are executed in the context of the hooked package
 		pref = getSharedPreferences(getPackageName() + "_preferences", MODE_WORLD_READABLE);
 		
+		
+		LogFragment.mHandler = new Handler();
 		setContentView(R.layout.activity_main);
+		
+		fragment = new PrefsFragment();
+		logFragment = new LogFragment();
+		
 		
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);        
@@ -73,6 +71,35 @@ public class Settings extends SherlockFragmentActivity {
 				
 				switch(position) {
 				case 0:
+				    mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+                        @Override
+                        public void onDrawerClosed(View drawerView) {
+                            super.onDrawerClosed(drawerView);
+                            getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.content_frame,fragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null)
+                                .commit();
+                        }
+				    });
+				    mDrawerLayout.closeDrawer(mDrawerList);
+				    break;
+				case 1:
+				    
+				    mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+				        @Override
+				        public void onDrawerClosed(View drawerView) {
+				            super.onDrawerClosed(drawerView);
+				            getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.content_frame, logFragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null)
+                                .commit();
+				        }
+                    });
+				    mDrawerLayout.closeDrawer(mDrawerList);
+				    break;
+				case 2:
 					optionAbout();
 					break;
 				}
@@ -98,8 +125,6 @@ public class Settings extends SherlockFragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         
         // Display the fragment as the main content.
-        
-        fragment = new PrefsFragment();
         
         if (savedInstanceState == null) {
             
@@ -171,67 +196,5 @@ public class Settings extends SherlockFragmentActivity {
 		
 		dlgAbout.show();
 		
-	}
-	
-	public static class PrefsFragment extends Fragment {
-		
-	    static public ListView listView;
-	    private List<Map<String, Object>> itemList;
-	    
-        @Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);			
-			setupAppList();
-		}
-        
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            
-            View root = inflater.inflate(R.layout.fragment_main, container);
-            
-            listView = (ListView) root.findViewById(R.id.listview);
-            
-            setupAppList();
-            listView.setAdapter(new CheckBoxAdapter(getActivity(), itemList));
-            
-            return super.onCreateView(inflater, container, savedInstanceState);
-        }
-		
-		private void setupAppList() {
-			
-			Context activity = getActivity();
-			
-			PackageManager pm = activity.getPackageManager();
-			List<ApplicationInfo> list = pm.getInstalledApplications(0);
-			
-			itemList = new ArrayList<Map<String, Object>>();
-			for(ApplicationInfo info : list) {
-				
-				if((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-					
-				    Map<String, Object> map = new HashMap<String, Object>();
-				    
-				    map.put("title", pm.getApplicationLabel(info));
-				    map.put("key", info.packageName);
-				    map.put("icon", pm.getApplicationIcon(info));
-				    
-					itemList.add(map);
-				}
-			}
-			
-			Collections.sort(itemList, new Comparator<Map<String, Object>>() {
-                @Override
-                public int compare(Map<String, Object> lhs, Map<String, Object> rhs) {
-                    String s1 = (String) lhs.get("title");
-                    String s2 = (String) rhs.get("title");
-                    return s1.compareTo(s2);
-                }
-			});
-			
-		}
-		
-		static public void setChecked(boolean value) {
-			
-		}
 	}
 }
