@@ -1,6 +1,8 @@
 package tw.fatminmin.xposed.minminguard.custom_mod;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
+
+import de.robv.android.xposed.XposedHelpers;
 import tw.fatminmin.xposed.minminguard.Main;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
@@ -18,21 +20,21 @@ public class _2chMate {
 		try {
 					
 			Class<?> adview = findClass("jp.syoboi.a2chMate.view.MyAdView", lpparam.classLoader);
-			
-			XposedBridge.hookAllMethods(adview, "c", new XC_MethodHook() {
-				
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							XposedBridge.log("Detect 2chmate MyAdView in " + packageName);
-							
-							if(!test) {
-								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
-							}
-						}
-					
-					});
+
+			XposedHelpers.findAndHookMethod(adview, "a", int.class, String.class, new XC_MethodHook() {
+
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+					XposedBridge.log("Detect 2chmate MyAdView in " + packageName);
+
+					if (!test) {
+						param.setResult(new Object());
+						Main.removeAdView((View) param.thisObject, true);
+					}
+				}
+
+			});
 			XposedBridge.log(packageName + " is 2chmate");
 		}
 		catch(ClassNotFoundError e) {
