@@ -21,38 +21,26 @@ public class LogFragment extends Fragment {
     
     static public Handler mHandler;
     static public boolean mRunning;
-    TextView tvLog;
-    
+    static public TextView tvLog;
+    private ViewGroup root;
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                tvLog.setText("");
-                tvLog.clearFocus();
-            }
-        });
+        
+        root.removeAllViews();
         
     }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         
-        if(savedInstanceState == null) {
-            final View root = inflater.inflate(R.layout.log_fragment, container);
-            tvLog = (TextView) root.findViewById(R.id.tvLog);
-        }
+        root = (ViewGroup) inflater.inflate(R.layout.log_fragment, container);
+        tvLog = (TextView) root.findViewById(R.id.tvLog);
         
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                tvLog.append("\nLog\n");
-                tvLog.append("===========\n");
-            }
-        });
-        mRunning = true;
+        tvLog.append("Log\n");
+        tvLog.append("===========\n");
         
         new Thread(new Runnable() {
             

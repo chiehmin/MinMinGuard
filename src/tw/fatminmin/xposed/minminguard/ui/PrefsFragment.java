@@ -23,6 +23,7 @@ public class PrefsFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
+        listView = getListView();
         setupAppList();
         setListAdapter(new CheckBoxAdapter(getActivity(), itemList));
     }

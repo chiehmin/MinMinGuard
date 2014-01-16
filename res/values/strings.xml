@@ -13,8 +13,11 @@
          But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
          \n\nHave fun with <i>MinMinGuard</i>.</b></string>
     <string name="msg_restart_app"><i>You must restart the app for the changes to take effect.</i></string>
+    <string name="msg_saving_log">Saving log</string>
+    <string name="msg_saving_log_complete">Log has been saved to %s</string>
     
     <string name="str_select_all">Select All</string>
+    <string name="str_save_log">Save Log</string>
     <string name="str_selecting_all">selecting all&#8230;</string>
     <string name="str_deselecting_all">deselecting all&#8230;</string>
     <string name="enable_url_filtering_data">Enable Url filtering in WebView data</string>

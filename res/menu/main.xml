@@ -5,6 +5,14 @@
         android:icon="@drawable/ic_action_select_all"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:title="@string/str_select_all"/>
-
+        android:visible="true"
+        android:title="@string/str_select_all" />
+	
+    <item
+        android:id="@+id/save_log"
+        android:icon="@drawable/ic_action_save"
+    	android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:visible="false"
+        android:title="@string/str_save_log" />
 </menu>

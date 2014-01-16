@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -77,7 +78,15 @@ public class SelectAllAsyncTask extends AsyncTask<Object, Integer, Void> {
                 public void run() {
                     View v = listView.getChildAt(index);
                     CheckBox cb = (CheckBox) v.findViewById(R.id.chkCheckBox);
+                    ImageButton imgEdit = (ImageButton) v.findViewById(R.id.edit);
+                    
                     cb.setChecked(mValue);
+                    if(mValue) {
+                        imgEdit.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        imgEdit.setVisibility(View.GONE);
+                    }
                 }
             });
         }

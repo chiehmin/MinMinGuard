@@ -1,11 +1,15 @@
 package tw.fatminmin.xposed.minminguard.ui;
 
+import java.io.File;
+
 import tw.fatminmin.xposed.minminguard.R;
+import tw.fatminmin.xposed.minminguard.Util;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -26,12 +30,13 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Settings extends SherlockFragmentActivity {
 	
-	private ListFragment fragment;
-	private Fragment logFragment;
+	private ListFragment prefFragment;
+	private Fragment logFragment, fragment;
 	
 	private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
+    private boolean usingPrefFragment;
     
     static public SharedPreferences pref;
     
@@ -49,7 +54,7 @@ public class Settings extends SherlockFragmentActivity {
 		LogFragment.mHandler = new Handler();
 		setContentView(R.layout.activity_main);
 		
-		fragment = new PrefsFragment();
+		prefFragment = new PrefsFragment();
 		logFragment = new LogFragment();
 		
 		
@@ -69,39 +74,38 @@ public class Settings extends SherlockFragmentActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
+			    fragment = null;
+			    
 				switch(position) {
 				case 0:
-				    mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                        @Override
-                        public void onDrawerClosed(View drawerView) {
-                            super.onDrawerClosed(drawerView);
-                            getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame,fragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .addToBackStack(null)
-                                .commit();
-                        }
-				    });
-				    mDrawerLayout.closeDrawer(mDrawerList);
+				    fragment = prefFragment;
+				    usingPrefFragment = true;
 				    break;
 				case 1:
-				    
-				    mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-				        @Override
-				        public void onDrawerClosed(View drawerView) {
-				            super.onDrawerClosed(drawerView);
-				            getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame, logFragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .addToBackStack(null)
-                                .commit();
-				        }
-                    });
-				    mDrawerLayout.closeDrawer(mDrawerList);
+				    fragment = logFragment;
+				    usingPrefFragment = false;
 				    break;
 				case 2:
 					optionAbout();
 					break;
+				}
+				if(fragment != null) {
+				    
+				    mDrawerLayout.closeDrawer(mDrawerList);
+				    
+				    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.content_frame, fragment)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                                .addToBackStack(null)
+                                .commit();
+                        }
+				        
+				    }, 300);
+				    
 				}
 			}
 		});
@@ -125,13 +129,18 @@ public class Settings extends SherlockFragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         
         // Display the fragment as the main content.
-        
-        if (savedInstanceState == null) {
-            
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
-                    fragment).commit();
-        }
-        
+
+	}
+	
+	@Override
+	protected void onResume() {
+	    
+	    fragment = prefFragment;
+	    usingPrefFragment = true;
+	    getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
+                fragment).commit();
+	    supportInvalidateOptionsMenu();
+	    super.onResume();
 	}
 	
 	@Override
@@ -146,6 +155,21 @@ public class Settings extends SherlockFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    getSupportMenuInflater().inflate(R.menu.main, menu);
 	    return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+	    
+	    if(usingPrefFragment) {
+	        menu.findItem(R.id.select_all).setVisible(true);
+            menu.findItem(R.id.save_log).setVisible(false);
+	    }
+	    else {
+	        menu.findItem(R.id.select_all).setVisible(false);
+            menu.findItem(R.id.save_log).setVisible(true);
+	    }
+	    
+	    return super.onPrepareOptionsMenu(menu);
 	}
 	
 	@Override
@@ -169,6 +193,12 @@ public class Settings extends SherlockFragmentActivity {
 	        
 	        SelectAllAsyncTask.setup(Settings.this, new Handler());
 	        new SelectAllAsyncTask(value).execute(new Object());
+	        break;
+	    case R.id.save_log:
+	        
+	        File logFile = new File(Environment.getExternalStorageDirectory(), "MinMinGuard.log");
+	        Util.saveLog(logFile, this, new Handler());
+	        
 	        break;
 	    }
 		
