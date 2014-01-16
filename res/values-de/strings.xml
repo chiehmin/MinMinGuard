@@ -15,9 +15,6 @@
     
     <string name="str_select_all">Alle auswählen</string>
     
-    <string-array name="drawer_list">
-        <item>Über</item>
-    </string-array>
 
 </resources>
 

@@ -15,8 +15,5 @@
     
     <string name="str_select_all">Chọn tất cả</string>
     
-    <string-array name="drawer_list">
-        <item>Giới thiệu</item>
-    </string-array>
 
 </resources>
