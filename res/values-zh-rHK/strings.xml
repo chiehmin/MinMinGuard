@@ -9,14 +9,21 @@
     <string name="menu_about">關於</string>
     <string name="app_version">MinMinGuard 版本: %s</string>
     <string name="app_copyright">版權所有 \u00A9 2014 <i>Chieh-Min Wang(FatMinMin)</i></string>
-    <string name="msg_first">它可以在你不想看到廣告的時候幫你擋廣告，但是對於認真的免費App作者還是盡量不要使用這個軟體，
-        要多支持免費App作者喔:) \n\n 祝您使用愉快！！</string>
+    <string name="msg_first"><b>它可以在你不想看到廣告的時候幫你攔截廣告，但是對於認真的免費App作者還是盡量不要使用這個軟體，
+        要多支持免費App作者喔:) \n\n 祝您使用愉快！！</b></string>
+    <string name="msg_restart_app"><i>你必須重新啟動應用程式才能使改變生效。</i></string>
+    <string name="msg_saving_log">正在儲存記錄</string>
+    <string name="msg_saving_log_complete">記錄已被儲存到 %s</string>
     
     <string name="str_select_all">選擇全部</string>
+    <string name="str_save_log">儲存記錄</string>
     <string name="str_selecting_all">正在選擇全部&#8230;</string>
     <string name="str_deselecting_all">正在取消選擇全部&#8230;</string>
     <string name="enable_url_filtering_data">在WebView資料中啟用URL過濾</string>
+    <string name="enable_log">在這個應用程式啟用記錄</string>
     <string-array name="drawer_list">
+        <item>應用程式設定</item>
+        <item>記錄</item>
         <item>關於</item>
     </string-array>
 
