@@ -19,13 +19,17 @@ public class PrefsFragment extends ListFragment {
     private List<Map<String, Object>> itemList;
     
     
+    public void refresh() {
+        setupAppList();
+        setListAdapter(new CheckBoxAdapter(getActivity(), itemList));
+    }
+    
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         
         listView = getListView();
-        setupAppList();
-        setListAdapter(new CheckBoxAdapter(getActivity(), itemList));
+        refresh();
     }
     
     private void setupAppList() {

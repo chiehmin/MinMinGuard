@@ -8,11 +8,9 @@
          But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
          \n\nHave fun with <i>MinMinGuard</i>.</b></string>
     
-    <string-array name="drawer_list">
-        <item>App Settings</item>
-        <item>Log</item>
-        <item>About</item>
-    </string-array>
+    <string name="drawer_app_settings">App Settings</string>
+    <string name="drawer_about">About</string>
+    <string name="drawer_log">Log</string>
     
     <string name="title_about">About</string>
     <string name="title_settings">Settings</string>
@@ -20,6 +18,7 @@
     <string name="menu_refresh">Refresh</string>
     <string name="menu_save_log">Save Log</string>
     <string name="menu_select_all">Select All</string>
+    <string name="menu_switch_theme">Switch Theme</string>
     
     <string name="msg_deselecting_all">deselecting all&#8230;</string>
     <string name="msg_restart_app"><i>You must restart the app for the changes to take effect.</i></string>
@@ -30,7 +29,5 @@
     <string name="settings_enable_log">Enable logging for this app</string>
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
     
-    
-
 </resources>
 

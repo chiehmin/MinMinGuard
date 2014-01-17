@@ -32,13 +32,8 @@ public class LogFragment extends Fragment {
         
     }
     
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        
-        root = (ViewGroup) inflater.inflate(R.layout.log_fragment, container);
-        tvLog = (TextView) root.findViewById(R.id.tvLog);
-        
+    public void refresh() {
+        tvLog.setText("");
         tvLog.append("Log\n");
         tvLog.append("===========\n");
         
@@ -109,6 +104,15 @@ public class LogFragment extends Fragment {
                 }
             }
         }).start();
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        root = (ViewGroup) inflater.inflate(R.layout.log_fragment, container);
+        tvLog = (TextView) root.findViewById(R.id.tvLog);
+        
+        refresh();
         
         return super.onCreateView(inflater, container, savedInstanceState);
     }

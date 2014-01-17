@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.Window;
@@ -30,26 +29,32 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class Settings extends SherlockFragmentActivity {
 	
-	private ListFragment prefFragment;
-	private Fragment logFragment, fragment;
+	private PrefsFragment prefFragment;
+	private LogFragment logFragment;
+	private Fragment fragment;
 	
 	private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private boolean usingPrefFragment, replaced;
     
-    static public SharedPreferences pref;
+    static public SharedPreferences pref, uiPref;
     
 	@SuppressLint("WorldReadableFiles")
     @SuppressWarnings("deprecation")
     @Override
 	public void onCreate(Bundle savedInstanceState) {
+	    
+	    uiPref = getSharedPreferences("ui_preference", MODE_PRIVATE);
+	    boolean themeDark = uiPref.getBoolean("theme_dark", false);
+	    if(themeDark) {
+	        setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+	    }
 		super.onCreate(savedInstanceState);
 		
 		// this is important because although the handler classes that read these settings
         // are in the same package, they are executed in the context of the hooked package
 		pref = getSharedPreferences(getPackageName() + "_preferences", MODE_WORLD_READABLE);
-		
 		
 		LogFragment.mHandler = new Handler();
 		setContentView(R.layout.activity_main);
@@ -65,9 +70,14 @@ public class Settings extends SherlockFragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		
+		String[] drawer_items = {getString(R.string.drawer_app_settings), 
+		                         getString(R.string.drawer_log),
+		                         getString(R.string.drawer_about)}; 
+		
 		mDrawerList.setAdapter(new ArrayAdapter<String>(Settings.this,
-				android.R.layout.simple_list_item_1, 
-				getResources().getStringArray(R.array.drawer_list)));
+				android.R.layout.simple_list_item_1,
+				drawer_items));
 		
 		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -176,6 +186,22 @@ public class Settings extends SherlockFragmentActivity {
             } else {
                 mDrawerLayout.openDrawer(mDrawerList);
             }
+	        break;
+	    case R.id.switch_theme:
+	        boolean themeDark = uiPref.getBoolean("theme_dark", false);
+	        uiPref.edit()
+	              .putBoolean("theme_dark", !themeDark)
+	              .commit();
+	        finish();
+	        startActivity(getIntent());
+	        break;
+	    case R.id.refresh:
+	        if(usingPrefFragment) {
+	            prefFragment.refresh();
+	        }
+	        else {
+	            logFragment.refresh();
+	        }
 	        break;
 	    case R.id.select_all:
 	        
