@@ -88,10 +88,7 @@ public class CheckBoxAdapter extends BaseAdapter {
                 CheckBox log = (CheckBox) checkBoxView.findViewById(R.id.enable_log);
                 
                 urlFilter.setChecked(pref.getBoolean(key + "_url", true));
-                urlFilter.setText(mContext.getString(R.string.enable_url_filtering_data));
-                
                 log.setChecked(pref.getBoolean(key + "_log", false));
-                log.setText(mContext.getString(R.string.enable_log));
                 
                 urlFilter.setOnClickListener(new View.OnClickListener() {
 
@@ -118,7 +115,7 @@ public class CheckBoxAdapter extends BaseAdapter {
                 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle(mContext.getString(R.string.action_settings))
+                    builder.setTitle(mContext.getString(R.string.title_settings))
                            .setIcon(R.drawable.ic_launcher)
                            .setView(checkBoxView)
                            .setCancelable(false)

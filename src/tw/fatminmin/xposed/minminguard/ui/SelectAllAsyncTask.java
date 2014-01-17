@@ -41,10 +41,10 @@ public class SelectAllAsyncTask extends AsyncTask<Object, Integer, Void> {
         
         TextView tv = (TextView) dlg.findViewById(R.id.selecting);
         if(mValue) {
-            tv.setText(mContext.getString(R.string.str_selecting_all));
+            tv.setText(mContext.getString(R.string.msg_selecting_all));
         }
         else {
-            tv.setText(mContext.getString(R.string.str_deselecting_all));
+            tv.setText(mContext.getString(R.string.msg_deselecting_all));
         }
         
         dlg.show();

@@ -1,12 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+	
+    
+    <item 
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="99"
+        android:showAsAction="ifRoom"
+        android:visible="true"
+        android:title="@string/menu_refresh" />
+    
     <item
         android:id="@+id/select_all"
         android:icon="@drawable/ic_action_select_all"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:visible="true"
-        android:title="@string/str_select_all" />
+        android:title="@string/menu_select_all" />
 	
     <item
         android:id="@+id/save_log"
@@ -14,5 +23,5 @@
     	android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:visible="false"
-        android:title="@string/str_save_log" />
+        android:title="@string/menu_save_log" />
 </menu>

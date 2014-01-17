@@ -36,7 +36,7 @@ public class Settings extends SherlockFragmentActivity {
 	private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private boolean usingPrefFragment;
+    private boolean usingPrefFragment, replaced;
     
     static public SharedPreferences pref;
     
@@ -80,32 +80,19 @@ public class Settings extends SherlockFragmentActivity {
 				case 0:
 				    fragment = prefFragment;
 				    usingPrefFragment = true;
+				    replaced = false;
 				    break;
 				case 1:
 				    fragment = logFragment;
 				    usingPrefFragment = false;
+				    replaced = false;
 				    break;
 				case 2:
 					optionAbout();
 					break;
 				}
 				if(fragment != null) {
-				    
 				    mDrawerLayout.closeDrawer(mDrawerList);
-				    
-				    new Handler().postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.content_frame, fragment)
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                                .addToBackStack(null)
-                                .commit();
-                        }
-				        
-				    }, 300);
-				    
 				}
 			}
 		});
@@ -115,6 +102,16 @@ public class Settings extends SherlockFragmentActivity {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
+                
+                if(!replaced) {
+                    replaced = true;
+                    getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, fragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .addToBackStack(null)
+                        .commit();
+                }
+                
                 supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -129,18 +126,15 @@ public class Settings extends SherlockFragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         
         // Display the fragment as the main content.
-
-	}
-	
-	@Override
-	protected void onResume() {
-	    
-	    fragment = prefFragment;
-	    usingPrefFragment = true;
-	    getSupportFragmentManager().beginTransaction().replace(R.id.content_frame,
-                fragment).commit();
-	    supportInvalidateOptionsMenu();
-	    super.onResume();
+        replaced = true;
+        usingPrefFragment = true;
+        fragment = prefFragment;
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.content_frame, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(null)
+            .commit();
+        supportInvalidateOptionsMenu();
 	}
 	
 	@Override
@@ -210,7 +204,7 @@ public class Settings extends SherlockFragmentActivity {
 		
 		Dialog dlgAbout = new Dialog(this);
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgAbout.setTitle(getString(R.string.menu_about));
+		dlgAbout.setTitle(getString(R.string.title_about));
 		dlgAbout.setContentView(R.layout.about);
 		dlgAbout.setCancelable(true);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
