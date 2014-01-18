@@ -11,10 +11,11 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 
-public class PrefsFragment extends ListFragment {
+import com.actionbarsherlock.app.SherlockListFragment;
+
+public class PrefsFragment extends SherlockListFragment {
     static public ListView listView;
     private List<Map<String, Object>> itemList;
     
@@ -27,6 +28,9 @@ public class PrefsFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        
+        Settings.usingPrefFragment = true;
+        getSherlockActivity().supportInvalidateOptionsMenu();
         
         listView = getListView();
         refresh();

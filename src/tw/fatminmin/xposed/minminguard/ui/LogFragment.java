@@ -11,13 +11,14 @@ import tw.fatminmin.xposed.minminguard.Util;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class LogFragment extends Fragment {
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class LogFragment extends SherlockFragment {
     
     static public Handler mHandler;
     static public boolean mRunning;
@@ -111,6 +112,9 @@ public class LogFragment extends Fragment {
 
         root = (ViewGroup) inflater.inflate(R.layout.log_fragment, container);
         tvLog = (TextView) root.findViewById(R.id.tvLog);
+        
+        Settings.usingPrefFragment = false;
+        getSherlockActivity().supportInvalidateOptionsMenu();
         
         refresh();
         

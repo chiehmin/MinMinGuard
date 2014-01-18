@@ -36,8 +36,8 @@ public class Settings extends SherlockFragmentActivity {
 	private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private boolean usingPrefFragment, replaced;
     
+    static public boolean usingPrefFragment, replaced;
     static public SharedPreferences pref, uiPref;
     
 	@SuppressLint("WorldReadableFiles")
@@ -121,13 +121,6 @@ public class Settings extends SherlockFragmentActivity {
                         .addToBackStack(null)
                         .commit();
                 }
-                
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
 		
@@ -142,9 +135,7 @@ public class Settings extends SherlockFragmentActivity {
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.content_frame, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .addToBackStack(null)
             .commit();
-        supportInvalidateOptionsMenu();
 	}
 	
 	@Override
