@@ -20,7 +20,7 @@
 	<string name="menu_select_all">Alles Selecteren</string>
 	<string name="menu_switch_theme">Thema Verwisselen</string>
 	
-	<string name="msg_deselecting_all">Alles deselecteren&#8230;</string>
+	<string name="msg_deselecting_all">Alles aan het deselecteren&#8230;</string>
 	<string name="msg_restart_app"><i>U moet de app herstarten om de wijzigingen te laten werken.</i></string>
 	<string name="msg_saving_log">Log aan het opslaan</string>
 	<string name="msg_saving_log_complete">Log is opgeslagen naar %s</string>
