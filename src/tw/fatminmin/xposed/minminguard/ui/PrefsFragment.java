@@ -59,7 +59,7 @@ public class PrefsFragment extends ListFragment {
             public int compare(Map<String, Object> lhs, Map<String, Object> rhs) {
                 String s1 = (String) lhs.get("title");
                 String s2 = (String) rhs.get("title");
-                return s1.compareTo(s2);
+                return s1.compareToIgnoreCase(s2);
             }
         });
     }

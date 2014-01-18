@@ -147,6 +147,9 @@ public class Main implements IXposedHookZygoteInit,
         if(url == null) 
             url = "";
         array = url.split("[/\\s):]");
+        
+        Util.log(packageName, url);
+        
         for(String hostname : array) {
 
             hostname = hostname.trim();
