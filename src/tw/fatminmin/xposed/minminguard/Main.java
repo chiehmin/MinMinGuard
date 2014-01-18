@@ -7,6 +7,7 @@ import java.util.Set;
 
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
+import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
@@ -87,6 +88,7 @@ public class Main implements IXposedHookZygoteInit,
     private static void adNetwork(String packageName, LoadPackageParam lpparam) {
         Admob.handleLoadPackage(packageName, lpparam, false);
         Amazon.handleLoadPackage(packageName, lpparam, false);
+        Amobee.handleLoadPackage(packageName, lpparam, false);
         Flurry.handleLoadPackage(packageName, lpparam, false);
         KuAd.handleLoadPackage(packageName, lpparam, false);
         Inmobi.handleLoadPackage(packageName, lpparam, false);
@@ -148,7 +150,7 @@ public class Main implements IXposedHookZygoteInit,
             url = "";
         array = url.split("[/\\s):]");
         
-        Util.log(packageName, url);
+        Util.log(packageName, packageName + " url:\n" + url);
         
         for(String hostname : array) {
 
@@ -171,7 +173,7 @@ public class Main implements IXposedHookZygoteInit,
 
         if(pref.getBoolean(packageName + "_url", true)) {
             
-            Util.log(packageName, data);
+            Util.log(packageName, packageName + " data:\n" + data);
             
             array = data.split("[/\\s):]");
 
