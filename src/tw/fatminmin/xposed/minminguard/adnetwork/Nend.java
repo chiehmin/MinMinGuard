@@ -23,13 +23,12 @@ public class Nend {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
+								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
 						}
 					});
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use Nend");
 			return false;
 		}
 		return true;

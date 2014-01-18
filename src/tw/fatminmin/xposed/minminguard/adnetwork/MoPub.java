@@ -24,7 +24,7 @@ public class MoPub {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
+								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
 						}
 					
@@ -39,7 +39,7 @@ public class MoPub {
 					
 					if(!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 				}
 			
@@ -47,7 +47,6 @@ public class MoPub {
 			Util.log(packageName, packageName + " uses MoPub");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use MoPub");
 			return false;
 		}
 		return true;

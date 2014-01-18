@@ -2,6 +2,8 @@ package tw.fatminmin.xposed.minminguard;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
+import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;
@@ -45,7 +48,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     private static String MODULE_PATH = null;
-    private static XSharedPreferences pref;
+    public static XSharedPreferences pref;
     private static Set<String> urls;
     private static Resources res;
 
@@ -67,6 +70,7 @@ public class Main implements IXposedHookZygoteInit,
         for(String url : sUrls) {
             urls.add(url);
         }
+        XposedBridge.log("init");
     }
 
     @Override
@@ -75,7 +79,9 @@ public class Main implements IXposedHookZygoteInit,
         pref.reload();
 
         final String packageName = lpparam.packageName;
-
+        
+        XposedBridge.log("packageName");
+        
         if(pref.getBoolean(packageName, false)) {
 
             adNetwork(packageName, lpparam);
@@ -92,6 +98,7 @@ public class Main implements IXposedHookZygoteInit,
         Flurry.handleLoadPackage(packageName, lpparam, false);
         KuAd.handleLoadPackage(packageName, lpparam, false);
         Inmobi.handleLoadPackage(packageName, lpparam, false);
+        mAdserve.handleLoadPackage(packageName, lpparam, false);
         Madvertise.handleLoadPackage(packageName, lpparam, false);
         MoPub.handleLoadPackage(packageName, lpparam, false);
         Nend.handleLoadPackage(packageName, lpparam, false);
@@ -148,6 +155,12 @@ public class Main implements IXposedHookZygoteInit,
 
         if(url == null) 
             url = "";
+        
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         array = url.split("[/\\s):]");
         
         Util.log(packageName, packageName + " url:\n" + url);
@@ -163,7 +176,7 @@ public class Main implements IXposedHookZygoteInit,
                     Util.log(packageName, "Detect Ads(url) with hostname: " + hostname + " in " + packageName);
                     if(!test) {
                         param.setResult(new Object());
-                        removeAdView((View) param.thisObject, false);
+                        removeAdView((View) param.thisObject, packageName, false);
                         return true;
                     }
                     break;
@@ -172,6 +185,12 @@ public class Main implements IXposedHookZygoteInit,
         }
 
         if(pref.getBoolean(packageName + "_url", true)) {
+            
+            try {
+                data = URLDecoder.decode(data, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             
             Util.log(packageName, packageName + " data:\n" + data);
             
@@ -188,7 +207,7 @@ public class Main implements IXposedHookZygoteInit,
                         Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
                         if(!test) {
                             param.setResult(new Object());
-                            removeAdView((View) param.thisObject, false);
+                            removeAdView((View) param.thisObject, packageName, false);
                             return true;
                         }
                         break;
@@ -199,15 +218,15 @@ public class Main implements IXposedHookZygoteInit,
         return false;
     }
 
-    public static void removeAdView(View view, final boolean apiBased) {
+    public static void removeAdView(View view, final String packageName, final boolean apiBased) {
 
         view.setVisibility(View.GONE);
 
         final ViewParent parent = view.getParent();
         if(parent instanceof ViewGroup) {
             final ViewGroup vg = (ViewGroup) parent;
-            if(vg.getChildCount() == 1) {
-                removeAdView(vg, apiBased);
+            if(apiBased && vg.getChildCount() == 1 && pref.getBoolean(packageName + "_recursive", false)) {
+                removeAdView(vg, packageName, apiBased);
             }
             else if(!apiBased){
 
@@ -217,11 +236,7 @@ public class Main implements IXposedHookZygoteInit,
                     public void onGlobalLayout() {
                         float heightDp = convertPixelsToDp(vg.getHeight()); 
                         if(heightDp <= 55) {
-
-                            for(int i = 0; i < vg.getChildCount(); i++)
-                                vg.getChildAt(i).setVisibility(View.GONE);
-
-                            removeAdView(vg, apiBased);
+                            vg.removeAllViews();
                         }
     	            }
                 });

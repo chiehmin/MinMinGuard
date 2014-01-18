@@ -24,7 +24,7 @@ public class Inmobi {
 					
 					if(!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 					
 				}
@@ -61,7 +61,6 @@ public class Inmobi {
 			Util.log(packageName, packageName + " uses inmobi");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use inmobi");
 			return false;
 		}
 		return true;

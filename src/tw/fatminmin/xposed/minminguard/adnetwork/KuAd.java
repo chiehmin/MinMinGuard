@@ -24,7 +24,7 @@ public class KuAd {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
+								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
 						}
 					});
@@ -37,7 +37,7 @@ public class KuAd {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
+								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
 						}
 					});
@@ -54,7 +54,6 @@ public class KuAd {
 				});
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use kuAd");
 			return false;
 		}
 		return true;

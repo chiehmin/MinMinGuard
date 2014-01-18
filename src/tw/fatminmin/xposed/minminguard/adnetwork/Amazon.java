@@ -23,7 +23,7 @@ public class Amazon {
 			        
 			        if(!test) {
                         param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, true);
+                        Main.removeAdView((View) param.thisObject, packageName, true);
                     }
 			    }
             });
@@ -37,7 +37,7 @@ public class Amazon {
 					
 					if(!test) {
 						param.setResult(Boolean.valueOf(true));
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 				}
 			});
@@ -45,7 +45,6 @@ public class Amazon {
 			Util.log(packageName, packageName + " uses Amazon");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use Amazon");
 			return false;
 		}
 		return true;

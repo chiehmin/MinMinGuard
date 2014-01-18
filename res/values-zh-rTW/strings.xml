@@ -27,6 +27,7 @@
     <string name="msg_selecting_all">正在全選&#8230;</string>
     
     <string name="settings_enable_log">在這個應用程序啟用日誌</string>
+    <string name="settings_recursive_remove">啟用遞迴移除空白的廣告欄位（可能導致不正常反應）</string>
     <string name="settings_enable_url_filtering_data">在WebView資料中啟用URL過濾</string>
 
 </resources>

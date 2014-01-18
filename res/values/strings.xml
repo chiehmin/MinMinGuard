@@ -27,6 +27,7 @@
     <string name="msg_selecting_all">selecting all&#8230;</string>
     
     <string name="settings_enable_log">Enable logging for this app</string>
+    <string name="settings_recursive_remove">Enable recursively remove empty parent view(may lead to view crash)</string>
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
     
 </resources>

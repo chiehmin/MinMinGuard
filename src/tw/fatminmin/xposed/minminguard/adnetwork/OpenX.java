@@ -21,7 +21,7 @@ public class OpenX {
 					
 					if(!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 				}
 				
@@ -29,7 +29,6 @@ public class OpenX {
 			Util.log(packageName, packageName + " uses OpenX");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use OpenX");
 			return false;
 		}
 		return true;

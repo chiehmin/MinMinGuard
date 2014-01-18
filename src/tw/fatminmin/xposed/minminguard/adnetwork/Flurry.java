@@ -34,7 +34,7 @@ public class Flurry {
 					
 					if(!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 				}
 				
@@ -42,7 +42,6 @@ public class Flurry {
 			Util.log(packageName, packageName + " uses FlurryAds");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use FlurryAds");
 			return false;
 		}
 		return true;

@@ -40,7 +40,7 @@ public class Settings extends SherlockFragmentActivity {
     static public boolean usingPrefFragment, replaced;
     static public SharedPreferences pref, uiPref;
     
-	@SuppressLint("WorldReadableFiles")
+	@SuppressLint({ "WorldReadableFiles", "WorldWriteableFiles" })
     @SuppressWarnings("deprecation")
     @Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -26,7 +26,7 @@ public class Madvertise {
 					
 					if(!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 					
 				}
@@ -35,7 +35,6 @@ public class Madvertise {
 			Util.log(packageName, packageName + " uses Madvertise");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use Madvertise");
 			return false;
 		}
 		return true;

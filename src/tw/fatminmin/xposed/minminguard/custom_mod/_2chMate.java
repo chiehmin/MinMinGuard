@@ -28,7 +28,7 @@ public class _2chMate {
 
 					if (!test) {
 						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, true);
+						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
 				}
 
@@ -36,7 +36,6 @@ public class _2chMate {
 			Util.log(packageName, packageName + " is 2chmate");
 		}
 		catch(ClassNotFoundError e) {
-			
 			return false;
 		}
 		return true;

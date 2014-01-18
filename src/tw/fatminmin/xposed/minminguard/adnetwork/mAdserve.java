@@ -7,15 +7,15 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Amobee {
+public class mAdserve {
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
-            Class<?> adView = XposedHelpers.findClass("com.amobee.adsdk.AdManager", lpparam.classLoader);
-            XposedBridge.hookAllMethods(adView, "getAd", new XC_MethodHook() {
+            Class<?> adView = XposedHelpers.findClass("com.adsdk.sdk.banner.InAppWebView", lpparam.classLoader);
+            XposedBridge.hookAllConstructors(adView, new XC_MethodHook() {
                 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    Util.log(packageName, "Detect Amobee getAd in " + packageName);
+                    Util.log(packageName, "Detect mAdserve InAppWebView constructor in " + packageName);
                     if(!test) {
                         param.setResult(new Object());
                     }
@@ -23,7 +23,7 @@ public class Amobee {
                 
             });
             
-            Util.log(packageName, packageName + " uses Amobee");
+            Util.log(packageName, packageName + " uses mAdserve");
         }
         catch(ClassNotFoundError e) {
             return false;

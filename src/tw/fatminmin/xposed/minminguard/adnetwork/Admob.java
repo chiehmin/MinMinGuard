@@ -25,7 +25,7 @@ public class Admob {
 							
 							if(!test) {
 								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, true);
+								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
 						}
 					
@@ -61,7 +61,6 @@ public class Admob {
 			Util.log(packageName, packageName + " uses Admob");
 		}
 		catch(ClassNotFoundError e) {
-			Util.log(packageName, packageName + " does not use Admob");
 			return false;
 		}
 		return true;
