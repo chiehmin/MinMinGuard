@@ -90,7 +90,7 @@ public class CheckBoxAdapter extends BaseAdapter {
                 
                 urlFilter.setChecked(pref.getBoolean(key + "_url", true));
                 log.setChecked(pref.getBoolean(key + "_log", false));
-                log.setChecked(pref.getBoolean(key + "_recursive", false));
+                rec_remove.setChecked(pref.getBoolean(key + "_recursive", false));
                 
                 urlFilter.setOnClickListener(new View.OnClickListener() {
 
