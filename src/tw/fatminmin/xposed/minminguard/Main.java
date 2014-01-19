@@ -26,9 +26,12 @@ import android.content.res.XModuleResources;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -218,25 +221,38 @@ public class Main implements IXposedHookZygoteInit,
         return false;
     }
 
-    public static void removeAdView(View view, final String packageName, final boolean apiBased) {
+    public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
 
         view.setVisibility(View.GONE);
 
         final ViewParent parent = view.getParent();
         if(parent instanceof ViewGroup) {
             final ViewGroup vg = (ViewGroup) parent;
-            if(apiBased && vg.getChildCount() == 1 && pref.getBoolean(packageName + "_recursive", false)) {
-                removeAdView(vg, packageName, apiBased);
+            if(apiBased && vg.getChildCount() == 1) {
+                if(pref.getBoolean(packageName + "_recursive", false) || 
+                        !(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
+                    removeAdView(vg, packageName, apiBased);
+                }
             }
             else if(!apiBased){
-
+                
                 ViewTreeObserver observer= vg.getViewTreeObserver();
                 observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         float heightDp = convertPixelsToDp(vg.getHeight()); 
                         if(heightDp <= 55) {
-                            vg.removeAllViews();
+                            
+                            if(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+                                for(int i = 0; i < vg.getChildCount(); i++) {
+                                    View v = vg.getChildAt(i);
+                                    v.setVisibility(View.GONE);
+                                }
+                            }
+                            else {
+                                vg.removeAllViews();
+                                removeAdView(vg, packageName, apiBased);
+                            }
                         }
     	            }
                 });
