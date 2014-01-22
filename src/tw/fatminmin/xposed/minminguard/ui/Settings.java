@@ -48,7 +48,7 @@ public class Settings extends SherlockFragmentActivity {
 	    uiPref = getSharedPreferences("ui_preference", MODE_PRIVATE);
 	    boolean themeDark = uiPref.getBoolean("theme_dark", false);
 	    if(themeDark) {
-	        setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+	        setTheme(R.style.MinMinTheme);
 	    }
 		super.onCreate(savedInstanceState);
 		

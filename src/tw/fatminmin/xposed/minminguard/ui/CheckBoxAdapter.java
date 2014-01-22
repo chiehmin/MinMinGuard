@@ -1,9 +1,11 @@
 package tw.fatminmin.xposed.minminguard.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import tw.fatminmin.xposed.minminguard.R;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,16 +25,18 @@ import android.widget.TextView;
 public class CheckBoxAdapter extends BaseAdapter {
 	
 	
-	private List<Map<String, Object>> mItemList;
+	private List<Map<String, Object>> mItemList, oriItemList;
 	private Context mContext;
 	private LayoutInflater mInflater;
 	private SharedPreferences pref;
+	private Filter mFilter;
 	
 	public CheckBoxAdapter(Context context, List<Map<String, Object>> itemList) {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
-		mItemList = itemList;
+		oriItemList = mItemList = itemList;
 		pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+		mFilter = new MyFilter();
 	}
 	
 	@Override
@@ -162,5 +167,50 @@ public class CheckBoxAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
+	
+	public Filter getFilter() {
+	    return mFilter;
+	}
+	
+	class MyFilter extends Filter {
 
+        @SuppressLint("DefaultLocale")
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            
+            constraint = constraint.toString().toLowerCase();
+            
+            FilterResults results = new FilterResults();
+            
+            if(constraint.length() == 0) {
+                results.values = oriItemList;
+                results.count = oriItemList.size();
+            }
+            else {
+                List<Map<String, Object>> filteredList = new ArrayList<Map<String, Object>>();
+                
+                for(Map<String, Object> app : oriItemList) {
+                    String title = ((String) app.get("title")).toLowerCase();
+                    if(title.indexOf((String) constraint) == 0) {
+                        filteredList.add(app);
+                    }
+                }
+                
+                results.values = filteredList;
+                results.count = filteredList.size();
+            }
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            
+            mItemList = (List<Map<String, Object>>) results.values;
+            notifyDataSetChanged();
+        }
+
+	    
+	}
+	
 }

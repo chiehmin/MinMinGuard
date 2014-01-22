@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+    	<tw.fatminmin.xposed.minminguard.ui.SearchEditText android:id="@+id/search"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:inputType="text"
+	        android:hint="@string/msg_search"
+	        android:drawableLeft="?attr/icon_search"
+	        android:drawableRight="?attr/icon_cancel"
+	        android:padding="5dp" />    
+	    
+    	<ImageButton android:id="@+id/cancel"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:background="?attr/icon_cancel"
+    	    android:contentDescription="@string/app_name" />
+    	
+    </LinearLayout>
+    
+    
+	<ListView android:id="@+id/listview"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" />
+    
+</LinearLayout>

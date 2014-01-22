@@ -7,33 +7,75 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tw.fatminmin.xposed.minminguard.R;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 
-public class PrefsFragment extends SherlockListFragment {
-    static public ListView listView;
-    private List<Map<String, Object>> itemList;
+public class PrefsFragment extends SherlockFragment {
     
+    static public ListView listView;
+    
+    private CheckBoxAdapter mAdapter;
+    private EditText search;
+    private List<Map<String, Object>> itemList;
+    private ViewGroup root;
     
     public void refresh() {
         setupAppList();
-        setListAdapter(new CheckBoxAdapter(getActivity(), itemList));
+        mAdapter = new CheckBoxAdapter(getActivity(), itemList);
+        listView.setAdapter(mAdapter);
+        setupSearch();
     }
     
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onDestroyView() {
+        
+        root.removeAllViews();
+        
+        super.onDestroyView();
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        
+        root = (ViewGroup) inflater.inflate(R.layout.pref_fragment, container);
+        listView = (ListView) root.findViewById(R.id.listview);
+        search = (EditText) root.findViewById(R.id.search);
         
         Settings.usingPrefFragment = true;
         getSherlockActivity().supportInvalidateOptionsMenu();
         
-        listView = getListView();
         refresh();
+        
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+    
+    private void setupSearch() {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mAdapter.getFilter().filter(s);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                
+            }
+        });
     }
     
     private void setupAppList() {
