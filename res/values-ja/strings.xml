@@ -21,13 +21,14 @@
     <string name="menu_switch_theme">テーマの切り替え</string>
     
     <string name="msg_deselecting_all">全て選択解除中&#8230;</string>
-    <string name="msg_restart_app"><i>変更を反映させるにはそのアプリを再起動してください。</i></string>
+    <string name="msg_restart_app"><i>変更を反映させるにはアプリを再起動してください。</i></string>
     <string name="msg_saving_log">ログの保存中</string>
     <string name="msg_saving_log_complete">ログを%sに保存しました</string>
+    <string name="msg_search">検索</string>
     <string name="msg_selecting_all">全て選択中&#8230;</string>
     
     <string name="settings_enable_log">このアプリのログを有効化</string>
-    <string name="settings_recursive_remove">再帰的に広告スペースの親ビューを削除する(ビューがクラシュする場合あり)</string>
+    <string name="settings_recursive_remove">再帰的に広告スペースの親ビューを削除する(ビューがクラッシュする場合あり)</string>
     <string name="settings_enable_url_filtering_data">WebViewデータでURLフィルタリングする</string>
 
 </resources>
