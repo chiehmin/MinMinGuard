@@ -1,15 +1,12 @@
 package tw.fatminmin.xposed.minminguard;
 
-import static de.robv.android.xposed.XposedHelpers.findClass;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.Set;
 
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
+import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
@@ -20,7 +17,8 @@ import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
-import tw.fatminmin.xposed.minminguard.custom_mod.ModTrain;
+import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
+import tw.fatminmin.xposed.minminguard.custom_mod.Train;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
@@ -34,12 +32,8 @@ import android.widget.RelativeLayout;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -49,10 +43,10 @@ public class Main implements IXposedHookZygoteInit,
 
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
-    private static String MODULE_PATH = null;
+    public static String MODULE_PATH = null;
     public static XSharedPreferences pref;
-    private static Set<String> urls;
-    private static Resources res;
+    public static Set<String> urls;
+    public static Resources res;
 
 
     @Override
@@ -72,7 +66,6 @@ public class Main implements IXposedHookZygoteInit,
         for(String url : sUrls) {
             urls.add(url);
         }
-        XposedBridge.log("init");
     }
 
     @Override
@@ -87,7 +80,7 @@ public class Main implements IXposedHookZygoteInit,
             adNetwork(packageName, lpparam);
             appSpecific(packageName, lpparam);
 
-            removeWebViewAds(packageName, lpparam, false);
+            UrlFiltering.removeWebViewAds(packageName, lpparam, false);
         }
     }
 
@@ -95,6 +88,7 @@ public class Main implements IXposedHookZygoteInit,
         Admob.handleLoadPackage(packageName, lpparam, false);
         Amazon.handleLoadPackage(packageName, lpparam, false);
         Amobee.handleLoadPackage(packageName, lpparam, false);
+        Bonzai.handleLoadPackage(packageName, lpparam, false);
         Flurry.handleLoadPackage(packageName, lpparam, false);
         KuAd.handleLoadPackage(packageName, lpparam, false);
         Inmobi.handleLoadPackage(packageName, lpparam, false);
@@ -111,153 +105,37 @@ public class Main implements IXposedHookZygoteInit,
         _2chMate.handleLoadPackage(packageName, lpparam, false);
     }
 
-
-    static boolean adExist = false;
-    static private boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
-
-
-        try {
-
-            Class<?> adView = findClass("android.webkit.WebView", lpparam.classLoader);
-
-            XposedBridge.hookAllMethods(adView, "loadData", new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    String data = (String) param.args[0];
-                    adExist = urlFiltering("", data, param, packageName, test);
-                }
-
-            });
-
-            XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    String url = (String) param.args[0];
-                    String data = (String) param.args[1];
-                    adExist = urlFiltering(url, data, param, packageName, test);
-                }
-            });
-
-        }
-        catch(ClassNotFoundError e) {
-            Util.log(packageName, packageName + "can not clear webview ads");
-            return false;
-        }
-        return adExist;
-    }
-
-    static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
-
-
-        Util.log(packageName, "Url filtering");
-        String[] array;
-
-        if(url == null) 
-            url = "";
-        
-        try {
-            url = URLDecoder.decode(url, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        array = url.split("[/\\s):]");
-        
-        Util.log(packageName, packageName + " url:\n" + url);
-        
-        for(String hostname : array) {
-
-            hostname = hostname.trim();
-
-            if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-
-                if(urls.contains(hostname)) {
-
-                    Util.log(packageName, "Detect Ads(url) with hostname: " + hostname + " in " + packageName);
-                    if(!test) {
-                        param.setResult(new Object());
-                        removeAdView((View) param.thisObject, packageName, false);
-                        return true;
-                    }
-                    break;
-                }
-            }
-        }
-
-        if(pref.getBoolean(packageName + "_url", true)) {
-            
-            try {
-                data = URLDecoder.decode(data, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            
-            Util.log(packageName, packageName + " data:\n" + data);
-            
-            array = data.split("[/\\s):]");
-
-            for(String hostname : array) {
-
-                hostname = hostname.trim();
-
-                if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-
-                    if(urls.contains(hostname)) {
-
-                        Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
-                        if(!test) {
-                            param.setResult(new Object());
-                            removeAdView((View) param.thisObject, packageName, false);
-                            return true;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
-
-        view.setVisibility(View.GONE);
-
+        
+        if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
+            view.setVisibility(View.GONE);
+        }
+        else {
+            ViewTreeObserver observer= view.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    float heightDp = convertPixelsToDp(view.getHeight());
+                    if(heightDp <= 55) {
+                        view.setVisibility(View.GONE);
+                    }
+                }
+                
+            });
+        }
+        
         final ViewParent parent = view.getParent();
         if(parent instanceof ViewGroup) {
             final ViewGroup vg = (ViewGroup) parent;
-            if(apiBased && vg.getChildCount() == 1) {
-                if(pref.getBoolean(packageName + "_recursive", false) || 
-                        !(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
-                    removeAdView(vg, packageName, apiBased);
-                }
-            }
-            else if(!apiBased){
-                
-                ViewTreeObserver observer= vg.getViewTreeObserver();
-                observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-                        float heightDp = convertPixelsToDp(vg.getHeight()); 
-                        if(heightDp <= 55) {
-
-                            if(pref.getBoolean(packageName + "_recursive", false) || 
-                                    !(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
-                                vg.removeAllViews();
-                                removeAdView(vg, packageName, apiBased);
-                            }
-                            else {
-                                for(int i = 0; i < vg.getChildCount(); i++) {
-                                    View v = vg.getChildAt(i);
-                                    v.setVisibility(View.GONE);
-                                }
-                            }
-                        }
-    	            }
-                });
+            final boolean recursive = pref.getBoolean(packageName + "_recursive", false);
+            final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
+            
+            
+            if(recursive || !relative) {
+                removeAdView(vg, packageName, apiBased);
             }
         }
-
+        
     }
 
     private static float convertPixelsToDp(float px){
@@ -268,6 +146,7 @@ public class Main implements IXposedHookZygoteInit,
 
     @Override
     public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
-        new ModTrain().modLayout(resparam);
+        Backgrounds.handleInitPackageResources(resparam);
+        Train.handleInitPackageResources(resparam);
     }
 }
