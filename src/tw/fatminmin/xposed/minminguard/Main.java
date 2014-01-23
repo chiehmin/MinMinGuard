@@ -81,8 +81,6 @@ public class Main implements IXposedHookZygoteInit,
 
         final String packageName = lpparam.packageName;
         
-        XposedBridge.log("packageName");
-        
         if(pref.getBoolean(packageName, false)) {
 
             adNetwork(packageName, lpparam);
@@ -240,16 +238,17 @@ public class Main implements IXposedHookZygoteInit,
                     public void onGlobalLayout() {
                         float heightDp = convertPixelsToDp(vg.getHeight()); 
                         if(heightDp <= 55) {
-                            
-                            if(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams) {
+
+                            if(pref.getBoolean(packageName + "_recursive", false) || 
+                                    !(vg.getLayoutParams() instanceof RelativeLayout.LayoutParams)) {
+                                vg.removeAllViews();
+                                removeAdView(vg, packageName, apiBased);
+                            }
+                            else {
                                 for(int i = 0; i < vg.getChildCount(); i++) {
                                     View v = vg.getChildAt(i);
                                     v.setVisibility(View.GONE);
                                 }
-                            }
-                            else {
-                                vg.removeAllViews();
-                                removeAdView(vg, packageName, apiBased);
                             }
                         }
     	            }
