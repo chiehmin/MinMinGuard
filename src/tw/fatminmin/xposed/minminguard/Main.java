@@ -3,6 +3,7 @@ package tw.fatminmin.xposed.minminguard;
 import java.util.HashSet;
 import java.util.Set;
 
+import tw.fatminmin.xposed.minminguard.adnetwork.AdMarvel;
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
@@ -13,11 +14,13 @@ import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
+import tw.fatminmin.xposed.minminguard.adnetwork.Onelouder;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
+import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod.Train;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.content.res.Resources;
@@ -85,6 +88,7 @@ public class Main implements IXposedHookZygoteInit,
     }
 
     private static void adNetwork(String packageName, LoadPackageParam lpparam) {
+        AdMarvel.handleLoadPackage(packageName, lpparam, false);
         Admob.handleLoadPackage(packageName, lpparam, false);
         Amazon.handleLoadPackage(packageName, lpparam, false);
         Amobee.handleLoadPackage(packageName, lpparam, false);
@@ -96,6 +100,7 @@ public class Main implements IXposedHookZygoteInit,
         Madvertise.handleLoadPackage(packageName, lpparam, false);
         MoPub.handleLoadPackage(packageName, lpparam, false);
         Nend.handleLoadPackage(packageName, lpparam, false);
+        Onelouder.handleLoadPackage(packageName, lpparam, false);
         OpenX.handleLoadPackage(packageName, lpparam, false);
         SmartAdserver.handleLoadPackage(packageName, lpparam, false);
         Vpon.handleLoadPackage(packageName, lpparam, false);
@@ -103,6 +108,7 @@ public class Main implements IXposedHookZygoteInit,
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, false);
+        OneWeather.handleLoadPackage(packageName, lpparam, false);
     }
 
     public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
@@ -120,7 +126,6 @@ public class Main implements IXposedHookZygoteInit,
                         view.setVisibility(View.GONE);
                     }
                 }
-                
             });
         }
         
@@ -133,6 +138,11 @@ public class Main implements IXposedHookZygoteInit,
             
             if(recursive || !relative) {
                 removeAdView(vg, packageName, apiBased);
+            }
+            else {
+                for(int i = 0; i < vg.getChildCount(); i++) {
+                    vg.getChildAt(i).setVisibility(View.GONE);
+                }
             }
         }
         
@@ -147,6 +157,7 @@ public class Main implements IXposedHookZygoteInit,
     @Override
     public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
         Backgrounds.handleInitPackageResources(resparam);
+//        OneWeather.handleInitPackageResources(resparam);
         Train.handleInitPackageResources(resparam);
     }
 }
