@@ -18,6 +18,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Og;
 import tw.fatminmin.xposed.minminguard.adnetwork.Onelouder;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
+import tw.fatminmin.xposed.minminguard.adnetwork.Startapp;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
@@ -105,6 +106,7 @@ public class Main implements IXposedHookZygoteInit,
         Onelouder.handleLoadPackage(packageName, lpparam, false);
         OpenX.handleLoadPackage(packageName, lpparam, false);
         SmartAdserver.handleLoadPackage(packageName, lpparam, false);
+        Startapp.handleLoadPackage(packageName, lpparam, false);
         Vpon.handleLoadPackage(packageName, lpparam, false);
     }
 
@@ -159,7 +161,6 @@ public class Main implements IXposedHookZygoteInit,
     @Override
     public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
         Backgrounds.handleInitPackageResources(resparam);
-//        OneWeather.handleInitPackageResources(resparam);
         Train.handleInitPackageResources(resparam);
     }
 }

@@ -17,24 +17,6 @@ public class Train {
 		if(!lpparam.packageName.equals(pkg))
 			return;
 		
-		Util.log(pkg, "Hacking " + pkg + "'s Methods");
-		
-		
-		
-		XposedHelpers.findAndHookMethod("com.vpon.ads.VponBanner", lpparam.classLoader, "loadAd"
-			, "com.vpon.ads.VponAdRequest"	
-			, new XC_MethodHook() {
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				
-				Util.log(pkg, "Prevent VponBanner loadAd " + pkg);
-				
-				param.setResult(new Object());
-				
-			}
-		});
-		
-		
 		XposedHelpers.findAndHookMethod("com.waystorm.ads.WSAdBanner", lpparam.classLoader, "setWSAdListener"
 				, "com.waystorm.ads.WSAdListener"	
 				, new XC_MethodHook() {

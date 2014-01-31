@@ -27,6 +27,21 @@ public class Vpon {
 							}
 						}
 					});
+			
+			Class<?> InterAds = XposedHelpers.findClass("com.vpon.ads.VponInterstitialAd", lpparam.classLoader);
+			XposedBridge.hookAllMethods(InterAds, "show" ,new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    
+                    Util.log(packageName, "Detect VponInterstitialAd show in " + packageName);
+                    
+                    if(!test) {
+                        param.setResult(new Object());
+                    }
+                }
+            });
+			
+			Util.log(packageName, packageName + " uses Vpon");
 		}
 		catch(ClassNotFoundError e) {
 			return false;
