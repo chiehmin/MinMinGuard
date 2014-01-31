@@ -12,6 +12,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
+import tw.fatminmin.xposed.minminguard.adnetwork.MdotM;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
 import tw.fatminmin.xposed.minminguard.adnetwork.Og;
@@ -19,6 +20,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Onelouder;
 import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Startapp;
+import tw.fatminmin.xposed.minminguard.adnetwork.TWMads;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
@@ -96,10 +98,11 @@ public class Main implements IXposedHookZygoteInit,
         Amobee.handleLoadPackage(packageName, lpparam, false);
         Bonzai.handleLoadPackage(packageName, lpparam, false);
         Flurry.handleLoadPackage(packageName, lpparam, false);
-        KuAd.handleLoadPackage(packageName, lpparam, false);
         Inmobi.handleLoadPackage(packageName, lpparam, false);
+        KuAd.handleLoadPackage(packageName, lpparam, false);
         mAdserve.handleLoadPackage(packageName, lpparam, false);
         Madvertise.handleLoadPackage(packageName, lpparam, false);
+        MdotM.handleLoadPackage(packageName, lpparam, false);
         MoPub.handleLoadPackage(packageName, lpparam, false);
         Nend.handleLoadPackage(packageName, lpparam, false);
         Og.handleLoadPackage(packageName, lpparam, false);
@@ -107,6 +110,7 @@ public class Main implements IXposedHookZygoteInit,
         OpenX.handleLoadPackage(packageName, lpparam, false);
         SmartAdserver.handleLoadPackage(packageName, lpparam, false);
         Startapp.handleLoadPackage(packageName, lpparam, false);
+        TWMads.handleLoadPackage(packageName, lpparam, false);
         Vpon.handleLoadPackage(packageName, lpparam, false);
     }
 
