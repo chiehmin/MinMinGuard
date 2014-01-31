@@ -13,6 +13,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
 import tw.fatminmin.xposed.minminguard.adnetwork.MdotM;
+import tw.fatminmin.xposed.minminguard.adnetwork.Millennial;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
 import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
 import tw.fatminmin.xposed.minminguard.adnetwork.Og;
@@ -103,6 +104,7 @@ public class Main implements IXposedHookZygoteInit,
         mAdserve.handleLoadPackage(packageName, lpparam, false);
         Madvertise.handleLoadPackage(packageName, lpparam, false);
         MdotM.handleLoadPackage(packageName, lpparam, false);
+        Millennial.handleLoadPackage(packageName, lpparam, false);
         MoPub.handleLoadPackage(packageName, lpparam, false);
         Nend.handleLoadPackage(packageName, lpparam, false);
         Og.handleLoadPackage(packageName, lpparam, false);
