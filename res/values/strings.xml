@@ -11,6 +11,7 @@
     <string name="drawer_app_settings">App Settings</string>
     <string name="drawer_about">About</string>
     <string name="drawer_log">Log</string>
+    <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
     
     <string name="title_about">About</string>
     <string name="title_settings">Settings</string>
@@ -28,8 +29,9 @@
     <string name="msg_selecting_all">selecting all&#8230;</string>
     
     <string name="settings_enable_log">Enable logging for this app</string>
-    <string name="settings_recursive_remove">Enable recursively remove empty parent view(may lead to view crash)</string>
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
+    <string name="settings_recursive_remove">Enable recursively remove empty parent view(may lead to view crash)</string>
+    <string name="settings_show_system_apps">Show system apps</string>
     
 </resources>
 

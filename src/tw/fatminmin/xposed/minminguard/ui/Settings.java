@@ -5,7 +5,9 @@ import java.io.File;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.Util;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -73,6 +76,7 @@ public class Settings extends SherlockFragmentActivity {
 		
 		String[] drawer_items = {getString(R.string.drawer_app_settings), 
 		                         getString(R.string.drawer_log),
+		                         getString(R.string.drawer_minminguard_settings), 
 		                         getString(R.string.drawer_about)}; 
 		
 		mDrawerList.setAdapter(new ArrayAdapter<String>(Settings.this,
@@ -98,6 +102,9 @@ public class Settings extends SherlockFragmentActivity {
 				    replaced = false;
 				    break;
 				case 2:
+				    optionMinMinGuardSettings();
+				    break;
+				case 3:
 					optionAbout();
 					break;
 				}
@@ -237,5 +244,41 @@ public class Settings extends SherlockFragmentActivity {
 		
 		dlgAbout.show();
 		
+	}
+	
+	private void optionMinMinGuardSettings() {
+	    View checkBoxView = View.inflate(this, R.layout.minminguard_settings, null);
+	    CheckBox show_system_apps = (CheckBox) checkBoxView.findViewById(R.id.show_system_apps);
+	    
+	    final boolean original_settings = uiPref.getBoolean("show_system_apps", false);
+	    show_system_apps.setChecked(original_settings);
+	    show_system_apps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                boolean value = cb.isChecked();
+                uiPref.edit()
+                    .putBoolean("show_system_apps", value)
+                    .commit();
+            }
+        });
+	    
+	    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.title_settings))
+               .setIcon(R.drawable.ic_launcher)
+               .setView(checkBoxView)
+               .setCancelable(false)
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dlg, int id) {
+                        dlg.dismiss();
+                        
+                        if(original_settings != uiPref.getBoolean("show_system_apps", false) &&
+                                usingPrefFragment ) {
+                            prefFragment.refresh();
+                        }
+                    }
+               })
+               .show();
 	}
 }

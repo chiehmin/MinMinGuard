@@ -85,10 +85,12 @@ public class PrefsFragment extends SherlockFragment {
         PackageManager pm = activity.getPackageManager();
         List<ApplicationInfo> list = pm.getInstalledApplications(0);
         
+        boolean showSystemApp = Settings.uiPref.getBoolean("show_system_apps", false);
+        
         itemList = new ArrayList<Map<String, Object>>();
         for(ApplicationInfo info : list) {
             
-            if((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            if(showSystemApp || ((info.flags & ApplicationInfo.FLAG_SYSTEM) == 0)) {
                 
                 Map<String, Object> map = new HashMap<String, Object>();
                 

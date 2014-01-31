@@ -11,6 +11,7 @@
     <string name="drawer_app_settings">应用程序设置</string>
     <string name="drawer_about">关于</string>
     <string name="drawer_log">日志</string>
+    <string name="drawer_minminguard_settings">MinMinGuard 设置</string>
     
     <string name="title_about">关于</string>
     <string name="title_settings">设置</string>
@@ -27,7 +28,8 @@
     <string name="msg_selecting_all">正在全选&#8230;</string>
     
     <string name="settings_enable_log">在这个应用程序启用日志</string>
-    <string name="settings_recursive_remove">启用递迴移除空白的广告栏位（可能导致不正常反应）</string>
     <string name="settings_enable_url_filtering_data">在WebView资料中启用URL过滤</string>
+    <string name="settings_recursive_remove">启用递迴移除空白的广告栏位（可能导致不正常反应）</string>
+    <string name="settings_show_system_apps">显示系统应用程式</string>
 
 </resources>

@@ -17,7 +17,7 @@ public class Util {
     public static XSharedPreferences pref;
     
     
-    final static public String tag = "MinMinGuard_v1.6.3";
+    final static public String tag = "MinMinGuard_v1.6.5";
     static public void log(String packageName, String msg) {
         if(pref.getBoolean(packageName + "_log", false)) {
             XposedBridge.log(msg);
