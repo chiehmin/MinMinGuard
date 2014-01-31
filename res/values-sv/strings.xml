@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ 
+    <string name="app_name">MinMinGuard</string>
+    <string name="app_version">MinMinGuard version: %s</string>
+    <string name="app_copyright">Copyright \u00A9 2014 av <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="app_about"><b>Detta är en app som kan ta bort reklam från olika reklam nätverk.
+	     Kom ihåg att stödja app utvecklarna genom att avaktivera <i>MinMinGuard</i> och klicka på reklamen.
+         \n\nHa så kul med <i>MinMinGuard</i>.</b></string>
+    
+    <string name="drawer_app_settings">App Inställningar</string>
+    <string name="drawer_about">Om</string>
+    <string name="drawer_log">Logg</string>
+    
+    <string name="title_about">Om</string>
+    <string name="title_settings">Inställningar</string>
+    
+    <string name="menu_refresh">Uppdatera</string>
+    <string name="menu_save_log">Spara Logg</string>
+    <string name="menu_select_all">Markera alla</string>
+    <string name="menu_switch_theme">Byt Tema</string>
+    
+    <string name="msg_deselecting_all">Avmarkera alla&#8230;</string>
+    <string name="msg_restart_app"><i>Du måste starta om appen för att ändringarna ska appliceras</i></string>
+    <string name="msg_saving_log">Sparar logg</string>
+    <string name="msg_saving_log_complete">Logg har blivit sparad till %s</string>
+    <string name="msg_search">Sök</string>
+    <string name="msg_selecting_all">Markerar alla&#8230;</string>
+    
+    <string name="settings_enable_log">Aktivera loggning för denna app</string>
+    <string name="settings_recursive_remove">Aktivera att rekursivt ta bort tom förälder vy(kan leda till vy krasch)</string>
+    <string name="settings_enable_url_filtering_data">Aktivera Url filtrering i WebView data</string>
+    
+</resources>
