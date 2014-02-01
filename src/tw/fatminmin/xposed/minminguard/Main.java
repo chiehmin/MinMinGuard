@@ -22,6 +22,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.OpenX;
 import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Startapp;
 import tw.fatminmin.xposed.minminguard.adnetwork.TWMads;
+import tw.fatminmin.xposed.minminguard.adnetwork.Tapfortap;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
@@ -112,6 +113,7 @@ public class Main implements IXposedHookZygoteInit,
         OpenX.handleLoadPackage(packageName, lpparam, false);
         SmartAdserver.handleLoadPackage(packageName, lpparam, false);
         Startapp.handleLoadPackage(packageName, lpparam, false);
+        Tapfortap.handleLoadPackage(packageName, lpparam, false);
         TWMads.handleLoadPackage(packageName, lpparam, false);
         Vpon.handleLoadPackage(packageName, lpparam, false);
     }
