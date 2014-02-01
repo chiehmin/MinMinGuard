@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 import tw.fatminmin.xposed.minminguard.ui.LogFragment;
+import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -17,12 +18,24 @@ public class Util {
     public static XSharedPreferences pref;
     
     
-    final static public String tag = "MinMinGuard_v1.6.5";
+    final static public String tag = "MinMinGuard_v1.7.0";
     static public void log(String packageName, String msg) {
         if(pref.getBoolean(packageName + "_log", false)) {
             XposedBridge.log(msg);
             Log.d(tag, msg);
         }
+    }
+    
+    static public Application getCurrentApplication() {
+        try {
+            Application app = (Application)Class.forName("android.app.ActivityThread").
+                    getMethod("currentApplication", new Class[0]).invoke(null, new Object[]{ null });
+            return app;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     static public void saveLog(final File dest, final Context context, final Handler handler) {

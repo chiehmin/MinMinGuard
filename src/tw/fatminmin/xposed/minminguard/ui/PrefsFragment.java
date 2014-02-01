@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import tw.fatminmin.xposed.minminguard.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -30,6 +32,7 @@ public class PrefsFragment extends SherlockFragment {
     private EditText search;
     private List<Map<String, Object>> itemList;
     private ViewGroup root;
+    private SharedPreferences adPref;
     
     public void refresh() {
         setupAppList();
@@ -46,6 +49,8 @@ public class PrefsFragment extends SherlockFragment {
         super.onDestroyView();
     }
     
+    @SuppressLint("WorldReadableFiles")
+    @SuppressWarnings("deprecation")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         
@@ -56,6 +61,7 @@ public class PrefsFragment extends SherlockFragment {
         Settings.usingPrefFragment = true;
         getSherlockActivity().supportInvalidateOptionsMenu();
         
+        adPref = getActivity().getSharedPreferences("ad_pref", Context.MODE_WORLD_READABLE);
         refresh();
         
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -97,6 +103,7 @@ public class PrefsFragment extends SherlockFragment {
                 map.put("title", pm.getApplicationLabel(info));
                 map.put("key", info.packageName);
                 map.put("icon", pm.getApplicationIcon(info));
+                map.put("summary", adPref.getString(info.packageName, ""));
                 
                 itemList.add(map);
             }

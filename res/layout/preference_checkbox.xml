@@ -19,7 +19,11 @@
         <ImageView android:id="@+id/icon"
            android:layout_width="56dp"
            android:layout_height="56dp"
-           android:padding="5dp" />
+           android:paddingRight="10dp"
+           android:paddingLeft="5dp"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp"
+           android:contentDescription="@string/app_name" />
         
         <TextView android:id="@+id/title"
             android:layout_toRightOf="@id/icon"
@@ -28,8 +32,7 @@
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearance"
             android:ellipsize="marquee"
-            android:padding="5dp"
-            android:fadingEdge="horizontal" android:text="Title"/> 
+            android:fadingEdge="horizontal" /> 
             
         <TextView android:id="@+id/summary"
             android:layout_width="wrap_content"
@@ -38,7 +41,8 @@
             android:layout_toRightOf="@id/icon"
             android:layout_alignLeft="@android:id/title"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:maxLines="2" android:text="Summary"/> 
+            android:textColor="@color/red"
+            android:maxLines="2" /> 
  		
     </RelativeLayout> 
     
@@ -53,7 +57,8 @@
            android:layout_height="48dp"
            android:visibility="gone"
            android:background="@drawable/ic_action_edit_black"
-           android:padding="5dp" />
+           android:padding="5dp"
+           android:contentDescription="@string/app_name" />
         <CheckBox android:id="@+id/chkCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" />
     </LinearLayout> 
 </LinearLayout> 

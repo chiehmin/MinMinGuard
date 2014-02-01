@@ -57,7 +57,6 @@ public class Admob {
 				}
 			});
 			
-			
 			Util.log(packageName, packageName + " uses Admob");
 		}
 		catch(ClassNotFoundError e) {
