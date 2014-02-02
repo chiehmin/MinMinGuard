@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import tw.fatminmin.xposed.minminguard.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.adnetwork.AdMarvel;
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
@@ -114,6 +115,9 @@ public class Main implements IXposedHookZygoteInit,
     private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
         
         List<String> networks = new ArrayList<String>();
+        if(Adfurikun.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Adfurikun");
+        }
         if(AdMarvel.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("AdMarvel");
         }

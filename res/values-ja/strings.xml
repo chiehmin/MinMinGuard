@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
- 
+    <string name="app_name">MinMinGuard</string>
     <string name="app_version">MinMinGuardバージョン: %s</string>
-
+	<string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>これは複数の広告ネットワークの広告をブロックするモジュールです。
          ですが、もしよろしければ<i>MinMinGuard</i>では無効にして広告をタップして開発をサポートしてください。
          \n\n<i>MinMinGuard</i>をよろしくお願いします!</b></string>
@@ -11,6 +11,7 @@
     <string name="drawer_app_settings">アプリの設定</string>
     <string name="drawer_about">情報</string>
     <string name="drawer_log">ログ</string>
+    <string name="drawer_minminguard_settings">MinMinGuard設定</string>
     
     <string name="title_about">情報</string>
     <string name="title_settings">設定</string>
@@ -30,5 +31,7 @@
     <string name="settings_enable_log">このアプリのログを有効化</string>
     <string name="settings_recursive_remove">再帰的に広告スペースの親ビューを削除する(ビューがクラッシュする場合あり)</string>
     <string name="settings_enable_url_filtering_data">WebViewデータでURLフィルタリングする</string>
+    <string name="settings_show_system_apps">システムアプリを表示</string>
 
 </resources>
+
