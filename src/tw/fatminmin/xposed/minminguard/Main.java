@@ -12,6 +12,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.AdmobGms;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
+import tw.fatminmin.xposed.minminguard.adnetwork.Chartboost;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
@@ -136,6 +137,9 @@ public class Main implements IXposedHookZygoteInit,
         }
         if(Bonzai.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Bonzai");
+        }
+        if(Chartboost.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Chartboost");
         }
         if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Flurry");
