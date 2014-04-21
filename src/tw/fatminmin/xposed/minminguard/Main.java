@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tw.fatminmin.xposed.minminguard.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.adnetwork.AdMarvel;
+import tw.fatminmin.xposed.minminguard.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
+import tw.fatminmin.xposed.minminguard.adnetwork.AdmobGms;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
@@ -123,6 +124,9 @@ public class Main implements IXposedHookZygoteInit,
         }
         if(Admob.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("AdMob");
+        }
+        if(AdmobGms.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("AdMobGms");
         }
         if(Amazon.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Amazon");
