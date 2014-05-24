@@ -8,6 +8,9 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Amobee {
+    
+    public final static String banner = "com.amobee.adsdk.AdManager";
+    
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.amobee.adsdk.AdManager", lpparam.classLoader);

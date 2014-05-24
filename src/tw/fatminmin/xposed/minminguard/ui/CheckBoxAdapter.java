@@ -6,9 +6,12 @@ import java.util.Map;
 
 import tw.fatminmin.xposed.minminguard.R;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
@@ -84,6 +87,17 @@ public class CheckBoxAdapter extends BaseAdapter {
 		    checkBox.setChecked(false);
 		    imgEdit.setVisibility(View.GONE);
 		}
+		
+		icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityManager am = (ActivityManager) mContext.getSystemService(Activity.ACTIVITY_SERVICE);
+                am.killBackgroundProcesses(key);
+                Intent it = mContext.getPackageManager().getLaunchIntentForPackage(key);
+                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(it);
+            }
+        });
 		
 		imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override

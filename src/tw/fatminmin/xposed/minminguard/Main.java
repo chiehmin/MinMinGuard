@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,9 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.adnetwork.Chartboost;
+import tw.fatminmin.xposed.minminguard.adnetwork.Domob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.adnetwork.Hodo;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
@@ -28,12 +31,14 @@ import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Startapp;
 import tw.fatminmin.xposed.minminguard.adnetwork.TWMads;
 import tw.fatminmin.xposed.minminguard.adnetwork.Tapfortap;
+import tw.fatminmin.xposed.minminguard.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod.Train;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -98,22 +103,73 @@ public class Main implements IXposedHookZygoteInit,
         XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
            @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                
                 Context context = (Context) param.thisObject;
                 
                 if(pref.getBoolean(packageName, false)) {
                     adNetwork(packageName, lpparam, false, context);
                     appSpecific(packageName, lpparam);
                     UrlFiltering.removeWebViewAds(packageName, lpparam, false);
+                    
+                    nameBasedBlocking(packageName, lpparam);
+                    
                 }
                 else {
                     adNetwork(packageName, lpparam, true, context);
                 }
             }  
-        });
-        
+        });    
+        if(pref.getBoolean(packageName, false)) {
+            XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    Activity ac = (Activity)(param.thisObject);
+                    ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
+                    clearAdViewInLayout(packageName, root);
+                }
+            });
+        }
     }
-
+    
+    static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
+        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner,  
+        Bonzai.banner, Chartboost.banner, Domob.banner, Flurry.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
+        Madvertise.banner, MdotM.banner, Millennial.banner, MoPub.banner, Nend.banner, Og.banner, Onelouder.banner, 
+        OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
+        Vpon.banner));
+    static {
+        banners.add("mong.moptt.ad.AdContainer");
+    }
+    
+    private static void clearAdViewInLayout(final String packageName, final View view) {
+        
+        if(banners.contains(view.getClass().getName())) {
+            removeAdView(view, packageName, true);
+            Util.log(packageName, "clearAdViewInLayout: " + view.getClass().getName());
+        }
+        
+        if(view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            for(int i = 0; i < vg.getChildCount(); i++) {
+                clearAdViewInLayout(packageName, vg.getChildAt(i));
+            }
+        }
+    }
+    
+    private static void nameBasedBlocking(final String packageName, final LoadPackageParam lpparam) {
+        
+        Class<?> viewGroup = XposedHelpers.findClass("android.view.ViewGroup", lpparam.classLoader);
+        XposedBridge.hookAllMethods(viewGroup, "addView", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                View v = (View) param.args[0];
+                if(banners.contains(v.getClass().getName())) {
+                    removeAdView((View) v, packageName, true);
+                    Util.log(packageName, "Name based blocking: " + v.getClass().getName());
+                }
+            }
+        });
+    }
+    
     private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
         
         List<String> networks = new ArrayList<String>();
@@ -141,8 +197,14 @@ public class Main implements IXposedHookZygoteInit,
         if(Chartboost.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Chartboost");
         }
+        if(Domob.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Domob");
+        }
         if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Flurry");
+        }
+        if(Hodo.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("HODo");
         }
         if(Inmobi.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Inmobi");
@@ -189,6 +251,9 @@ public class Main implements IXposedHookZygoteInit,
         if(TWMads.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("TWMads");
         }
+        if(Vpadn.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Vpadn");
+        }
         if(Vpon.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Vpon");
         }
@@ -219,18 +284,17 @@ public class Main implements IXposedHookZygoteInit,
         if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
             view.setVisibility(View.GONE);
         }
-        else {
-            ViewTreeObserver observer= view.getViewTreeObserver();
-            observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    float heightDp = convertPixelsToDp(view.getHeight());
-                    if(heightDp <= 55) {
-                        view.setVisibility(View.GONE);
-                    }
+        ViewTreeObserver observer= view.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                float heightDp = convertPixelsToDp(view.getHeight());
+                if(heightDp <= 55) {
+                    view.setVisibility(View.GONE);
                 }
-            });
-        }
+            }
+        });
+        
         
         final ViewParent parent = view.getParent();
         if(parent instanceof ViewGroup) {

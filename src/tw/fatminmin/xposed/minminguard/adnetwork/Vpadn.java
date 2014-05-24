@@ -9,20 +9,19 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Millennial {
-    
-    public final static String banner = "com.millennialmedia.android.MMAdView";
+public class Vpadn {
+    public final static String banner = "com.vpadn.ads.VpadnBanner";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             
-            Class<?> adView = XposedHelpers.findClass("com.millennialmedia.android.MMAdView", lpparam.classLoader);
+            Class<?> adView = XposedHelpers.findClass("com.vpadn.ads.VpadnBanner", lpparam.classLoader);
             
-            XposedBridge.hookAllMethods(adView, "getAd" ,new XC_MethodHook() {
+            XposedBridge.hookAllMethods(adView, "loadAd" ,new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             
-                            Util.log(packageName, "Detect MMAdView getAd in " + packageName);
+                            Util.log(packageName, "Detect VpadnBanner loadAd in " + packageName);
                             
                             if(!test) {
                                 param.setResult(new Object());
@@ -31,12 +30,12 @@ public class Millennial {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.millennialmedia.android.MMInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "display" ,new XC_MethodHook() {
+            Class<?> InterAds = XposedHelpers.findClass("com.vpadn.ads.VpadnInterstitialAd", lpparam.classLoader);
+            XposedBridge.hookAllMethods(InterAds, "show" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     
-                    Util.log(packageName, "Detect MMInterstitial display in " + packageName);
+                    Util.log(packageName, "Detect VpadnInterstitialAd show in " + packageName);
                     
                     if(!test) {
                         param.setResult(new Object());
@@ -44,7 +43,7 @@ public class Millennial {
                 }
             });
             
-            Util.log(packageName, packageName + " uses Millennial");
+            Util.log(packageName, packageName + " uses Vpadn");
         }
         catch(ClassNotFoundError e) {
             return false;

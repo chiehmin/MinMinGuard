@@ -10,6 +10,9 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Adfurikun {
+    
+    public final static String banner = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
+    
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             Class<?> adView = XposedHelpers.findClass("jp.tjkapp.adfurikunsdk.AdfurikunBase", lpparam.classLoader);

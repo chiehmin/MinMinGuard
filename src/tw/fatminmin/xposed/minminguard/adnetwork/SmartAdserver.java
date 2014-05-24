@@ -10,6 +10,9 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class SmartAdserver {
+    
+    public final static String banner = "com.smartadserver.android.library.ui.SASAdView";
+    
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.smartadserver.android.library.ui.SASAdView", lpparam.classLoader);

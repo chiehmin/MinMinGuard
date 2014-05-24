@@ -10,11 +10,13 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class KuAd {
+    
+    public final static String banner = "com.waystorm.ads.WSAdBanner";
+    
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			
 			Class<?> wsBanner = findClass("com.waystorm.ads.WSAdBanner", lpparam.classLoader);
-			Class<?> wsListener = findClass("com.waystorm.ads.WSAdListener", lpparam.classLoader);
 			
 			XposedBridge.hookAllMethods(wsBanner, "setWSAdListener", new XC_MethodHook() {
 						@Override
@@ -26,6 +28,12 @@ public class KuAd {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
+							new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    
+                                }
+                            });
 						}
 					});
 			
@@ -41,17 +49,19 @@ public class KuAd {
 							}
 						}
 					});
-			XposedBridge.hookAllMethods(wsListener, "onReceived", new XC_MethodHook() {
-					@Override
-					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						
-						Util.log(packageName, "Detect WSDlistener onreceived " + packageName);
-						
-						if(!test) {
-							param.setResult(new Object());
-						}
-					}
-				});
+			
+			XposedBridge.hookAllMethods(wsBanner, "mediationLoadAd", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                            
+                            Util.log(packageName, "Detect WSAdBanner mediationLoadAd " + packageName);
+                            
+                            if(!test) {
+                                param.setResult(new Object());
+                                Main.removeAdView((View) param.thisObject, packageName, true);
+                            }
+                        }
+                    });
 		}
 		catch(ClassNotFoundError e) {
 			return false;

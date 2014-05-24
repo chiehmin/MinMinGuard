@@ -10,6 +10,9 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Inmobi {
+    
+    public final static String banner = "com.inmobi.monetization.IMBanner";
+    
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.inmobi.monetization.IMBanner", lpparam.classLoader);

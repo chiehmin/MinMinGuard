@@ -13,6 +13,9 @@ import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Madvertise {
+    
+    public final static String banner = "de.madvertise.android.sdk.MadvertiseMraidView";
+    
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("de.madvertise.android.sdk.MadvertiseMraidView", lpparam.classLoader);

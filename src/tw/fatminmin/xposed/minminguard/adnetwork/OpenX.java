@@ -10,6 +10,9 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class OpenX {
+    
+    public final static String banner = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
+    
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView", lpparam.classLoader);
