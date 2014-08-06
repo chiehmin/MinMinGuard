@@ -2,32 +2,35 @@
 <resources>
 
     <string name="app_name">MinMinGuard</string>
-    <string name="app_version">MinMinGuard verzia: %s</string>
-    <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="app_version">Verzia MinMinGuard: %s</string>
+    <string name="app_copyright">Autorské práva \u00A9 2014 od <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Táto aplikácia umožňuje blokovať reklamy z viacerých sietí.
-         Ale nezabudnite občas podporiť vývojárov aplikácií vypnutím <i>MinMinGuard</i> a kliknutím na reklamy.
+         Ale nezabudnite občas podporiť vývojárov aplikácií zakázaním <i>MinMinGuard</i> a kliknutím na reklamy.
          \n\nVeľa zábavy s <i>MinMinGuard</i>.</b></string>
     
     <string name="drawer_app_settings">Nastavenia</string>
     <string name="drawer_about">O aplikácii</string>
-    <string name="drawer_log">Log</string>
+    <string name="drawer_log">Záznam</string>
+    <string name="drawer_minminguard_settings">Nastavenia MinMinGuard</string>
     
     <string name="title_about">O aplikácii</string>
     <string name="title_settings">Nastavenia</string>
     
     <string name="menu_refresh">Obnoviť</string>
-    <string name="menu_save_log">Uložiť Log</string>
+    <string name="menu_save_log">Uložiť záznam</string>
     <string name="menu_select_all">Vybrať všetky</string>
-    <string name="menu_switch_theme">Zmeniť vzhľad</string>
+    <string name="menu_switch_theme">Zmeniť tému</string>
     
-    <string name="msg_deselecting_all">odznačujem všetky&#8230;</string>
-    <string name="msg_restart_app"><i>Musíte aplikáciu reštartovať by sa prejavili zmeny.</i></string>
-    <string name="msg_saving_log">Ukladám log</string>
-    <string name="msg_saving_log_complete">Log bol uložený do %s</string>
-    <string name="msg_selecting_all">označujem všetky&#8230;</string>
+    <string name="msg_deselecting_all">Rušie výberu všetkých&#8230;</string>
+    <string name="msg_restart_app"><i>Musíte reštartovať aplikáciu, aby sa zmeny prejavili.</i></string>
+    <string name="msg_saving_log">Záznam sa ukladá</string>
+    <string name="msg_saving_log_complete">Záznam bol uložený do %s</string>
+    <string name="msg_search">Hľadať</string>
+    <string name="msg_selecting_all">Výber všetkých&#8230;</string>
     
-    <string name="settings_enable_log">Povoliť ukladanie log súboru pre túto apl.</string>
-    <string name="settings_recursive_remove">Povoliť odstránenie prázdnych miest (môže viesť k zlému zobrazovaniu)</string>
-    <string name="settings_enable_url_filtering_data">Povoliť filtrovanie adries v dátach WebView</string>
+    <string name="settings_enable_log">Povoliť zaznamenávanie pre túto aplikáciu</string>
+    <string name="settings_enable_url_filtering_data">Povoliť filtrovanie URL adries v údajoch zobrazenia webu</string>
+    <string name="settings_recursive_remove">Povoliť odstránenie prázdnych miest (môže viesť k zlému zobrazeniu)</string>
+    <string name="settings_show_system_apps">Zobraziť systémové aplikácie</string>
     
 </resources>
