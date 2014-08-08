@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">MinMinGuard</string>
+    <string name="app_description">Najlepší odstraňovač reklám</string>
     <string name="app_version">Verzia MinMinGuard: %s</string>
     <string name="app_copyright">Autorské práva \u00A9 2014 od <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Táto aplikácia umožňuje blokovať reklamy z viacerých sietí.
