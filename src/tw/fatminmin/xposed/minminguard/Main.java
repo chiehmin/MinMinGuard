@@ -16,6 +16,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.adnetwork.Chartboost;
 import tw.fatminmin.xposed.minminguard.adnetwork.Domob;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.adnetwork.GmsDoubleClick;
 import tw.fatminmin.xposed.minminguard.adnetwork.Hodo;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
@@ -132,8 +133,8 @@ public class Main implements IXposedHookZygoteInit,
     }
     
     static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
-        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner,  
-        Bonzai.banner, Chartboost.banner, Domob.banner, Flurry.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
+        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, Bonzai.banner,  
+        Chartboost.banner, Domob.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
         Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, MoPub.banner, Nend.banner, Og.banner, Onelouder.banner, 
         OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
         Vpon.banner));
@@ -203,6 +204,9 @@ public class Main implements IXposedHookZygoteInit,
         }
         if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Flurry");
+        }
+        if(GmsDoubleClick.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("GmsDoubleClick");
         }
         if(Hodo.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("HODo");

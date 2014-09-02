@@ -17,10 +17,11 @@ public class AdmobGms {
 		try {
 			
 			Class<?> admobBanner = findClass("com.google.android.gms.ads.AdView", lpparam.classLoader);
+			Class<?> admobSearchBanner = findClass("com.google.android.gms.ads.search.SearchAdView", lpparam.classLoader);
 			Class<?> admobInter = findClass("com.google.android.gms.ads.InterstitialAd", lpparam.classLoader);
 			
+			
 			XposedBridge.hookAllMethods(admobBanner, "loadAd", new XC_MethodHook() {
-				
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
@@ -33,6 +34,20 @@ public class AdmobGms {
 						}
 					
 					});
+			
+			XposedBridge.hookAllMethods(admobSearchBanner, "loadAd", new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					
+					Util.log(packageName, "Detect AdmobGms SearchBanner loadAd in " + packageName);
+					
+					if(!test) {
+						param.setResult(new Object());
+						Main.removeAdView((View) param.thisObject, packageName, true);
+					}
+				}
+			
+			});
 			
 			XposedBridge.hookAllMethods(admobInter, "loadAd",  new XC_MethodHook() {
 				
