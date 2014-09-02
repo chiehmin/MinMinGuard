@@ -12,6 +12,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.adnetwork.AdmobGms;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Amobee;
+import tw.fatminmin.xposed.minminguard.adnetwork.AppBrain;
 import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.adnetwork.Chartboost;
 import tw.fatminmin.xposed.minminguard.adnetwork.Domob;
@@ -25,6 +26,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.MasAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.MdotM;
 import tw.fatminmin.xposed.minminguard.adnetwork.Millennial;
 import tw.fatminmin.xposed.minminguard.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.adnetwork.Mobclix;
 import tw.fatminmin.xposed.minminguard.adnetwork.Nend;
 import tw.fatminmin.xposed.minminguard.adnetwork.Og;
 import tw.fatminmin.xposed.minminguard.adnetwork.Onelouder;
@@ -96,8 +98,10 @@ public class Main implements IXposedHookZygoteInit,
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-
-        pref.reload();
+        
+        if(pref.hasFileChanged()) {
+            pref.reload();
+        }
 
         final String packageName = lpparam.packageName;
         
@@ -133,13 +137,14 @@ public class Main implements IXposedHookZygoteInit,
     }
     
     static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
-        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, Bonzai.banner,  
+        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, AppBrain.banner, Bonzai.banner,  
         Chartboost.banner, Domob.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
-        Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, MoPub.banner, Nend.banner, Og.banner, Onelouder.banner, 
-        OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
+        Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
+        Onelouder.banner, OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
         Vpon.banner));
     static {
         banners.add("mong.moptt.ad.AdContainer");
+        banners.add("net.leetsoft.mangareader.ui.MangoAdWrapperView");
     }
     
     private static void clearAdViewInLayout(final String packageName, final View view) {
@@ -193,6 +198,9 @@ public class Main implements IXposedHookZygoteInit,
         if(Amobee.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Amobee");
         }
+        if(AppBrain.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("AppBrain");
+        }
         if(Bonzai.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Bonzai");
         }
@@ -231,6 +239,9 @@ public class Main implements IXposedHookZygoteInit,
         }
         if(Millennial.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Millennial");
+        }
+        if(Mobclix.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Mobclix");
         }
         if(MoPub.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("MoPub");
@@ -289,6 +300,14 @@ public class Main implements IXposedHookZygoteInit,
 
     public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
         
+        if(view.getParent() != null) {
+            final ViewParent parent = view.getParent();
+            final ViewGroup vg = (ViewGroup) parent;
+            final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
+            if(convertPixelsToDp(vg.getHeight()) > 55 && relative) {
+                return;
+            }
+        }
         if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
             view.setVisibility(View.GONE);
         }
@@ -303,24 +322,9 @@ public class Main implements IXposedHookZygoteInit,
             }
         });
         
-        
-        final ViewParent parent = view.getParent();
-        if(parent instanceof ViewGroup) {
-            final ViewGroup vg = (ViewGroup) parent;
-            final boolean recursive = pref.getBoolean(packageName + "_recursive", false);
-            final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
-            
-            
-            if(recursive || !relative) {
-                removeAdView(vg, packageName, apiBased);
-            }
-            else {
-                for(int i = 0; i < vg.getChildCount(); i++) {
-                    vg.getChildAt(i).setVisibility(View.GONE);
-                }
-            }
+        if(view.getParent() != null && view.getParent() instanceof ViewGroup) {
+            removeAdView((View)view.getParent(), packageName, apiBased);
         }
-        
     }
 
     private static float convertPixelsToDp(float px){

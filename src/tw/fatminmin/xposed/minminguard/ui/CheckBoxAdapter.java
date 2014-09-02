@@ -105,11 +105,9 @@ public class CheckBoxAdapter extends BaseAdapter {
                 View checkBoxView = View.inflate(mContext, R.layout.per_app_settings, null);
                 CheckBox urlFilter = (CheckBox) checkBoxView.findViewById(R.id.enable_url_filter);
                 CheckBox log = (CheckBox) checkBoxView.findViewById(R.id.enable_log);
-                CheckBox rec_remove = (CheckBox) checkBoxView.findViewById(R.id.enable_recursive_remove);
                 
                 urlFilter.setChecked(pref.getBoolean(key + "_url", true));
                 log.setChecked(pref.getBoolean(key + "_log", false));
-                rec_remove.setChecked(pref.getBoolean(key + "_recursive", false));
                 
                 urlFilter.setOnClickListener(new View.OnClickListener() {
 
@@ -130,17 +128,6 @@ public class CheckBoxAdapter extends BaseAdapter {
                         boolean value = cb.isChecked();
                         pref.edit()
                             .putBoolean(key + "_log", value)
-                            .commit();
-                    }
-                });
-                
-                rec_remove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CheckBox cb = (CheckBox) v;
-                        boolean value = cb.isChecked();
-                        pref.edit()
-                            .putBoolean(key + "_recursive", value)
                             .commit();
                     }
                 });
