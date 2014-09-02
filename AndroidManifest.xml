@@ -37,7 +37,7 @@
          
         <meta-data android:value="true" android:name="xposedmodule"/>
         <meta-data android:value="2.0*" android:name="xposedminversion"/>
-        <meta-data android:name="xposeddescription" android:value="The best ads remover!" />
+        <meta-data android:name="xposeddescription" android:value="@string/app_description" />
         
     </application>
 
