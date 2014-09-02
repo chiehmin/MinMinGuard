@@ -302,10 +302,12 @@ public class Main implements IXposedHookZygoteInit,
         
         if(view.getParent() != null) {
             final ViewParent parent = view.getParent();
-            final ViewGroup vg = (ViewGroup) parent;
-            final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
-            if(convertPixelsToDp(vg.getHeight()) > 55 && relative) {
-                return;
+            if(parent instanceof ViewGroup) {
+            	final ViewGroup vg = (ViewGroup) parent;
+                final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
+                if(convertPixelsToDp(vg.getHeight()) > 55 && relative) {
+                    return;
+                }
             }
         }
         if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
