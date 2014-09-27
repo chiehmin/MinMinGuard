@@ -22,7 +22,7 @@
     <string name="menu_select_all">Sélectionner tout</string>
     <string name="menu_switch_theme">Changer le thème</string>
     
-    <string name="msg_deselecting_all">Désélectionner tout&#8230;</string>
+    <string name="msg_deselecting_all">Tout désélectionner&#8230;</string>
     <string name="msg_restart_app"><i>Vous devez redémarrer l\'application pour effectuer les changements.</i></string>
     <string name="msg_saving_log">Enregistrement du fichier Log</string>
     <string name="msg_saving_log_complete">Fichier log a été enregistré dans %s</string>
