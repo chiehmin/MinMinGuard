@@ -19,7 +19,7 @@
     
     <string name="menu_refresh">Actualiser</string>
     <string name="menu_save_log">Sauvegarder fichier Log</string>
-    <string name="menu_select_all">Sélectionner tout</string>
+    <string name="menu_select_all">Tout sélectionner</string>
     <string name="menu_switch_theme">Changer le thème</string>
     
     <string name="msg_deselecting_all">Tout désélectionner&#8230;</string>
