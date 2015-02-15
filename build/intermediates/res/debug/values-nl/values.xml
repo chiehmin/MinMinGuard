@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/fatminmin/Documents/MinMinGuard/res/values-nl/strings.xml -->
+    <eat-comment/>
+    <string name="app_about"><b>Deze app is voor u om ads te verwijderen van verschillende ad netwerken.
+	  Maar vergeet niet om de app ontwikkelaars te supporten door <i>MinMinGuard uit te schakelen</i> en op de ads te klikken.
+	  \n\nVeel plezier met <i>MinMinGuard</i>.</b></string>
+    <string name="app_copyright">Copyright \u00A9 2014 door <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="app_name">MinMinGuard</string>
+    <string name="app_version">MinMinGuard versie: %s</string>
+    <string name="drawer_about">Over MinMinGuard</string>
+    <string name="drawer_app_settings">App Instellingen</string>
+    <string name="drawer_log">Log</string>
+    <string name="menu_refresh">Vernieuwen</string>
+    <string name="menu_save_log">Log Opslaan</string>
+    <string name="menu_select_all">Alles Selecteren</string>
+    <string name="menu_switch_theme">Thema Verwisselen</string>
+    <string name="msg_deselecting_all">Alles aan het deselecteren…</string>
+    <string name="msg_restart_app"><i>U moet de app herstarten om de wijzigingen te laten werken.</i></string>
+    <string name="msg_saving_log">Log aan het opslaan</string>
+    <string name="msg_saving_log_complete">Log is opgeslagen naar %s</string>
+    <string name="msg_selecting_all">Alles aan het selecteren…</string>
+    <string name="settings_enable_log">Activeer logboek voor deze app</string>
+    <string name="settings_enable_url_filtering_data">Activeer Url filter in WebView gegevens</string>
+    <string name="title_about">Over MinMinGuard</string>
+    <string name="title_settings">Instellingen</string>
+</resources>

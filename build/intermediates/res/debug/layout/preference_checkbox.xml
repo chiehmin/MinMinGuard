@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    android:baselineAligned="false"
+    android:paddingRight="?android:attr/scrollbarSize"> 
+    
+    <RelativeLayout 
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="6dip"
+        android:layout_marginTop="6dip"
+        android:layout_marginBottom="6dip"
+        android:layout_weight="1"> 
+    	
+        <ImageView android:id="@+id/icon"
+           android:layout_width="56dp"
+           android:layout_height="56dp"
+           android:paddingRight="10dp"
+           android:paddingLeft="5dp"
+           android:paddingTop="5dp"
+           android:paddingBottom="5dp"
+           android:contentDescription="@string/app_name" />
+        
+        <TextView android:id="@+id/title"
+            android:layout_toRightOf="@id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearance"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal" /> 
+            
+        <TextView android:id="@+id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_toRightOf="@id/icon"
+            android:layout_alignLeft="@android:id/title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/red"
+            android:maxLines="2" /> 
+ 		
+    </RelativeLayout> 
+    
+    <!-- Preference should place its actual preference widget here. --> 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageButton android:id="@+id/edit"
+           android:layout_width="48dp"
+           android:layout_height="48dp"
+           android:visibility="gone"
+           android:background="@drawable/ic_action_edit_black"
+           android:padding="5dp"
+           android:contentDescription="@string/app_name" />
+        <CheckBox android:id="@+id/chkCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout> 
+</LinearLayout> <!-- From: file:/home/fatminmin/Documents/MinMinGuard/res/layout/preference_checkbox.xml -->

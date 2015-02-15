@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/fatminmin/Documents/MinMinGuard/actionbarsherlock/build/intermediates/bundles/debug/res/values-w600dp-v13/values.xml -->
+    <eat-comment/>
+    <integer name="abs__max_action_buttons">5</integer>
+</resources>
