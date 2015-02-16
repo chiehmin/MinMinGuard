@@ -11,6 +11,8 @@
 # generated files
 bin/
 gen/
+build/
+actionbarsherlock/build/
 
 # Local configuration file (sdk path, etc)
 local.properties

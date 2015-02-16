@@ -11,7 +11,7 @@ android {
     buildToolsVersion "21.1.2"
 
     sourceSets {
-        main {
+        final def var = main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
             resources.srcDirs = ['src']
@@ -20,6 +20,7 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
+        var
 
         // Move the tests to tests/java, tests/res, etc...
         instrumentTest.setRoot('tests')

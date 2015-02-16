@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/fatminmin/Documents/MinMinGuard/assets"><file name="host/reader_list" path="/home/fatminmin/Documents/MinMinGuard/assets/host/reader_list"/><file name="host/output_file" path="/home/fatminmin/Documents/MinMinGuard/assets/host/output_file"/><file name="xposed_init" path="/home/fatminmin/Documents/MinMinGuard/assets/xposed_init"/></source></dataSet><dataSet config="debug"><source path="/home/fatminmin/Documents/MinMinGuard/build-types/debug/assets"/></dataSet></merger>

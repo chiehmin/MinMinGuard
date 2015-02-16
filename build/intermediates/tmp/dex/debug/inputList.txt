@@ -1,4 +1,0 @@
-/home/fatminmin/Documents/MinMinGuard/build/intermediates/classes/debug
-/home/fatminmin/Documents/MinMinGuard/build/intermediates/pre-dexed/debug/XposedBridgeApi-54-b51b80dc6d36eb53e85ebff6538e18bae2978a52.jar
-/home/fatminmin/Documents/MinMinGuard/build/intermediates/pre-dexed/debug/classes-03b6ecdbc83378589a718789ce96f69fbb96db23.jar
-/home/fatminmin/Documents/MinMinGuard/build/intermediates/pre-dexed/debug/support-v4-18.0.0-0b924cc89ca1d0f17b9d652a2d32b9b879c9aba9.jar
