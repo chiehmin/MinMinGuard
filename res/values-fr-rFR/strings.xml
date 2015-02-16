@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MinMinGuard</string>
     <string name="app_version">MinMinGuard version: %s</string>
     <string name="app_copyright">Copyright \u00A9 2014 par <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Ceci est une application pour bloquer les annonces des réseaux publicitaires.
@@ -28,7 +27,8 @@
     <string name="msg_selecting_all">Sélectionner tout&#8230;</string>
     
     <string name="settings_enable_log">Activer le logging pour cette application</string>
-    <string name="settings_recursive_remove">Enable recursively remove empty parent view(may lead to view crash)</string>
     <string name="settings_enable_url_filtering_data">Activer le filtrage URL</string>
-    
+    <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
+    <string name="settings_show_system_apps">Show system apps</string>
+
 </resources>

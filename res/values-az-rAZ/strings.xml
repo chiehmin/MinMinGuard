@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MinMinGuard</string>
     <string name="app_version">MinMinGuard versiyası: %s</string>
     <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Bu tətbiq müxtəlif şəbələrdə olan reklamları silmək üçündür.
@@ -27,8 +26,10 @@
     <string name="msg_selecting_all">Hamısı seçilir&#8230;</string>
     
     <string name="settings_enable_log">Loqqing üçün bu tətbiqə icazə verin</string>
-    <string name="settings_recursive_remove">Valideyn görünüşünü aktivləşdirin(görmə problemi yarada bilər)</string>
     <string name="settings_enable_url_filtering_data">Səhifə görüntülənməsi üçün Url filtirasiyasını aktivləşdirin.</string>
-    
+    <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
+    <string name="msg_search">Search</string>
+    <string name="settings_show_system_apps">Show system apps</string>
+
 </resources>
 

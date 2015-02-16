@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- 
-    <string name="app_name">MinMinGuard</string>
+
     <string name="app_version">MinMinGuard versión: %s</string>
     <string name="app_copyright">Copyright \u00A9 2014 por <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Esta es una aplicación para que puedas eliminar anuncios de varias redes de anuncios. 
@@ -28,5 +27,8 @@
     
     <string name="settings_enable_log">Activar una bitácora (Log) para esta aplicación</string>
     <string name="settings_enable_url_filtering_data">Activar Filtrado de URL en los datos WebView</string>
-    
+    <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
+    <string name="msg_search">Search</string>
+    <string name="settings_show_system_apps">Show system apps</string>
+
 </resources>

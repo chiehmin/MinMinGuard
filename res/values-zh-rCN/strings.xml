@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MinMinGuard</string>
     <string name="app_version">MinMinGuard 版本: %s</string>
     <string name="app_copyright">版权所有 \u00A9 2014 <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>它可以在你不想看到广告的时候帮你挡广告，但是对于认真的免费App作者还是尽量不要使用这个软体，
@@ -29,7 +28,7 @@
     
     <string name="settings_enable_log">在这个应用程序启用日志</string>
     <string name="settings_enable_url_filtering_data">在WebView资料中启用URL过滤</string>
-    <string name="settings_recursive_remove">启用递迴移除空白的广告栏位（可能导致不正常反应）</string>
     <string name="settings_show_system_apps">显示系统应用程式</string>
+    <string name="msg_search">搜寻</string>
 
 </resources>

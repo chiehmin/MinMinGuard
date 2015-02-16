@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MinMinGuard</string>
-    <string name="app_description">Najlepší odstraňovač reklám</string>
     <string name="app_version">Verzia MinMinGuard: %s</string>
     <string name="app_copyright">Autorské práva \u00A9 2014 od <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Táto aplikácia umožňuje blokovať reklamy z viacerých sietí.
@@ -31,7 +29,6 @@
     
     <string name="settings_enable_log">Povoliť zaznamenávanie pre túto aplikáciu</string>
     <string name="settings_enable_url_filtering_data">Povoliť filtrovanie URL adries v údajoch zobrazenia webu</string>
-    <string name="settings_recursive_remove">Povoliť odstránenie prázdnych miest (môže viesť k zlému zobrazeniu)</string>
     <string name="settings_show_system_apps">Zobraziť systémové aplikácie</string>
-    
+
 </resources>
