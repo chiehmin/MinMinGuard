@@ -20,7 +20,6 @@ public class AdmobGms {
 			Class<?> admobSearchBanner = findClass("com.google.android.gms.ads.search.SearchAdView", lpparam.classLoader);
 			Class<?> admobInter = findClass("com.google.android.gms.ads.InterstitialAd", lpparam.classLoader);
 			
-			
 			XposedBridge.hookAllMethods(admobBanner, "loadAd", new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MinMinTheme" parent="android:Theme.Material">
+        <item name="icon_cancel">@drawable/ic_action_cancel</item>
+        <item name="icon_search">@drawable/ic_action_search</item>
+    </style>
+
+    <style name="MinMinTheme.Light" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="icon_cancel">@drawable/ic_action_cancel_light</item>
+        <item name="icon_search">@drawable/ic_action_search_light</item>
+    </style>
+</resources>

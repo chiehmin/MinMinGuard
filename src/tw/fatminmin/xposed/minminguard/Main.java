@@ -49,9 +49,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.net.Uri;
+import android.text.Layout;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -299,19 +301,12 @@ public class Main implements IXposedHookZygoteInit,
     }
 
     public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
-        
-        if(view.getParent() != null) {
-            final ViewParent parent = view.getParent();
-            if(parent instanceof ViewGroup) {
-            	final ViewGroup vg = (ViewGroup) parent;
-                final boolean relative = vg.getLayoutParams() instanceof RelativeLayout.LayoutParams;
-                if(convertPixelsToDp(vg.getHeight()) > 55 && relative) {
-                    return;
-                }
-            }
-        }
+
         if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
-            view.setVisibility(View.GONE);
+
+            LayoutParams params = view.getLayoutParams();
+            params.height = 0;
+            view.setLayoutParams(params);
         }
         ViewTreeObserver observer= view.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
@@ -319,11 +314,14 @@ public class Main implements IXposedHookZygoteInit,
             public void onGlobalLayout() {
                 float heightDp = convertPixelsToDp(view.getHeight());
                 if(heightDp <= 55) {
-                    view.setVisibility(View.GONE);
+
+                    LayoutParams params = view.getLayoutParams();
+                    params.height = 0;
+                    view.setLayoutParams(params);
                 }
             }
         });
-        
+
         if(view.getParent() != null && view.getParent() instanceof ViewGroup) {
             removeAdView((View)view.getParent(), packageName, apiBased);
         }

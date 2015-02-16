@@ -4,7 +4,7 @@
     <string name="app_name">MinMinGuard</string>
     <string name="app_description">The best ads remover</string>
     <string name="app_version">MinMinGuard version: %s</string>
-    <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
+    <string name="app_copyright">Copyright \u00A9 2014–2015 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>This is an app for you to remove ads from various ad networks.
          But still remember to support the app developers by disabling <i>MinMinGuard</i> and clicking the ads.
          \n\nHave fun with <i>MinMinGuard</i>.</b></string>
