@@ -151,6 +151,10 @@ public class Main implements IXposedHookZygoteInit,
             Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
             Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
             Vpon.bannerPrefix));
+    static
+    {
+        bannerPrefix.add("com.google.ads");
+    }
 
     private static boolean isAdView(String name)
     {
