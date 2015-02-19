@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Tapfortap {
     
     public final static String banner = "com.tapfortap.AdView";
+    public final static String bannerPrefix = "com.tapfortap";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

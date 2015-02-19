@@ -12,7 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class AdMarvel {
     
     public final static String banner = "com.admarvel.android.ads.AdMarvelView";
-    
+    public final static String bannerPrefix = "com.admarvel.android.ads";
+
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.admarvel.android.ads.AdMarvelView", lpparam.classLoader);

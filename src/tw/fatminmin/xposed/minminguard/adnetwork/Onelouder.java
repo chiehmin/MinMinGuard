@@ -13,6 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Onelouder {
     
     public final static String banner = "com.onelouder.adlib.AdView";
+    public final static String bannerPrefix = "com.onelouder.adlib";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

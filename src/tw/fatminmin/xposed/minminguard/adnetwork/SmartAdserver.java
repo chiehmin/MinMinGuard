@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class SmartAdserver {
     
     public final static String banner = "com.smartadserver.android.library.ui.SASAdView";
+    public final static String bannerPrefix = "com.smartadserver.android.library.ui";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

@@ -38,7 +38,6 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Tapfortap;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
-import tw.fatminmin.xposed.minminguard.custom_mod.Backgrounds;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod.Train;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
@@ -69,8 +68,7 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Main implements IXposedHookZygoteInit,
-                             IXposedHookLoadPackage,
-                             IXposedHookInitPackageResources {
+                             IXposedHookLoadPackage {
 
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
@@ -116,7 +114,11 @@ public class Main implements IXposedHookZygoteInit,
                 if(pref.getBoolean(packageName, false)) {
                     adNetwork(packageName, lpparam, false, context);
                     appSpecific(packageName, lpparam);
-                    UrlFiltering.removeWebViewAds(packageName, lpparam, false);
+
+                    if(Main.pref.getBoolean(packageName + "_url", false))
+                    {
+                        UrlFiltering.removeWebViewAds(packageName, lpparam, false);
+                    }
                     
                     nameBasedBlocking(packageName, lpparam);
                     
@@ -144,14 +146,32 @@ public class Main implements IXposedHookZygoteInit,
         Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
         Onelouder.banner, OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
         Vpon.banner));
-    static {
-        banners.add("mong.moptt.ad.AdContainer");
-        banners.add("net.leetsoft.mangareader.ui.MangoAdWrapperView");
+    static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList( Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
+            Chartboost.bannerPrefix, Domob.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
+            Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
+            Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
+            Vpon.bannerPrefix));
+
+    private static boolean isAdView(String name)
+    {
+        if(banners.contains(name))
+        {
+            return true;
+        }
+        // detect adview obfuscate by proguard
+        for(String prefix : bannerPrefix)
+        {
+            if(name.startsWith(prefix))
+            {
+                return true;
+            }
+        }
+        return false;
     }
-    
+
     private static void clearAdViewInLayout(final String packageName, final View view) {
         
-        if(banners.contains(view.getClass().getName())) {
+        if(isAdView(view.getClass().getName())) {
             removeAdView(view, packageName, true);
             Util.log(packageName, "clearAdViewInLayout: " + view.getClass().getName());
         }
@@ -171,10 +191,13 @@ public class Main implements IXposedHookZygoteInit,
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View v = (View) param.args[0];
-                if(banners.contains(v.getClass().getName())) {
+
+                if(isAdView(v.getClass().getName()))
+                {
                     removeAdView((View) v, packageName, true);
                     Util.log(packageName, "Name based blocking: " + v.getClass().getName());
                 }
+
             }
         });
     }
@@ -331,11 +354,5 @@ public class Main implements IXposedHookZygoteInit,
         DisplayMetrics metrics = res.getDisplayMetrics();
         float dp = px / (metrics.densityDpi / 160f);
         return dp;
-    }
-
-    @Override
-    public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
-        Backgrounds.handleInitPackageResources(resparam);
-        Train.handleInitPackageResources(resparam);
     }
 }

@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class OpenX {
     
     public final static String banner = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
+    public final static String bannerPrefix = "com.openx.ad.mobile.sdk.interfaces";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

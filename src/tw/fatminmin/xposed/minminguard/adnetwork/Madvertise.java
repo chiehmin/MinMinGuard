@@ -15,6 +15,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Madvertise {
     
     public final static String banner = "de.madvertise.android.sdk.MadvertiseMraidView";
+    public final static String bannerPrefix = "de.madvertise.android.sdk";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

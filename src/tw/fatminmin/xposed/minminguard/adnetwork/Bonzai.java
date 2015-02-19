@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Bonzai {
     
     public final static String banner = "com.bonzai.view.BonzaiAdView";
+    public final static String bannerPrefix = "com.bonzai.view";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

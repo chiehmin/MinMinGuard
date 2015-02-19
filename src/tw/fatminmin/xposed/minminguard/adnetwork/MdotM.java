@@ -12,7 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class MdotM {
     
     public final static String banner = "com.mdotm.android.view.MdotMAdView";
-    
+    public final static String bannerPrefix = "com.mdotm.android.view";
+
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             

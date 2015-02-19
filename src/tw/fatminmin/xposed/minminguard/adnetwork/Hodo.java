@@ -11,6 +11,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Hodo {
     public final static String banner = "com.hodo.HodoADView";
+    public final static String bannerPrefix = "com.hodo";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

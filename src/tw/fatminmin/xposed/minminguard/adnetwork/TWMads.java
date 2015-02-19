@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class TWMads {
     
     public final static String banner = "com.taiwanmobile.pt.adp.view.TWMAdView";
+    public final static String bannerPrefix = "com.taiwanmobile.pt.adp.view";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

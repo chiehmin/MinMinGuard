@@ -11,6 +11,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Mobclix {
     public final static String banner = "com.mobclix.android.sdk.MobclixMMABannerXLAdView";
+    public final static String bannerPrefix = "com.mobclix.android.sdk";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

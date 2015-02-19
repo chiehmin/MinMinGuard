@@ -10,6 +10,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class mAdserve {
     
     public final static String banner = "com.adsdk.sdk.banner.InAppWebView";
+    public final static String bannerPrefix = "com.adsdk.sdk.banner";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

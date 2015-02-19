@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Amazon {
     
     public final static String banner = "com.amazon.device.ads.AdLayout";
+    public final static String bannerPrefix = "com.amazon.device.ads";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

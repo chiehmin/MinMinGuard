@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Domob {
     
     public final static String banner = "cn.domob.android.ads.DomobAdView";
+    public final static String bannerPrefix = "cn.domob.android.ads";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

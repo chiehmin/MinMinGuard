@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Vpon {
     
     public final static String banner = "com.vpon.ads.VponBanner";
+    public final static String bannerPrefix = "com.vpon.ads";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

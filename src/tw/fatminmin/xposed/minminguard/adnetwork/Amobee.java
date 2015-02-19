@@ -10,6 +10,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Amobee {
     
     public final static String banner = "com.amobee.adsdk.AdManager";
+    public final static String bannerPrefix = "com.amobee.adsdk";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

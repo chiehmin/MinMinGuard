@@ -12,7 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Admob {
     
     public final static String banner = "com.google.ads.AdView";
-    
+    public final static String bannerPrefix = "com.google.ads";
+
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			

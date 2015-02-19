@@ -106,7 +106,7 @@ public class CheckBoxAdapter extends BaseAdapter {
                 CheckBox urlFilter = (CheckBox) checkBoxView.findViewById(R.id.enable_url_filter);
                 CheckBox log = (CheckBox) checkBoxView.findViewById(R.id.enable_log);
                 
-                urlFilter.setChecked(pref.getBoolean(key + "_url", true));
+                urlFilter.setChecked(pref.getBoolean(key + "_url", false));
                 log.setChecked(pref.getBoolean(key + "_log", false));
                 
                 urlFilter.setOnClickListener(new View.OnClickListener() {

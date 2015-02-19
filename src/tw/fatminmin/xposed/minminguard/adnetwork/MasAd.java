@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class MasAd {
     
     public final static String banner = "mediba.ad.sdk.android.openx.MasAdView";
+    public final static String bannerPrefix = "mediba.ad.sdk.android.openx";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {

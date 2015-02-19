@@ -10,6 +10,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Chartboost {
     
     public final static String banner = "com.chartboost.sdk.Chartboost";
+    public final static String bannerPrefix = "com.chartboost.sdk";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

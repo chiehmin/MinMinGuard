@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class GmsDoubleClick {
     
     public final static String banner = "com.google.android.gms.ads.doubleclick.PublisherAdView";
+    public final static String bannerPrefix = "com.google.android.gms.ads.doubleclick";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

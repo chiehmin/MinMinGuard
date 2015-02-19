@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Inmobi {
     
     public final static String banner = "com.inmobi.monetization.IMBanner";
+    public final static String bannerPrefix = "com.inmobi.monetization";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Flurry {
     
     public final static String banner = "com.flurry.android.FlurryAds";
+    public final static String bannerPrefix = "com.flurry.android";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {

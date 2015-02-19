@@ -12,6 +12,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class Adfurikun {
     
     public final static String banner = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
+    public final static String bannerPrefix = "jp.tjkapp.adfurikunsdk";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
