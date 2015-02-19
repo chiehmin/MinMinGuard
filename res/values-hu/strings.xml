@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MinMinGuard</string>
-    <string name="app_description">A legjobb reklám eltávolító</string>
     <string name="app_version">MinMinGuard verzió: %s</string>
     <string name="app_copyright">Copyright \u00A9 2014 by <i>Chieh-Min Wang(FatMinMin)</i></string>
     <string name="app_about"><b>Ez egy alkalmazás, amivel hirdetéseket távolíthat el különböző hirdetési hálózatokból.
@@ -31,7 +29,6 @@
     
     <string name="settings_enable_log">Naplózás engedélyezése ehhez a programhoz</string>
     <string name="settings_enable_url_filtering_data">Url szűrés engedélyezése WebView adatokban</string>
-    <string name="settings_recursive_remove">Rekurzív eltávolítás engedélyezése üres szülő nézethez (nézet összeomláshoz vezethet)</string>
     <string name="settings_show_system_apps">Rendszer alkalmazások mutatása</string>
     
 </resources>
