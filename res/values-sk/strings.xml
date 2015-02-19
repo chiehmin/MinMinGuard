@@ -20,7 +20,7 @@
     <string name="menu_select_all">Vybrať všetky</string>
     <string name="menu_switch_theme">Zmeniť tému</string>
     
-    <string name="msg_deselecting_all">Rušie výberu všetkých&#8230;</string>
+    <string name="msg_deselecting_all">Rušenie výberu všetkých&#8230;</string>
     <string name="msg_restart_app"><i>Musíte reštartovať aplikáciu, aby sa zmeny prejavili.</i></string>
     <string name="msg_saving_log">Záznam sa ukladá</string>
     <string name="msg_saving_log_complete">Záznam bol uložený do %s</string>
