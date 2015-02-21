@@ -37,12 +37,12 @@ public class Waystorm {
 
             });
 
-            XposedBridge.hookAllMethods(waystormInter, "waystormInter",  new XC_MethodHook() {
+            XposedBridge.hookAllMethods(waystormInter, "loadAd",  new XC_MethodHook() {
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    Util.log(packageName, "Detect facebookInter loadAd in " + packageName);
+                    Util.log(packageName, "Detect waystormInter loadAd in " + packageName);
 
                     if(!test) {
                         param.setResult(new Object());

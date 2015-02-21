@@ -15,12 +15,14 @@ public class Facebook {
     public final static String banner = "com.facebook.ads.AdView";
     public final static String bannerPrefix = "com.facebook.ads";
     public final static String inter = "com.facebook.ads.InterstitialAd";
+    public final static String nativeAd = "com.facebook.ads.NativeAd";
 
     public static boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
         try {
 
             Class<?> facebookBanner = findClass(banner, lpparam.classLoader);
             Class<?> facebookInter = findClass(inter, lpparam.classLoader);
+            Class<?> facebookNativeAd = findClass(nativeAd, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(facebookBanner, "loadAd", new XC_MethodHook() {
 
@@ -49,6 +51,35 @@ public class Facebook {
                     }
                 }
             });
+
+            XposedBridge.hookAllMethods(facebookNativeAd, "loadAd",  new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    Util.log(packageName, "Detect facebookNativeAd loadAd in " + packageName);
+
+                    if(!test) {
+                        param.setResult(new Object());
+                    }
+                }
+            });
+
+            XposedBridge.hookAllMethods(facebookNativeAd, "registerViewForInteraction",  new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    Util.log(packageName, "Detect facebookNativeAd registerViewForInteraction in " + packageName);
+
+                    if(!test) {
+                        View nativeAd = (View) param.args[0];
+                        Main.removeAdView(nativeAd, packageName, true);
+                        param.setResult(new Object());
+                    }
+                }
+            });
+
 
             Util.log(packageName, packageName + " uses facebook");
         }

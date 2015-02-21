@@ -13,13 +13,17 @@ public class MoPub {
     
     public final static String banner = "com.mopub.mobileads.MoPubView";
     public final static String bannerPrefix = "com.mopub.mobileads";
+    public final static String inter = "com.mopub.mobileads.MoPubInterstitial";
+    public final static String nativeAd = "com.mopub.nativeads.MoPubAdAdapter";
     
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 					
-			Class<?> adview = findClass("com.mopub.mobileads.MoPubView", lpparam.classLoader);
+			Class<?> mopubBanner = findClass(banner, lpparam.classLoader);
+            Class<?> mopubInter = findClass(inter, lpparam.classLoader);
+            Class<?> mopubNativeAd = findClass(nativeAd, lpparam.classLoader);
 			
-			XposedBridge.hookAllMethods(adview, "loadAd", new XC_MethodHook() {
+			XposedBridge.hookAllMethods(mopubBanner, "loadAd", new XC_MethodHook() {
 				
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -33,21 +37,36 @@ public class MoPub {
 						}
 					
 					});
-			Class<?> banner = findClass("com.mopub.mobileads.MraidBanner", lpparam.classLoader);
-			XposedBridge.hookAllMethods(banner, "loadBanner", new XC_MethodHook() {
-				
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
-					Util.log(packageName, "Detect MoPub loadBanner in " + packageName);
-					
-					if(!test) {
-						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, packageName, true);
-					}
-				}
-			
-			});
+			;
+
+            XposedBridge.hookAllMethods(mopubInter, "load", new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    Util.log(packageName, "Detect mopubInter load in " + packageName);
+
+                    if(!test) {
+                        param.setResult(new Object());
+                        Main.removeAdView((View) param.thisObject, packageName, true);
+                    }
+                }
+
+            });
+
+            XposedBridge.hookAllMethods(mopubNativeAd, "loadAds",  new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    Util.log(packageName, "Detect mopubNativeAd loadAds in " + packageName);
+
+                    if(!test) {
+                        param.setResult(new Object());
+                    }
+                }
+            });
+
 			Util.log(packageName, packageName + " uses MoPub");
 		}
 		catch(ClassNotFoundError e) {

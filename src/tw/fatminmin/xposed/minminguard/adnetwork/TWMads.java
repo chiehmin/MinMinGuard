@@ -13,12 +13,14 @@ public class TWMads {
     
     public final static String banner = "com.taiwanmobile.pt.adp.view.TWMAdView";
     public final static String bannerPrefix = "com.taiwanmobile.pt.adp.view";
+    public final static String inter = "com.taiwanmobile.pt.adp.view.TWMInterstitialAd";
     
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             
-            Class<?> adView = XposedHelpers.findClass("com.taiwanmobile.pt.adp.view.TWMAdView", lpparam.classLoader);
-            
+            Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
+            Class<?> InterAds = XposedHelpers.findClass(inter, lpparam.classLoader);
+
             XposedBridge.hookAllMethods(adView, "activeAd" ,new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -32,8 +34,8 @@ public class TWMads {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.taiwanmobile.pt.adp.view.TWMAdViewInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "show" ,new XC_MethodHook() {
+
+            XposedBridge.hookAllMethods(InterAds, "loadAd" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     
