@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import tw.fatminmin.xposed.minminguard.adnetwork.Ad2iction;
 import tw.fatminmin.xposed.minminguard.adnetwork.AdMarvel;
 import tw.fatminmin.xposed.minminguard.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.adnetwork.Admob;
@@ -16,6 +17,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.AppBrain;
 import tw.fatminmin.xposed.minminguard.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.adnetwork.Chartboost;
 import tw.fatminmin.xposed.minminguard.adnetwork.Domob;
+import tw.fatminmin.xposed.minminguard.adnetwork.Facebook;
 import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.GmsDoubleClick;
 import tw.fatminmin.xposed.minminguard.adnetwork.Hodo;
@@ -37,6 +39,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.TWMads;
 import tw.fatminmin.xposed.minminguard.adnetwork.Tapfortap;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
+import tw.fatminmin.xposed.minminguard.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod.Train;
@@ -47,6 +50,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.text.Layout;
 import android.util.DisplayMetrics;
@@ -141,16 +145,17 @@ public class Main implements IXposedHookZygoteInit,
     }
     
     static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
-        Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, AppBrain.banner, Bonzai.banner,  
-        Chartboost.banner, Domob.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
+        Ad2iction.banner, Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, AppBrain.banner, Bonzai.banner,
+        Chartboost.banner, Domob.banner, Facebook.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
         Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
         Onelouder.banner, OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
-        Vpon.banner));
-    static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList( Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
-            Chartboost.bannerPrefix, Domob.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
-            Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
-            Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
-            Vpon.bannerPrefix));
+        Vpon.banner, Waystorm.banner));
+    static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList(
+        Ad2iction.bannerPrefix, Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
+        Chartboost.bannerPrefix, Domob.bannerPrefix, Facebook.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
+        Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
+        Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
+        Vpon.bannerPrefix, Waystorm.bannerPrefix));
     static
     {
         bannerPrefix.add("com.google.ads");
@@ -239,6 +244,9 @@ public class Main implements IXposedHookZygoteInit,
         if(Domob.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Domob");
         }
+        if(Facebook.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Facebook");
+        }
         if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Flurry");
         }
@@ -304,6 +312,9 @@ public class Main implements IXposedHookZygoteInit,
         }
         if(Vpon.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Vpon");
+        }
+        if(Waystorm.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Waystorm");
         }
         
         if(networks.size() > 0) {
