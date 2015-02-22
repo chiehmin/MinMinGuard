@@ -19,16 +19,16 @@
     <string name="menu_select_all">Seleccionar Todo</string>
     <string name="menu_switch_theme">Cambiar Tema</string>
     
-    <string name="msg_deselecting_all">deseleccionar todo&#8230;</string>
+    <string name="msg_deselecting_all">Deseleccionar todo&#8230;</string>
     <string name="msg_restart_app"><i>Debes reiniciar esta aplicación para que los cambios surjan efecto.</i></string>
     <string name="msg_saving_log">Guardando bitácora (Log)</string>
     <string name="msg_saving_log_complete">La bitácora (Log) se ha guardado en %s</string>
-    <string name="msg_selecting_all">seleccionando todo&#8230;</string>
+    <string name="msg_selecting_all">Seleccionando todo&#8230;</string>
     
     <string name="settings_enable_log">Activar una bitácora (Log) para esta aplicación</string>
     <string name="settings_enable_url_filtering_data">Activar Filtrado de URL en los datos WebView</string>
-    <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
-    <string name="msg_search">Search</string>
-    <string name="settings_show_system_apps">Show system apps</string>
+    <string name="drawer_minminguard_settings">Ajustes de MinMinGuard</string>
+    <string name="msg_search">Buscar</string>
+    <string name="settings_show_system_apps">Mostrar aplicaciones del sistema</string>
 
 </resources>
