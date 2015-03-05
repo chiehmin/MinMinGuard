@@ -7,6 +7,8 @@ import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
+import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
+import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class _2chMate {
@@ -40,4 +42,18 @@ public class _2chMate {
 		}
 		return true;
 	}
+public static void handleInitPackageResources(InitPackageResourcesParam resparam) {
+        if(!resparam.packageName.equals("jp.co.airfront.android.a2chMate")) {
+            return;
+        }
+        
+        resparam.res.hookLayout("jp.co.airfront.android.a2chMate", "layout", "a2ch_ad", new XC_LayoutInflated() {
+                
+                @Override
+            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
+                liparam.view.setVisibility(View.GONE);
+                liparam.view.getLayoutParams().height = 0;
+            }
+        });
+    }
 }
