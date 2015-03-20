@@ -28,7 +28,8 @@
     <string name="msg_saving_log_complete">Log has been saved to %s</string>
     <string name="msg_search">Search</string>
     <string name="msg_selecting_all">selecting all&#8230;</string>
-    
+
+    <string name="settings_enable_host_blocking">Enable hosts blocking</string>
     <string name="settings_enable_log">Enable logging for this app</string>
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
     <string name="settings_show_system_apps">Show system apps</string>

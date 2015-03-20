@@ -103,12 +103,26 @@ public class CheckBoxAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 View checkBoxView = View.inflate(mContext, R.layout.per_app_settings, null);
+                CheckBox hostBlock = (CheckBox) checkBoxView.findViewById(R.id.enable_host_blocking);
                 CheckBox urlFilter = (CheckBox) checkBoxView.findViewById(R.id.enable_url_filter);
                 CheckBox log = (CheckBox) checkBoxView.findViewById(R.id.enable_log);
-                
+
+                hostBlock.setChecked(pref.getBoolean(key + "_host", false));
                 urlFilter.setChecked(pref.getBoolean(key + "_url", false));
                 log.setChecked(pref.getBoolean(key + "_log", false));
-                
+
+                hostBlock.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        CheckBox cb = (CheckBox) v;
+                        boolean value = cb.isChecked();
+                        pref.edit()
+                                .putBoolean(key + "_host", value)
+                                .commit();
+                    }
+                });
+
                 urlFilter.setOnClickListener(new View.OnClickListener() {
 
                     @Override

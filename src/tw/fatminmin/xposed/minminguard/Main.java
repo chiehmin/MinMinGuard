@@ -54,6 +54,7 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.text.Layout;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -94,7 +95,7 @@ public class Main implements IXposedHookZygoteInit,
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
 
-        urls = new HashSet<String>();
+        urls = new HashSet<>();
         for(String url : sUrls) {
             urls.add(url);
         }
@@ -108,7 +109,12 @@ public class Main implements IXposedHookZygoteInit,
         }
 
         final String packageName = lpparam.packageName;
-        
+
+        if (pref.getBoolean(packageName + "_host", false)) {
+            Util.log(packageName, packageName + " is using host blocking now");
+            HostBlock.block(lpparam);
+        }
+
         Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
         XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
            @Override
