@@ -30,5 +30,6 @@
     <string name="settings_enable_log">Povoliť zaznamenávanie pre túto aplikáciu</string>
     <string name="settings_enable_url_filtering_data">Povoliť filtrovanie URL adries v údajoch zobrazenia webu</string>
     <string name="settings_show_system_apps">Zobraziť systémové aplikácie</string>
+    <string name="settings_auto_enable_new_apps">Automaticky povoliť pre novo nainštalované aplikácie</string>
 
 </resources>
