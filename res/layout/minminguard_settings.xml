@@ -3,13 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <CheckBox
+
+    <Checkbox
         android:id="@+id/show_system_apps"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/settings_show_system_apps" />
-    
+
+    <Checkbox
+        android:id="@+id/auto_enable_new_apps"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/settings_auto_enable_new_apps" />
+
 </LinearLayout>
