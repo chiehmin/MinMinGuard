@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Checkbox
+    <CheckBox
         android:id="@+id/show_system_apps"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:layout_margin="5dp"
         android:text="@string/settings_show_system_apps" />
 
-    <Checkbox
+    <CheckBox
         android:id="@+id/auto_enable_new_apps"
         style="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"

@@ -12,14 +12,6 @@
         android:text="@string/msg_restart_app"
         android:textColor="@color/red" />
 
-    <CheckBox
-        android:id="@+id/enable_host_blocking"
-        style="?android:attr/textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:text="@string/settings_enable_host_blocking" />
-
 	<CheckBox
         android:id="@+id/enable_url_filter"
         style="?android:attr/textAppearanceMedium"

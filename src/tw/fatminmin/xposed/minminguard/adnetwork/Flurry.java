@@ -17,6 +17,7 @@ public class Flurry {
 	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.flurry.android.FlurryAds", lpparam.classLoader);
+            Class<?> nativeAdView = XposedHelpers.findClass("com.flurry.android.ads.FlurryAdNative", lpparam.classLoader);
 			XposedBridge.hookAllMethods(adView, "fetchAd", new XC_MethodHook() {
 				
 				@Override
@@ -43,6 +44,19 @@ public class Flurry {
 				}
 				
 			});
+            XposedBridge.hookAllMethods(nativeAdView, "fetchAd", new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    Util.log(packageName, "Detect FlurryAdNative fetchAd in " + packageName);
+
+                    if(!test) {
+                        param.setResult(new Object());
+                    }
+                }
+
+            });
+
 			Util.log(packageName, packageName + " uses FlurryAds");
 		}
 		catch(ClassNotFoundError e) {
