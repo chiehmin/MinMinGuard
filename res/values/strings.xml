@@ -34,6 +34,7 @@
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
     <string name="settings_show_system_apps">Show system apps</string>
     <string name="settings_auto_enable_new_apps">Automatically enable for newly installed apps</string>
+    <string name="settings_show_apps_with_ads">Show only apps with ads</string>
 
 </resources>
 
