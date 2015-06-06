@@ -92,6 +92,7 @@ public class PrefsFragment extends SherlockFragment {
         List<ApplicationInfo> list = pm.getInstalledApplications(0);
         
         boolean showSystemApp = Settings.uiPref.getBoolean("show_system_apps", false);
+        boolean showAppWithAds = Settings.uiPref.getBoolean("show_apps_with_ads", false);
         
         itemList = new ArrayList<Map<String, Object>>();
         for(ApplicationInfo info : list) {
@@ -103,9 +104,17 @@ public class PrefsFragment extends SherlockFragment {
                 map.put("title", pm.getApplicationLabel(info));
                 map.put("key", info.packageName);
                 map.put("icon", pm.getApplicationIcon(info));
-                map.put("summary", adPref.getString(info.packageName, ""));
+                String ads = adPref.getString(info.packageName, "");
+                map.put("summary", ads);
                 
-                itemList.add(map);
+                if (ads.length > 0) {
+                    itemList.add(map);
+                }
+                else {
+                    if (!showAppWithAds) {
+                        itemList.add(map);
+                    }
+                }
             }
         }
         
