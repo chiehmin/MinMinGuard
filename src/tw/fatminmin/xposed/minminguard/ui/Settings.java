@@ -287,8 +287,8 @@ public class Settings extends SherlockFragmentActivity {
                     public void onClick(DialogInterface dlg, int id) {
                         dlg.dismiss();
                         
-                        if(showSystemApps != uiPref.getBoolean("show_system_apps", false) &&
-                                autoEnableNewApps != uiPref.getBoolean("auto_enable_new_apps", false) && usingPrefFragment ) {
+                        if ((showSystemApps != uiPref.getBoolean("show_system_apps", false) ||
+                                autoEnableNewApps != uiPref.getBoolean("auto_enable_new_apps", false)) && usingPrefFragment ) {
                             prefFragment.refresh();
                         }
                     }
