@@ -21,7 +21,7 @@ public class PackageInstalledReceiver extends BroadcastReceiver {
 				Context.MODE_PRIVATE);
 		boolean autoEnableNewApps = uiPref.getBoolean("auto_enable_new_apps",
 				false);
-		if (autoEnableNewApps) {
+		if (!autoEnableNewApps) {
 			return;
 		}
 		Uri uri = intent.getData();
