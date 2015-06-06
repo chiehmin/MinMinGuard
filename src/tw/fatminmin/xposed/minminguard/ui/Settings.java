@@ -249,9 +249,11 @@ public class Settings extends SherlockFragmentActivity {
 	private void optionMinMinGuardSettings() {
 	    View checkBoxView = View.inflate(this, R.layout.minminguard_settings, null);
 	    CheckBox show_system_apps = (CheckBox) checkBoxView.findViewById(R.id.show_system_apps);
-	    
-	    final boolean original_settings = uiPref.getBoolean("show_system_apps", false);
-	    show_system_apps.setChecked(original_settings);
+	    CheckBox auto_enable_new_apps = (CheckBox) checkBoxView.findViewById(R.id.auto_enable_new_apps);
+	    	    
+	    final boolean showSystemApps = uiPref.getBoolean("show_system_apps", false);
+	    final boolean autoEnableNewApps = uiPref.getBoolean("auto_enable_new_apps", false);
+	    show_system_apps.setChecked(showSystemApps);
 	    show_system_apps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,20 +263,32 @@ public class Settings extends SherlockFragmentActivity {
                     .putBoolean("show_system_apps", value)
                     .commit();
             }
-        });
+            });
+            
+   	    auto_enable_new_apps.setChecked(autoEnableNewApps);
+	    auto_enable_new_apps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                boolean value = cb.isChecked();
+                uiPref.edit()
+                    .putBoolean("auto_enable_new_apps", value)
+                    .commit();
+            }
+            });
 	    
 	    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.title_settings))
+	    builder.setTitle(getString(R.string.title_settings))
                .setIcon(R.drawable.ic_launcher)
                .setView(checkBoxView)
                .setCancelable(false)
-               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+               .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dlg, int id) {
                         dlg.dismiss();
                         
-                        if(original_settings != uiPref.getBoolean("show_system_apps", false) &&
-                                usingPrefFragment ) {
+                        if(showSystemApps != uiPref.getBoolean("show_system_apps", false) &&
+                                autoEnableNewApps != uiPref.getBoolean("auto_enable_new_apps", false) && usingPrefFragment ) {
                             prefFragment.refresh();
                         }
                     }
