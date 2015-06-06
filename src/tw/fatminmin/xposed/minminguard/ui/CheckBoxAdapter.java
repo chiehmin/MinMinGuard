@@ -94,6 +94,7 @@ public class CheckBoxAdapter extends BaseAdapter {
                 ActivityManager am = (ActivityManager) mContext.getSystemService(Activity.ACTIVITY_SERVICE);
                 am.killBackgroundProcesses(key);
                 Intent it = mContext.getPackageManager().getLaunchIntentForPackage(key);
+        	if (it == null) return;
                 it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(it);
             }
