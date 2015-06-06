@@ -250,9 +250,11 @@ public class Settings extends SherlockFragmentActivity {
 	    View checkBoxView = View.inflate(this, R.layout.minminguard_settings, null);
 	    CheckBox show_system_apps = (CheckBox) checkBoxView.findViewById(R.id.show_system_apps);
 	    CheckBox auto_enable_new_apps = (CheckBox) checkBoxView.findViewById(R.id.auto_enable_new_apps);
-	    	    
+	    CheckBox show_apps_with_ads = (CheckBox) checkBoxView.findViewById(R.id.show_apps_with_ads);
+
 	    final boolean showSystemApps = uiPref.getBoolean("show_system_apps", false);
 	    final boolean autoEnableNewApps = uiPref.getBoolean("auto_enable_new_apps", false);
+	    final boolean showAppsWithAds = uiPref.getBoolean("show_apps_with_ads", false);
 	    show_system_apps.setChecked(showSystemApps);
 	    show_system_apps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,6 +278,18 @@ public class Settings extends SherlockFragmentActivity {
                     .commit();
             }
             });
+            
+     	    show_apps_with_ads.setChecked(showAppsWithAds);
+	    show_apps_with_ads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                boolean value = cb.isChecked();
+                uiPref.edit()
+                    .putBoolean("show_apps_with_ads", value)
+                    .commit();
+            }
+            });
 	    
 	    AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    builder.setTitle(getString(R.string.title_settings))
@@ -288,7 +302,8 @@ public class Settings extends SherlockFragmentActivity {
                         dlg.dismiss();
                         
                         if ((showSystemApps != uiPref.getBoolean("show_system_apps", false) ||
-                                autoEnableNewApps != uiPref.getBoolean("auto_enable_new_apps", false)) && usingPrefFragment ) {
+                                autoEnableNewApps != uiPref.getBoolean("auto_enable_new_apps", false) ||
+                                showAppsWithAds != uiPref.getBoolean("show_apps_with_ads", false)) && usingPrefFragment ) {
                             prefFragment.refresh();
                         }
                     }
