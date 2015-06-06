@@ -22,6 +22,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.Flurry;
 import tw.fatminmin.xposed.minminguard.adnetwork.GmsDoubleClick;
 import tw.fatminmin.xposed.minminguard.adnetwork.Hodo;
 import tw.fatminmin.xposed.minminguard.adnetwork.Inmobi;
+import tw.fatminmin.xposed.minminguard.adnetwork.Intowow;
 import tw.fatminmin.xposed.minminguard.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.adnetwork.Madvertise;
 import tw.fatminmin.xposed.minminguard.adnetwork.MasAd;
@@ -37,12 +38,12 @@ import tw.fatminmin.xposed.minminguard.adnetwork.SmartAdserver;
 import tw.fatminmin.xposed.minminguard.adnetwork.Startapp;
 import tw.fatminmin.xposed.minminguard.adnetwork.TWMads;
 import tw.fatminmin.xposed.minminguard.adnetwork.Tapfortap;
+import tw.fatminmin.xposed.minminguard.adnetwork.UnityAds;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
-import tw.fatminmin.xposed.minminguard.custom_mod.Train;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -50,26 +51,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
-import android.hardware.Camera;
 import android.net.Uri;
-import android.text.Layout;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.RelativeLayout;
-import de.robv.android.xposed.IXposedHookInitPackageResources;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Main implements IXposedHookZygoteInit,
@@ -152,13 +147,13 @@ public class Main implements IXposedHookZygoteInit,
     
     static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
         Ad2iction.banner, Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, AppBrain.banner, Bonzai.banner,
-        Chartboost.banner, Domob.banner, Facebook.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, KuAd.banner, mAdserve.banner,
+        Chartboost.banner, Domob.banner, Facebook.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, Intowow.banner, KuAd.banner, mAdserve.banner,
         Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
         Onelouder.banner, OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
         Vpon.banner, Waystorm.banner));
     static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList(
         Ad2iction.bannerPrefix, Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
-        Chartboost.bannerPrefix, Domob.bannerPrefix, Facebook.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
+        Chartboost.bannerPrefix, Domob.bannerPrefix, Facebook.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, Intowow.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
         Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
         Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
         Vpon.bannerPrefix, Waystorm.bannerPrefix));
@@ -265,6 +260,9 @@ public class Main implements IXposedHookZygoteInit,
         if(Inmobi.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Inmobi");
         }
+        if(Intowow.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("Intowow");
+        }
         if(KuAd.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("KuAd");
         }
@@ -313,6 +311,9 @@ public class Main implements IXposedHookZygoteInit,
         if(TWMads.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("TWMads");
         }
+        if(UnityAds.handleLoadPackage(packageName, lpparam, test)) {
+            networks.add("UnityAds");
+        }
         if(Vpadn.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Vpadn");
         }
@@ -344,9 +345,11 @@ public class Main implements IXposedHookZygoteInit,
         OneWeather.handleLoadPackage(packageName, lpparam, false);
     }
 
-    public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
+    public static void removeAdView(final View view, final String packageName, final boolean apiBased, final boolean first, final float heightLimit) {
 
-        if(convertPixelsToDp(view.getHeight()) > 0 && convertPixelsToDp(view.getHeight()) <= 55) {
+        float adHeight = convertPixelsToDp(view.getHeight());
+
+        if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
             LayoutParams params = view.getLayoutParams();
             params.height = 0;
@@ -357,7 +360,7 @@ public class Main implements IXposedHookZygoteInit,
             @Override
             public void onGlobalLayout() {
                 float heightDp = convertPixelsToDp(view.getHeight());
-                if(heightDp <= 55) {
+                if(heightDp <= heightLimit) {
 
                     LayoutParams params = view.getLayoutParams();
                     params.height = 0;
@@ -367,8 +370,17 @@ public class Main implements IXposedHookZygoteInit,
         });
 
         if(view.getParent() != null && view.getParent() instanceof ViewGroup) {
-            removeAdView((View)view.getParent(), packageName, apiBased);
+            float currentLimit = heightLimit;
+            if(first)
+            {
+                currentLimit = Math.max(adHeight + 5, currentLimit);
+            }
+            removeAdView((View)view.getParent(), packageName, apiBased, false, currentLimit);
         }
+    }
+
+    public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
+        removeAdView(view, packageName, apiBased, true, 50);
     }
 
     private static float convertPixelsToDp(float px){
