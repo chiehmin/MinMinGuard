@@ -230,16 +230,12 @@ public class Settings extends SherlockFragmentActivity {
 		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgAbout.setTitle(getString(R.string.title_about));
 		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setCancelable(true);
 		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.ic_launcher);
 		
-		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		String version = Util.getAppVersion(this);
+		if (version != null) {
 			TextView tv = (TextView) dlgAbout.findViewById(R.id.tvVersion);
-			tv.setText(String.format(getString(R.string.app_version), pInfo.versionName));
-		}
-		catch(Exception e) {
-			e.printStackTrace();
+			tv.setText(String.format(getString(R.string.app_version), version));	
 		}
 		
 		dlgAbout.show();
@@ -281,7 +277,6 @@ public class Settings extends SherlockFragmentActivity {
 	    builder.setTitle(getString(R.string.title_settings))
                .setIcon(R.drawable.ic_launcher)
                .setView(checkBoxView)
-               .setCancelable(false)
                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dlg, int id) {
