@@ -18,7 +18,19 @@ public class Util {
     public static XSharedPreferences pref;
     
     
-    final static public String tag = "MinMinGuard_v1.7.1";
+    final static public String TAG = "MinMinGuard";
+    final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
+    
+    static public String getAppVersion(Context context) {
+        String version = "";
+        PackageManager pm = context.getPackageManager();
+        try {
+            version = pm.getPackageInfo(PACKAGE, 0).versionName;
+        } catch (NameNotFoundException e) {
+        }
+        return version;
+    }    
+    
     static public void log(String packageName, String msg) {
         if(pref.getBoolean(packageName + "_log", false)) {
             XposedBridge.log(msg);
