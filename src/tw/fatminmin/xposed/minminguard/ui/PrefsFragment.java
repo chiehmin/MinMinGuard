@@ -107,13 +107,8 @@ public class PrefsFragment extends SherlockFragment {
                 String ads = adPref.getString(info.packageName, "");
                 map.put("summary", ads);
                 
-                if (ads.length > 0) {
+                if (!showAppWithAds || (showAppWithAds && ads.length() > 0)) {
                     itemList.add(map);
-                }
-                else {
-                    if (!showAppWithAds) {
-                        itemList.add(map);
-                    }
                 }
             }
         }
