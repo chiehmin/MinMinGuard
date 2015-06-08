@@ -42,6 +42,7 @@ public class Util {
         am.killBackgroundProcesses(packageName);
 
         Intent it = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (it == null) return;
         it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(it);
     }
