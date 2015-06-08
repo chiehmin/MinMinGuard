@@ -22,7 +22,7 @@ public class Util {
     final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
     
     static public String getAppVersion(Context context) {
-        String version = "";
+        String version = null;
         PackageManager pm = context.getPackageManager();
         try {
             version = pm.getPackageInfo(PACKAGE, 0).versionName;
