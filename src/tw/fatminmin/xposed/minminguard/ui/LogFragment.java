@@ -66,7 +66,7 @@ public class LogFragment extends SherlockFragment {
                 progs.add("logcat");
                 progs.add("-d");
                 progs.add("-s");
-                progs.add(Util.tag);
+                progs.add(Util.TAG);
                 
                 try {
                     Process proc = Runtime.getRuntime().exec(progs.toArray(new String[progs.size()]));

@@ -13,6 +13,11 @@
     <string name="drawer_about">About</string>
     <string name="drawer_log">Log</string>
     <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
+
+    <string name="dialog_title_enable_mmg">Enable MinMinGuard?</string>
+    <string name="dialog_msg_enable_mmg">Advertisement detected. Do you want to enable MinMinGuard for this app?</string>
+    <string name="dialog_btn_enable">Enable now</string>
+    <string name="dialog_btn_no_enable">No, thanks</string>
     
     <string name="title_about">About</string>
     <string name="title_settings">Settings</string>
@@ -34,6 +39,10 @@
     <string name="settings_enable_url_filtering_data">Enable Url filtering in WebView data</string>
     <string name="settings_show_system_apps">Show system apps</string>
     <string name="settings_auto_enable_new_apps">Automatically enable for newly installed apps</string>
+    <string name="title_activity_enable_dialog">EnableDialog</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
 

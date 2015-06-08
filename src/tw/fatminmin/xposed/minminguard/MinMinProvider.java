@@ -1,9 +1,14 @@
 package tw.fatminmin.xposed.minminguard;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,7 +17,6 @@ import android.util.Log;
 public class MinMinProvider extends ContentProvider {
     
     SharedPreferences adPref;
-    
     @Override
     public int delete(Uri arg0, String arg1, String[] arg2) {
         // TODO Auto-generated method stub
@@ -53,10 +57,10 @@ public class MinMinProvider extends ContentProvider {
         Log.d("fatminmin", packageName);
         
         String network = values.getAsString("networks");
-        
+
         adPref.edit()
-            .putString(packageName, network)
-            .commit();
+              .putString(packageName, network)
+              .commit();
         
         return 0;
     }

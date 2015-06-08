@@ -46,9 +46,13 @@ import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.net.Uri;
@@ -114,6 +118,7 @@ public class Main implements IXposedHookZygoteInit,
         XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
            @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+
                 Context context = (Context) param.thisObject;
                 
                 if(pref.getBoolean(packageName, false)) {
@@ -204,7 +209,7 @@ public class Main implements IXposedHookZygoteInit,
 
                 if(isAdView(v.getClass().getName()))
                 {
-                    removeAdView((View) v, packageName, true);
+                    removeAdView(v, packageName, true);
                     Util.log(packageName, "Name based blocking: " + v.getClass().getName());
                 }
 
@@ -214,7 +219,7 @@ public class Main implements IXposedHookZygoteInit,
     
     private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
         
-        List<String> networks = new ArrayList<String>();
+        List<String> networks = new ArrayList<>();
         if(Adfurikun.handleLoadPackage(packageName, lpparam, test)) {
             networks.add("Adfurikun");
         }
@@ -337,7 +342,20 @@ public class Main implements IXposedHookZygoteInit,
             ContentValues values = new ContentValues();
             values.put("networks", sb.toString());
             resolver.update(uri, values, null, null);
+
+            if(test && pref.getBoolean(packageName + "_first", true)) {
+                launchEnableDialog(packageName, context);
+            }
         }
+    }
+
+    private static void launchEnableDialog(final String packageName, final Context context) {
+        Util.log("fatminmin", "launch dialog for " + packageName);
+
+        Intent it = new Intent();
+        it.setComponent(new ComponentName(MY_PACKAGE_NAME, MY_PACKAGE_NAME + ".ui.EnableDialog"));
+        it.putExtra("pkgName", packageName);
+        context.startActivity(it);
     }
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
