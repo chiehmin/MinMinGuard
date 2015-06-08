@@ -19,5 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:text="@string/settings_auto_enable_new_apps" />
+        
+    <CheckBox
+        android:id="@+id/show_apps_with_ads"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/settings_show_apps_with_ads" />
 
 </LinearLayout>
