@@ -33,7 +33,8 @@ public class PrefsFragment extends SherlockFragment {
     private List<Map<String, Object>> itemList;
     private ViewGroup root;
     private SharedPreferences adPref;
-    
+
+    static private final int SHOW_ICONS_APPS_LIMIT = 500;
     public void refresh() {
         setupAppList();
         mAdapter = new CheckBoxAdapter(getActivity(), itemList);
@@ -92,6 +93,7 @@ public class PrefsFragment extends SherlockFragment {
         List<ApplicationInfo> list = pm.getInstalledApplications(0);
         
         boolean showSystemApp = Settings.uiPref.getBoolean("show_system_apps", false);
+        boolean showAppIcons = !showSystemApp || list.size() <= SHOW_ICONS_APPS_LIMIT;
         
         itemList = new ArrayList<Map<String, Object>>();
         for(ApplicationInfo info : list) {
@@ -102,7 +104,9 @@ public class PrefsFragment extends SherlockFragment {
                 
                 map.put("title", pm.getApplicationLabel(info));
                 map.put("key", info.packageName);
-                map.put("icon", pm.getApplicationIcon(info));
+                if (showAppIcons) {
+                    map.put("icon", pm.getApplicationIcon(info));
+                }
                 map.put("summary", adPref.getString(info.packageName, ""));
                 
                 itemList.add(map);

@@ -77,8 +77,14 @@ public class CheckBoxAdapter extends BaseAdapter {
 		
 		title.setText(sTitle);
 		summary.setText(sSummary);
-		icon.setImageDrawable(dIcon);
-		
+
+		if (dIcon != null) {
+		    icon.setImageDrawable(dIcon);
+		}
+		else {
+		    icon.setVisibility(View.GONE);	
+		}
+
 		if(pref.getBoolean(key, false)) {
 		    checkBox.setChecked(true);
 		    imgEdit.setVisibility(View.VISIBLE);
