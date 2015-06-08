@@ -93,7 +93,7 @@ public class PrefsFragment extends SherlockFragment {
         List<ApplicationInfo> list = pm.getInstalledApplications(0);
         
         boolean showSystemApp = Settings.uiPref.getBoolean("show_system_apps", false);
-        boolean showAppIcons = !showSystemApp || (list.size() <= SHOW_ICONS_APPS_LIMIT;
+        boolean showAppIcons = !showSystemApp || (list.size() <= SHOW_ICONS_APPS_LIMIT);
         
         itemList = new ArrayList<Map<String, Object>>();
         for(ApplicationInfo info : list) {
