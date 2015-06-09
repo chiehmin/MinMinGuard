@@ -77,7 +77,7 @@ public class Settings extends SherlockFragmentActivity {
 		String[] drawer_items = {getString(R.string.drawer_app_settings), 
 		                         getString(R.string.drawer_log),
 		                         getString(R.string.drawer_minminguard_settings), 
-		                         getString(R.string.drawer_minminguard_help), 
+		                         getString(R.string.drawer_help), 
 		                         getString(R.string.drawer_about)}; 
 		
 		mDrawerList.setAdapter(new ArrayAdapter<String>(Settings.this,
