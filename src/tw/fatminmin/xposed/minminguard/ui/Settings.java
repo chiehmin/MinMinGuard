@@ -77,6 +77,7 @@ public class Settings extends SherlockFragmentActivity {
 		String[] drawer_items = {getString(R.string.drawer_app_settings), 
 		                         getString(R.string.drawer_log),
 		                         getString(R.string.drawer_minminguard_settings), 
+		                         getString(R.string.drawer_minminguard_help), 
 		                         getString(R.string.drawer_about)}; 
 		
 		mDrawerList.setAdapter(new ArrayAdapter<String>(Settings.this,
@@ -104,9 +105,12 @@ public class Settings extends SherlockFragmentActivity {
 				case 2:
 				    optionMinMinGuardSettings();
 				    break;
-				case 3:
-					optionAbout();
-					break;
+				case 2:
+				    optionHelp();
+				    break;
+				case 4:
+				    optionAbout();
+				    break;
 				}
 				if(fragment != null) {
 				    mDrawerLayout.closeDrawer(mDrawerList);
@@ -240,6 +244,14 @@ public class Settings extends SherlockFragmentActivity {
 		
 		dlgAbout.show();
 		
+	}
+	
+	private void optionHelp() {
+		String xdaLink = "http://forum.xda-developers.com/xposed/modules/xposed-minminguard-v1-7-0-cancelled-t2597332";
+		Intent openHelp = new Intent(Intent.ACTION_VIEW);
+		openHelp.setData(Uri.parse(xdaLink));
+		openHelp.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(openHelp);
 	}
 	
 	private void optionMinMinGuardSettings() {
