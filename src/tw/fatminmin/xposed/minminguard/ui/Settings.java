@@ -105,7 +105,7 @@ public class Settings extends SherlockFragmentActivity {
 				case 2:
 				    optionMinMinGuardSettings();
 				    break;
-				case 2:
+				case 3:
 				    optionHelp();
 				    break;
 				case 4:
@@ -168,11 +168,11 @@ public class Settings extends SherlockFragmentActivity {
 	    
 	    if(usingPrefFragment) {
 	        menu.findItem(R.id.select_all).setVisible(true);
-            menu.findItem(R.id.save_log).setVisible(false);
+        	menu.findItem(R.id.save_log).setVisible(false);
 	    }
 	    else {
 	        menu.findItem(R.id.select_all).setVisible(false);
-            menu.findItem(R.id.save_log).setVisible(true);
+            	menu.findItem(R.id.save_log).setVisible(true);
 	    }
 	    
 	    return super.onPrepareOptionsMenu(menu);
