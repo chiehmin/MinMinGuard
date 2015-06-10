@@ -13,7 +13,7 @@
     <string name="drawer_minminguard_settings">Nastavenia MinMinGuard</string>
     
     <string name="dialog_title_enable_mmg">Povoliť MinMinGuard</string>
-    <string name="dialog_msg_enable_mmg">Zistená reklama. Chcete povoliť MinMinGuard pre túto aplikáciu?</string>
+    <string name="dialog_msg_enable_mmg">Zistená reklama. Chcete povoliť MinMinGuard pre %s?</string>
     <string name="dialog_btn_enable">Povoliť teraz</string>
     <string name="dialog_btn_no_enable">Nie, ďakujem</string>
 
