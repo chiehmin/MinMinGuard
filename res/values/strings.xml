@@ -15,7 +15,7 @@
     <string name="drawer_minminguard_settings">MinMinGuard Settings</string>
 
     <string name="dialog_title_enable_mmg">Enable MinMinGuard?</string>
-    <string name="dialog_msg_enable_mmg">Advertisement detected. Do you want to enable MinMinGuard for this app?</string>
+    <string name="dialog_msg_enable_mmg">Advertisement detected. Do you want to enable MinMinGuard for %s?</string>
     <string name="dialog_btn_enable">Enable now</string>
     <string name="dialog_btn_no_enable">No, thanks</string>
     
