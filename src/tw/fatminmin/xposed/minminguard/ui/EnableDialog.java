@@ -41,11 +41,11 @@ public class EnableDialog extends Activity {
         
         if (ai == null) return;
         String applicationName = (String) pm.getApplicationLabel(ai);
-        String message = context.getString(R.string.dialog_msg_enable_mmg, applicationName);
+        String enableMsg = context.getString(R.string.dialog_msg_enable_mmg, applicationName);
     
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_title_enable_mmg)
-                .setMessage(R.string.dialog_msg_enable_mmg)
+                .setMessage(enableMsg)
                 .setPositiveButton(R.string.dialog_btn_enable, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
