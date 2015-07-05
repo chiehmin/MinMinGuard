@@ -13,6 +13,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -73,11 +75,19 @@ public class CheckBoxAdapter extends BaseAdapter {
 		final String sTitle = (String) mItemList.get(position).get("title");
 		final String sSummary = (String) mItemList.get(position).get("summary");
 		final String key = (String) mItemList.get(position).get("key");
-		final Drawable dIcon = (Drawable) mItemList.get(position).get("icon");
+        final Drawable dIcon;
+
+        try {
+            PackageManager pm = mContext.getPackageManager();
+            dIcon = pm.getApplicationIcon(key);
+            icon.setImageDrawable(dIcon);
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
 		
 		title.setText(sTitle);
 		summary.setText(sSummary);
-		icon.setImageDrawable(dIcon);
+
 		
 		if(pref.getBoolean(key, false)) {
 		    checkBox.setChecked(true);

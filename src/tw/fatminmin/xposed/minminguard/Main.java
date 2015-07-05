@@ -81,12 +81,13 @@ public class Main implements IXposedHookZygoteInit,
     public static Set<String> urls;
     public static Resources res;
 
+
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
         
         pref = new XSharedPreferences(MY_PACKAGE_NAME);
         Util.pref = pref;
-        
+
         MODULE_PATH = startupParam.modulePath;
 
         res = XModuleResources.createInstance(MODULE_PATH, null);
@@ -344,7 +345,10 @@ public class Main implements IXposedHookZygoteInit,
             resolver.update(uri, values, null, null);
 
             if(test && pref.getBoolean(packageName + "_first", true)) {
-                launchEnableDialog(packageName, context);
+                pref.reload();
+                if(pref.getBoolean(packageName + "_first", true)) {
+                    launchEnableDialog(packageName, context);
+                }
             }
         }
     }

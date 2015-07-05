@@ -103,7 +103,6 @@ public class PrefsFragment extends SherlockFragment {
                 
                 map.put("title", pm.getApplicationLabel(info));
                 map.put("key", info.packageName);
-                map.put("icon", pm.getApplicationIcon(info));
                 String ads = adPref.getString(info.packageName, "");
                 map.put("summary", ads);
                 
