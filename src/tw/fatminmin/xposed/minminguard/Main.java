@@ -42,6 +42,7 @@ import tw.fatminmin.xposed.minminguard.adnetwork.UnityAds;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.adnetwork.Waystorm;
+import tw.fatminmin.xposed.minminguard.adnetwork.Yahoo;
 import tw.fatminmin.xposed.minminguard.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.custom_mod._2chMate;
@@ -156,13 +157,13 @@ public class Main implements IXposedHookZygoteInit,
         Chartboost.banner, Domob.banner, Facebook.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, Inmobi.banner, Intowow.banner, KuAd.banner, mAdserve.banner,
         Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
         Onelouder.banner, OpenX.banner, SmartAdserver.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner, 
-        Vpon.banner, Waystorm.banner));
+        Vpon.banner, Waystorm.banner, Yahoo.banner));
     static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList(
         Ad2iction.bannerPrefix, Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
         Chartboost.bannerPrefix, Domob.bannerPrefix, Facebook.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, Inmobi.bannerPrefix, Intowow.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
         Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
         Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
-        Vpon.bannerPrefix, Waystorm.bannerPrefix));
+        Vpon.bannerPrefix, Waystorm.bannerPrefix, Yahoo.bannerPrefix));
     static
     {
         bannerPrefix.add("com.google.ads");
