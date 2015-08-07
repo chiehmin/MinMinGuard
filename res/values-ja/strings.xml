@@ -11,10 +11,15 @@
     <string name="drawer_about">情報</string>
     <string name="drawer_log">ログ</string>
     <string name="drawer_minminguard_settings">MinMinGuard設定</string>
-    
+
+    <string name="dialog_title_enable_mmg">MinMinGuardを有効にしますか？</string>
+    <string name="dialog_msg_enable_mmg">広告が検出されました。このアプリに対してMinMinGuardを有効にしますか？</string>
+    <string name="dialog_btn_enable">すぐに有効化する</string>
+    <string name="dialog_btn_no_enable">今は有効化しない</string>
+
     <string name="title_about">情報</string>
     <string name="title_settings">設定</string>
-    
+
     <string name="menu_refresh">再読み込み</string>
     <string name="menu_save_log">ログの保存</string>
     <string name="menu_select_all">全て選択</string>
@@ -26,10 +31,13 @@
     <string name="msg_saving_log_complete">ログを%sに保存しました</string>
     <string name="msg_search">検索</string>
     <string name="msg_selecting_all">全て選択中&#8230;</string>
-    
+
+    <string name="settings_enable_host_blocking">ホストによるブロックを有効化</string>
     <string name="settings_enable_log">このアプリのログを有効化</string>
     <string name="settings_enable_url_filtering_data">WebViewデータでURLフィルタリングする</string>
     <string name="settings_show_system_apps">システムアプリを表示</string>
+    <string name="settings_auto_enable_new_apps">新規インストールアプリに対して自動的に有効化</string>
+    <string name="settings_show_apps_with_ads">広告を含むアプリのみを表示</string>
 
 </resources>
 
