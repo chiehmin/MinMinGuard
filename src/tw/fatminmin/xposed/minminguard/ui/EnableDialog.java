@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,10 +31,21 @@ public class EnableDialog extends Activity {
         pref.edit()
                 .putBoolean(requestPkg + "_first", false)
                 .commit();
-
+        
+        PackageManager pm = context.getPackageManager();
+        ApplicationInfo ai = null;
+        try {
+            ai = pm.getApplicationInfo(requestPkg, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        
+        if (ai == null) return;
+        String applicationName = (String) pm.getApplicationLabel(ai);
+        String enableMsg = context.getString(R.string.dialog_msg_enable_mmg, applicationName);
+    
         new AlertDialog.Builder(this)
                 .setTitle(R.string.dialog_title_enable_mmg)
-                .setMessage(R.string.dialog_msg_enable_mmg)
+                .setMessage(enableMsg)
                 .setPositiveButton(R.string.dialog_btn_enable, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
