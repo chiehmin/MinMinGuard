@@ -9,6 +9,7 @@
     
     <string name="drawer_app_settings">Nastavenia</string>
     <string name="drawer_about">O aplikácii</string>
+    <string name="drawer_help">Pomoc</string>
     <string name="drawer_log">Záznam</string>
     <string name="drawer_minminguard_settings">Nastavenia MinMinGuard</string>
     
