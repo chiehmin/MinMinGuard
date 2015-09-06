@@ -78,7 +78,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     public static String MODULE_PATH = null;
-    public static XSharedPreferences pref;
+    public static XSharedPreferences pref, uiPref;
     public static Set<String> urls;
     public static Resources res;
 
@@ -87,6 +87,7 @@ public class Main implements IXposedHookZygoteInit,
     public void initZygote(StartupParam startupParam) throws Throwable {
         
         pref = new XSharedPreferences(MY_PACKAGE_NAME);
+        uiPref = new XSharedPreferences(MY_PACKAGE_NAME, "ui_preference");
         Util.pref = pref;
 
         MODULE_PATH = startupParam.modulePath;
@@ -355,8 +356,8 @@ public class Main implements IXposedHookZygoteInit,
     }
 
     private static void launchEnableDialog(final String packageName, final Context context) {
-        Util.log("fatminmin", "launch dialog for " + packageName);
-
+        Util.log(Util.TAG, "launch dialog for " + packageName);
+        if (uiPref.getBoolean("auto_enable_new_apps", false)) return;
         Intent it = new Intent();
         it.setComponent(new ComponentName(MY_PACKAGE_NAME, MY_PACKAGE_NAME + ".ui.EnableDialog"));
         it.putExtra("pkgName", packageName);
