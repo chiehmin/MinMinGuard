@@ -147,7 +147,6 @@ public class CheckBoxAdapter extends BaseAdapter {
                     builder.setTitle(mContext.getString(R.string.title_settings))
                            .setIcon(R.drawable.ic_launcher)
                            .setView(checkBoxView)
-                           .setCancelable(false)
                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dlg, int id) {
