@@ -44,8 +44,10 @@ public class EnableDialog extends Activity {
                         ActivityManager am = (ActivityManager) getSystemService(Activity.ACTIVITY_SERVICE);
                         am.killBackgroundProcesses(requestPkg);
                         Intent it = getPackageManager().getLaunchIntentForPackage(requestPkg);
-                        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(it);
+                        if (it != null) {
+                            it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(it);
+                        }
                         finish();
                     }
                 })
