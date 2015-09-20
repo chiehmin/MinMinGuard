@@ -345,8 +345,11 @@ public class Main implements IXposedHookZygoteInit,
             }
             ContentValues values = new ContentValues();
             values.put("networks", sb.toString());
-            resolver.update(uri, values, null, null);
-
+            try {
+                resolver.update(uri, values, null, null);
+            }
+            catch (IllegalArgumentException e){
+            }
             if(test && pref.getBoolean(packageName + "_first", true)) {
                 pref.reload();
                 if(pref.getBoolean(packageName + "_first", true)) {
