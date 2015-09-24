@@ -10,9 +10,16 @@
     <string name="drawer_app_settings">Ajustes de la Aplicación</string>
     <string name="drawer_about">Acerca de</string>
     <string name="drawer_log">Bitácora (log)</string>
+    <string name="drawer_minminguard_settings">MinMinGuard Configuración</string>
+    
+    <string name="dialog_title_enable_mmg">¿Habilitar MinMinGuard?</string>
+    <string name="dialog_msg_enable_mmg">Publicidad detectada.¿Quieres habilitar MinMinGuard para esta aplicación?</string>
+    <string name="dialog_btn_enable">Habilitarlo ahora</string>
+    <string name="dialog_btn_no_enable">No, Gracias</string>
     
     <string name="title_about">Acerca de</string>
     <string name="title_settings">Ajustes</string>
+    <string name="title_activity_enable_dialog">Habilitar dialogos</string>
     
     <string name="menu_refresh">Refrescar</string>
     <string name="menu_save_log">Guardar bitácora (log)</string>
@@ -23,12 +30,14 @@
     <string name="msg_restart_app"><i>Debes reiniciar esta aplicación para que los cambios surjan efecto.</i></string>
     <string name="msg_saving_log">Guardando bitácora (Log)</string>
     <string name="msg_saving_log_complete">La bitácora (Log) se ha guardado en %s</string>
+    <string name="msg_search">Buscar</string>
     <string name="msg_selecting_all">Seleccionando todo&#8230;</string>
     
+    <string name="settings_enable_host_blocking">Habilitar bloqueo de hosts</string>
     <string name="settings_enable_log">Activar una bitácora (Log) para esta aplicación</string>
     <string name="settings_enable_url_filtering_data">Activar Filtrado de URL en los datos WebView</string>
-    <string name="drawer_minminguard_settings">Ajustes de MinMinGuard</string>
-    <string name="msg_search">Buscar</string>
     <string name="settings_show_system_apps">Mostrar aplicaciones del sistema</string>
+    <string name="settings_auto_enable_new_apps">Automaticamente habilitar para nuevas aplicaciones instaladas</string>
+    <string name="settings_show_apps_with_ads">Mostrar solo aplicaciones con publicidad</string>
 
 </resources>
