@@ -1,4 +1,0 @@
-<resources>
-    <attr name="icon_cancel" format="reference" />
-    <attr name="icon_search" format="reference" />
-</resources>
