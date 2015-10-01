@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.ui.fragments;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,7 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
@@ -73,9 +77,24 @@ public class MainFragment extends Fragment {
     }
 
     private void updateAppList() {
-        PackageManager pm = getActivity().getPackageManager();
+        final PackageManager pm = getActivity().getPackageManager();
         mAppList.clear();
-        mAppList.addAll(pm.getInstalledPackages(0));
+
+        List<PackageInfo> list = pm.getInstalledPackages(0);
+        for (PackageInfo info : list) {
+            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                mAppList.add(info);
+            }
+        }
+
+        Collections.sort(mAppList, new Comparator<PackageInfo>() {
+            @Override
+            public int compare(PackageInfo lhs, PackageInfo rhs) {
+                String s1 = (String) lhs.applicationInfo.loadLabel(pm);
+                String s2 = (String) rhs.applicationInfo.loadLabel(pm);
+                return s1.compareToIgnoreCase(s2);
+            }
+        });
     }
 
 }
