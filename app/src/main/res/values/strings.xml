@@ -2,5 +2,6 @@
     <string name="app_name">MinMinGuard</string>
     <string name="action_settings">Settings</string>
 
+    <string name="action_search">search</string>
     <string name="msg_xposed_not_enabled">Xposed is not enabled</string>
 </resources>
