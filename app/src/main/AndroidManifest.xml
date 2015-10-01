@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="minminguard.xposed.fatminmin.tw.minminguard" >
+    package="tw.fatminmin.xposed.minminguard" >
 
     <application
         android:allowBackup="true"

@@ -1,4 +1,4 @@
-package minminguard.xposed.fatminmin.tw.minminguard;
+package tw.fatminmin.xposed.minminguard;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

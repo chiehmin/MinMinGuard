@@ -1,4 +1,4 @@
-package minminguard.xposed.fatminmin.tw.minminguard;
+package tw.fatminmin.xposed.minminguard;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
