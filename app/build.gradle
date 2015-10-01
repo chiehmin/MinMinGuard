@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "tw.fatminmin.xposed.minminguard"
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -24,4 +24,6 @@ dependencies {
     provided files('lib/XposedBridgeApi-20150213.jar')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:support-v4:23.0.1'
+    compile 'com.android.support:cardview-v7:+'
+    compile 'com.android.support:recyclerview-v7:+'
 }

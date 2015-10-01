@@ -8,7 +8,18 @@
     <TextView
         android:id="@+id/txt_xposed_enable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="" />
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="@color/red"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/msg_xposed_not_enabled" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/txt_xposed_enable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
