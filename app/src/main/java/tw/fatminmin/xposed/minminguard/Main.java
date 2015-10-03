@@ -127,7 +127,7 @@ public class Main implements IXposedHookZygoteInit,
 
                 Context context = (Context) param.thisObject;
                 
-                if(pref.getBoolean(packageName, false) || true) {
+                if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
                     adNetwork(packageName, lpparam, false, context);
                     appSpecific(packageName, lpparam);
 
@@ -144,7 +144,7 @@ public class Main implements IXposedHookZygoteInit,
                 }
             }  
         });    
-        if(pref.getBoolean(packageName, false) || true) {
+        if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
             XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
