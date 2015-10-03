@@ -3,6 +3,7 @@
     package="tw.fatminmin.xposed.minminguard" >
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -27,6 +28,10 @@
             android:name="xposeddescription"
             android:value="" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="11b3bd0c3467e4848618141b36a73619c7ef4843" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
