@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
+
+    private SharedPreferences mUiPref;
 
     private NavigationView.OnNavigationItemSelectedListener mNavListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -52,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        showIntro();
+        mUiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
+
+        if (mUiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
+            mUiPref.edit()
+                    .putBoolean(Common.KEY_FIRST_TIME, false)
+                    .commit();
+            showIntro();
+        }
 
         setContentView(R.layout.activity_main);
         

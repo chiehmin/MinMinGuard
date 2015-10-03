@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +47,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         super();
         mContext = context;
         mFilteredList = mAppList = list;
-        mPref = mContext.getSharedPreferences(Common.PREFS, Context.MODE_WORLD_READABLE);
+        mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
     }
 
     public void setAppList(List<PackageInfo> list) {
