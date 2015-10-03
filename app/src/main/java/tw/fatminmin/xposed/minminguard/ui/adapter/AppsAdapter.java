@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 
 /**
@@ -86,6 +87,13 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
         holder.imgAppIcon.setImageDrawable(appIcon);
         holder.txtAppName.setText(appName);
+
+        if (mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false)) {
+            holder.switchEnable.setVisibility(View.GONE);
+        } else {
+            holder.switchEnable.setVisibility(View.VISIBLE);
+        }
+
         holder.switchEnable.setChecked(mPref.getBoolean(pkgName, false));
         holder.switchEnable.setOnClickListener(new View.OnClickListener() {
             @Override

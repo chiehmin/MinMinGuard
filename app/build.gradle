@@ -8,8 +8,8 @@ android {
         applicationId "tw.fatminmin.xposed.minminguard"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 37
+        versionName "2.0 alpha2"
     }
     buildTypes {
         release {
@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:design:+'
 }

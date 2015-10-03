@@ -25,11 +25,11 @@
     
     <Button
         android:id="@+id/btn_mode"
-        android:text="MANUAL"
         android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/blue"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        tools:text="@string/msg_mode_manual" />
 
 </RelativeLayout>

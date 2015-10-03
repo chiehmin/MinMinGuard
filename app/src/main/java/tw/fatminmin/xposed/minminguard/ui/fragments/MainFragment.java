@@ -1,10 +1,12 @@
 package tw.fatminmin.xposed.minminguard.ui.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import tw.fatminmin.xposed.minminguard.ui.adapter.AppsAdapter;
@@ -34,12 +38,26 @@ public class MainFragment extends Fragment {
     private Context mContext;
 
     private TextView mTxtXposedEnabled;
+    private Button mBtnMode;
 
     private RecyclerView mRecyclerView;
     private AppsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<PackageInfo> mAppList;
+    private SharedPreferences mPref;
 
+
+    private View.OnClickListener btnModeClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Boolean autoMode = !mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false);
+            mBtnMode.setText(autoMode ? R.string.msg_mode_auto : R.string.msg_mode_manual);
+            mPref.edit()
+                    .putBoolean(Common.KEY_AUTO_MODE_ENABLED, autoMode)
+                    .commit();
+            mAdapter.notifyDataSetChanged();
+        }
+    };
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -54,6 +72,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mContext = getActivity();
+        mPref = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
     @Override
@@ -84,11 +103,18 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mTxtXposedEnabled = (TextView) view.findViewById(R.id.txt_xposed_enable);
+        mBtnMode = (Button) view.findViewById(R.id.btn_mode);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
         if (!Util.xposedEnabled()) {
             mTxtXposedEnabled.setVisibility(View.VISIBLE);
         }
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        Boolean autoMode = mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false);
+        mBtnMode.setText(autoMode ? R.string.msg_mode_auto : R.string.msg_mode_manual);
+        mBtnMode.setOnClickListener(btnModeClick);
+
+
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
 

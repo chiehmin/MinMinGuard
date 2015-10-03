@@ -4,4 +4,6 @@
 
     <string name="action_search">search</string>
     <string name="msg_xposed_not_enabled">Xposed is not enabled</string>
+    <string name="msg_mode_manual">Manual</string>
+    <string name="msg_mode_auto">Auto</string>
 </resources>
