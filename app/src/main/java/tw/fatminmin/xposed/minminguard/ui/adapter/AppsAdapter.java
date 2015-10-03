@@ -48,7 +48,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         super();
         mContext = context;
         mFilteredList = mAppList = list;
-        mPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mPref = mContext.getSharedPreferences(Common.PREFS, Context.MODE_WORLD_READABLE);
     }
 
     public void setAppList(List<PackageInfo> list) {

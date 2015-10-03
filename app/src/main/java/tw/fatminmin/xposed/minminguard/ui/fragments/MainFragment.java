@@ -72,7 +72,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         mContext = getActivity();
-        mPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        mPref = mContext.getSharedPreferences(Common.PREFS, Context.MODE_WORLD_READABLE);
     }
 
     @Override

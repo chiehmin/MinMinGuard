@@ -87,7 +87,8 @@ public class Main implements IXposedHookZygoteInit,
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
 
-        pref = new XSharedPreferences(MY_PACKAGE_NAME);
+        pref = new XSharedPreferences(MY_PACKAGE_NAME, Common.PREFS);
+        pref.makeWorldReadable();
         Util.pref = pref;
 
         MODULE_PATH = startupParam.modulePath;
@@ -112,6 +113,7 @@ public class Main implements IXposedHookZygoteInit,
         }
 
         pref.reload();
+        XposedBridge.log(String.valueOf(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false)));
 
         final String packageName = lpparam.packageName;
 
