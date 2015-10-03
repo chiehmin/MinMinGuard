@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import tw.fatminmin.xposed.minminguard.R;
+import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawers();
             switch (menuItem.getItemId()) {
                 case R.id.action_settings:
+                    SettingsDialogFragment.newInstance().show(getSupportFragmentManager(), "dialog");
+                    break;
+                case R.id.action_tutorial:
+                    showIntro();
                     break;
                 case R.id.action_donate:
                     Intent it = new Intent(Intent.ACTION_VIEW,
@@ -38,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void showIntro() {
+        Intent it = new Intent(this, MinMinGuardIntro.class);
+        startActivity(it);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        showIntro();
+
         setContentView(R.layout.activity_main);
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
