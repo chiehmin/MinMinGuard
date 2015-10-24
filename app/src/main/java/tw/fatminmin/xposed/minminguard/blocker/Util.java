@@ -7,14 +7,18 @@ import java.io.OutputStreamWriter;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
+import tw.fatminmin.xposed.minminguard.Common;
 
 public class Util {
     
@@ -81,5 +85,14 @@ public class Util {
                 }
             }
         });
+    }
+    static public void notifyAdNetwork(Context context, String pkgName, String adNetwork) {
+        ContentResolver resolver = context.getContentResolver();
+        Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+
+        ContentValues values = new ContentValues();
+        values.put(Common.KEY_PKG_NAME, pkgName);
+        values.put(Common.KEY_NETWORK, adNetwork);
+        resolver.update(uri, values, null, null);
     }
 }

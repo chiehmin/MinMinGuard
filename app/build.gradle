@@ -43,6 +43,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.android.support:design:+'
     compile 'com.github.paolorotolo:appintro:3.2.0'
+    compile 'de.greenrobot:greendao:2.0.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true;
     }

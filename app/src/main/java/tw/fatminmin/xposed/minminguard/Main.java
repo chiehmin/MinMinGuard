@@ -113,7 +113,6 @@ public class Main implements IXposedHookZygoteInit,
         }
 
         pref.reload();
-        XposedBridge.log(String.valueOf(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false)));
 
         final String packageName = lpparam.packageName;
 
@@ -226,147 +225,115 @@ public class Main implements IXposedHookZygoteInit,
     }
     
     private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
-        
-        List<String> networks = new ArrayList<>();
+
         if(Adfurikun.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Adfurikun");
+            Util.notifyAdNetwork(context, packageName, "Adfurikun");
         }
         if(AdMarvel.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("AdMarvel");
+            Util.notifyAdNetwork(context, packageName, "AdMarvel");
         }
         if(Admob.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("AdMob");
+            Util.notifyAdNetwork(context, packageName, "AdMob");
         }
         if(AdmobGms.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("AdMobGms");
+            Util.notifyAdNetwork(context, packageName, "AdMobGms");
         }
         if(Amazon.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Amazon");
+            Util.notifyAdNetwork(context, packageName, "Amazon");
         }
         if(Amobee.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Amobee");
+            Util.notifyAdNetwork(context, packageName, "Amobee");
         }
         if(AppBrain.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("AppBrain");
+            Util.notifyAdNetwork(context, packageName, "AppBrain");
         }
         if(Bonzai.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Bonzai");
+            Util.notifyAdNetwork(context, packageName, "Bonzai");
         }
         if(Chartboost.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Chartboost");
+            Util.notifyAdNetwork(context, packageName, "Chartboost");
         }
         if(Domob.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Domob");
+            Util.notifyAdNetwork(context, packageName, "Domob");
         }
         if(Facebook.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Facebook");
+            Util.notifyAdNetwork(context, packageName, "Facebook");
         }
         if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Flurry");
+            Util.notifyAdNetwork(context, packageName, "Flurry");
         }
         if(GmsDoubleClick.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("GmsDoubleClick");
+            Util.notifyAdNetwork(context, packageName, "GmsDoubleClick");
         }
         if(Hodo.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("HODo");
+            Util.notifyAdNetwork(context, packageName, "HODo");
         }
         if(Inmobi.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Inmobi");
+            Util.notifyAdNetwork(context, packageName, "Inmobi");
         }
         if(Intowow.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Intowow");
+            Util.notifyAdNetwork(context, packageName, "Intowow");
         }
         if(KuAd.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("KuAd");
+            Util.notifyAdNetwork(context, packageName, "KuAd");
         }
         if(mAdserve.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("mAdserve");
+            Util.notifyAdNetwork(context, packageName, "mAdserve");
         }
         if(Madvertise.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Madvertise");
+            Util.notifyAdNetwork(context, packageName, "Madvertise");
         }
         if(MasAd.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("MasAd");
+            Util.notifyAdNetwork(context, packageName, "MasAd");
         }
         if(MdotM.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("MdotM");
+            Util.notifyAdNetwork(context, packageName, "MdotM");
         }
         if(Millennial.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Millennial");
+            Util.notifyAdNetwork(context, packageName, "Millennial");
         }
         if(Mobclix.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Mobclix");
+            Util.notifyAdNetwork(context, packageName, "Mobclix");
         }
         if(MoPub.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("MoPub");
+            Util.notifyAdNetwork(context, packageName, "MoPub");
         }
         if(Nend.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Nend");
+            Util.notifyAdNetwork(context, packageName, "Nend");
         }
         if(Og.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Og");
+            Util.notifyAdNetwork(context, packageName, "Og");
         }
         if(Onelouder.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Onelouder");
+            Util.notifyAdNetwork(context, packageName, "Onelouder");
         }
         if(OpenX.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("OpenX");
+            Util.notifyAdNetwork(context, packageName, "OpenX");
         }
         if(SmartAdserver.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("SmartAdserver");
+            Util.notifyAdNetwork(context, packageName, "SmartAdserver");
         }
         if(Startapp.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Startapp");
+            Util.notifyAdNetwork(context, packageName, "Startapp");
         }
         if(Tapfortap.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Tapfortap");
+            Util.notifyAdNetwork(context, packageName, "Tapfortap");
         }
         if(TWMads.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("TWMads");
+            Util.notifyAdNetwork(context, packageName, "TWMads");
         }
         if(UnityAds.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("UnityAds");
+            Util.notifyAdNetwork(context, packageName, "UnityAds");
         }
         if(Vpadn.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Vpadn");
+            Util.notifyAdNetwork(context, packageName, "Vpadn");
         }
         if(Vpon.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Vpon");
+            Util.notifyAdNetwork(context, packageName, "Vpon");
         }
         if(Waystorm.handleLoadPackage(packageName, lpparam, test)) {
-            networks.add("Waystorm");
+            Util.notifyAdNetwork(context, packageName, "Waystorm");
         }
-        
-//        if(networks.size() > 0) {
-//            ContentResolver resolver = context.getContentResolver();
-//            Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/" + packageName);
-//            StringBuilder sb = new StringBuilder();
-//            for(String network : networks) {
-//                if(sb.length() != 0) {
-//                    sb.append(", ");
-//                }
-//                sb.append(network);
-//            }
-//            ContentValues values = new ContentValues();
-//            values.put("networks", sb.toString());
-//            resolver.update(uri, values, null, null);
-//
-//            if(test && pref.getBoolean(packageName + "_first", true)) {
-//                pref.reload();
-//                if(pref.getBoolean(packageName + "_first", true)) {
-//                    launchEnableDialog(packageName, context);
-//                }
-//            }
-//        }
-    }
-
-    private static void launchEnableDialog(final String packageName, final Context context) {
-        Util.log("fatminmin", "launch dialog for " + packageName);
-
-        Intent it = new Intent();
-        it.setComponent(new ComponentName(MY_PACKAGE_NAME, MY_PACKAGE_NAME + ".ui.EnableDialog"));
-        it.putExtra("pkgName", packageName);
-        context.startActivity(it);
     }
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {

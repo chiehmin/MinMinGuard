@@ -5,7 +5,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -22,6 +22,11 @@
             android:label="@string/app_name"
             android:theme="@style/FullscreenTheme">
         </activity>
+
+        <provider
+            android:name=".MinMinProvider"
+            android:authorities="tw.fatminmin.xposed.minminguard"
+            android:exported="true" />
 
         <meta-data
             android:name="xposedmodule"
