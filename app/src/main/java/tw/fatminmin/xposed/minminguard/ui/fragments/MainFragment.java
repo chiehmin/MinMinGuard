@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -37,6 +38,7 @@ public class MainFragment extends Fragment {
     private TextView mTxtXposedEnabled;
     private Button mBtnMode;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private AppsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -73,6 +75,12 @@ public class MainFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
@@ -101,6 +109,7 @@ public class MainFragment extends Fragment {
 
         mTxtXposedEnabled = (TextView) view.findViewById(R.id.txt_xposed_enable);
         mBtnMode = (Button) view.findViewById(R.id.btn_mode);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
         if (!Util.xposedEnabled()) {
@@ -118,6 +127,14 @@ public class MainFragment extends Fragment {
         mAppList = new ArrayList<>();
         mAdapter = new AppsAdapter(getActivity(), mAppList);
         mRecyclerView.setAdapter(mAdapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         refresh();
         return view;
