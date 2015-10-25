@@ -20,11 +20,23 @@
 
         <TextView
             android:id="@+id/txt_app_name"
+            android:textSize="17sp"
             android:layout_toRightOf="@+id/img_app_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="1dp"
             tools:text="MinMinGuard" />
+
+        <TextView
+            android:id="@+id/txt_block_num"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_app_name"
+            android:layout_alignLeft="@+id/txt_app_name"
+            tools:text="@string/msg_block_num"/>
 
         <Switch
             android:id="@+id/switch_enable"

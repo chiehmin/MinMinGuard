@@ -343,6 +343,8 @@ public class Main implements IXposedHookZygoteInit,
 
     public static void removeAdView(final View view, final String packageName, final boolean apiBased, final boolean first, final float heightLimit) {
 
+        Util.notifyRemoveAdView(view.getContext(), packageName, 1);
+
         float adHeight = convertPixelsToDp(view.getHeight());
 
         if(first || (adHeight > 0 && adHeight <= heightLimit)) {

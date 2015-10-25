@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,10 @@ import java.util.List;
 
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
+import tw.fatminmin.xposed.minminguard.orm.AppData;
+import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
+import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
+import tw.fatminmin.xposed.minminguard.orm.DaoSession;
 
 /**
  * Created by fatminmin on 2015/10/1.
@@ -29,16 +34,24 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     private List<PackageInfo> mFilteredList;
     private SharedPreferences mPref;
 
+    DaoMaster.DevOpenHelper helper;
+    SQLiteDatabase db;
+    DaoMaster daoMaster;
+    DaoSession daoSession;
+    AppDataDao appDataDao;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imgAppIcon;
         public TextView txtAppName;
+        public TextView txtBlockNum;
         public Switch switchEnable;
 
         public ViewHolder(View v) {
             super(v);
             imgAppIcon = (ImageView) v.findViewById(R.id.img_app_icon);
             txtAppName = (TextView) v.findViewById(R.id.txt_app_name);
+            txtBlockNum = (TextView) v.findViewById(R.id.txt_block_num);
             switchEnable = (Switch) v.findViewById(R.id.switch_enable);
         }
     }
@@ -48,6 +61,12 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         mContext = context;
         mFilteredList = mAppList = list;
         mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
+
+        helper = new DaoMaster.DevOpenHelper(context, "mmg", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        appDataDao = daoSession.getAppDataDao();
     }
 
     public void setAppList(List<PackageInfo> list) {
@@ -84,6 +103,20 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         final String appName = (String) info.applicationInfo.loadLabel(pm);
         final String pkgName = info.packageName;
 
+        List<AppData> list = appDataDao.queryBuilder()
+                               .where(AppDataDao.Properties.PkgName.eq(pkgName))
+                               .list();
+
+        if (list.size() == 1) {
+            AppData appData = list.get(0);
+            int blockNum = appData.getBlockNum();
+            String msg = mContext.getString(R.string.msg_block_num, blockNum);
+            holder.txtBlockNum.setText(msg);
+        }
+        else {
+            holder.txtBlockNum.setText("");
+        }
+
         holder.imgAppIcon.setImageDrawable(appIcon);
         holder.txtAppName.setText(appName);
 
@@ -103,6 +136,10 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
                         .commit();
             }
         });
+
+
+
+
     }
 
     @Override
