@@ -5,8 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import de.robv.android.xposed.XC_MethodReplacement;
@@ -96,6 +98,8 @@ public class Main implements IXposedHookZygoteInit,
             TWMads.class, UnityAds.class, Vpadn.class, Vpon.class, Waystorm.class, Yahoo.class
     };
 
+    public static List<Map<String, String>> adNetworkFields;
+
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
 
@@ -113,6 +117,28 @@ public class Main implements IXposedHookZygoteInit,
         urls = new HashSet<>();
         for(String url : sUrls) {
             urls.add(url);
+        }
+
+        adNetworkFields = new ArrayList<>();
+
+        for (Class network : adNetworks) {
+            try {
+                Map<String, String> m = new HashMap<>();
+                Field fBanner = network.getDeclaredField("banner");
+                Field fBannerPrefix = network.getDeclaredField("bannerPrefix");
+
+                String banner = (String) fBanner.get(null);
+                String bannerPrefix = (String) fBannerPrefix.get(null);
+
+                m.put("name", network.getSimpleName());
+                m.put("banner", banner);
+                m.put("bannerPrefix", bannerPrefix);
+
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -175,24 +201,16 @@ public class Main implements IXposedHookZygoteInit,
         if(clazzName.startsWith("com.google.ads")) {
             return true;
         }
-        for (Class network : adNetworks) {
-            try {
-                Field fBanner = network.getDeclaredField("banner");
-                Field fBannerPrefix = network.getDeclaredField("bannerPrefix");
+        for (Map<String, String> m : adNetworkFields) {
+            String name = m.get("name");
+            String banner = m.get("banner");
+            String bannerPrefix = m.get("bannerPrefix");
 
-                String banner = (String) fBanner.get(null);
-                String bannerPrefix = (String) fBannerPrefix.get(null);
-
-                // prefix is used to detect adview obfuscate by proguard
-                if(banner.equals(clazzName) || clazzName.startsWith(bannerPrefix))
-                {
-                    Util.notifyAdNetwork(context, pkgName, network.getSimpleName());
-                    return true;
-                }
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            // prefix is used to detect adview obfuscate by proguard
+            if(banner.equals(clazzName) || clazzName.startsWith(bannerPrefix))
+            {
+                Util.notifyAdNetwork(context, pkgName, name);
+                return true;
             }
         }
         return false;
