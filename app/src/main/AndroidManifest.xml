@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tw.fatminmin.xposed.minminguard" >
 
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -43,5 +46,4 @@
             android:value="11b3bd0c3467e4848618141b36a73619c7ef4843" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

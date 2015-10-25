@@ -1,11 +1,15 @@
 package tw.fatminmin.xposed.minminguard.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +27,8 @@ import tw.fatminmin.xposed.minminguard.orm.AppData;
 import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
 import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
 import tw.fatminmin.xposed.minminguard.orm.DaoSession;
+import tw.fatminmin.xposed.minminguard.ui.UIUtils;
+import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
 
 /**
  * Created by fatminmin on 2015/10/1.
@@ -42,6 +48,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public View card;
         public ImageView imgAppIcon;
         public TextView txtAppName;
         public TextView txtBlockNum;
@@ -49,6 +56,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
         public ViewHolder(View v) {
             super(v);
+            card = v;
             imgAppIcon = (ImageView) v.findViewById(R.id.img_app_icon);
             txtAppName = (TextView) v.findViewById(R.id.txt_app_name);
             txtBlockNum = (TextView) v.findViewById(R.id.txt_block_num);
@@ -107,13 +115,15 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
                                .where(AppDataDao.Properties.PkgName.eq(pkgName))
                                .list();
 
+        final AppData appData;
         if (list.size() == 1) {
-            AppData appData = list.get(0);
+            appData = list.get(0);
             int blockNum = appData.getBlockNum();
             String msg = mContext.getString(R.string.msg_block_num, blockNum);
             holder.txtBlockNum.setText(msg);
         }
         else {
+            appData = null;
             holder.txtBlockNum.setText("");
         }
 
@@ -138,7 +148,22 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         });
 
 
+        holder.card.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = AppDetailDialogFragment.newInstance(appName, pkgName, appData);
+                AppCompatActivity activity = (AppCompatActivity) mContext;
+                dialog.show(activity.getSupportFragmentManager(), "dialog");
+            }
+        });
+
+        holder.imgAppIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIUtils.restartApp(mContext, pkgName);
+            }
+        });
 
     }
 

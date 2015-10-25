@@ -29,4 +29,7 @@
     <string name="msg_mode_manual">Manual</string>
     <string name="msg_mode_auto">Auto</string>
     <string name="msg_block_num">Blocked %d ads</string>
+    <string name="msg_ad_networks">Ad Networks: </string>
+    <string name="msg_ads_blocked">Ads Blocked: </string>
+    <string name="msg_not_detected">Not detected</string>
 </resources>

@@ -42,16 +42,6 @@ public class Util {
         return version;
     }    
 
-    static public void restartApp(Context context, String packageName)
-    {
-        ActivityManager am = (ActivityManager) context.getSystemService(Activity.ACTIVITY_SERVICE);
-        am.killBackgroundProcesses(packageName);
-
-        Intent it = context.getPackageManager().getLaunchIntentForPackage(packageName);
-        it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(it);
-    }
-
     static public void log(String packageName, String msg) {
         if(pref.getBoolean(packageName + "_log", false)) {
             XposedBridge.log(msg);
