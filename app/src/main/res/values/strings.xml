@@ -19,6 +19,18 @@
     <string name="intro_manual_content">
         You can decide which app you want to block ads. (You can tap the blue button to switch mode)
     </string>
+    <string name="intro_tap_icon_title">
+        Tap on the App Icon
+    </string>
+    <string name="intro_tap_icon_content">
+        You can tap on the app icon to restart the app.
+    </string>
+    <string name="intro_app_detail_title">
+        Show App statistic
+    </string>
+    <string name="intro_app_detail_content">
+        Tap on the app name to show MinMinGuard blocking statistic for the app.
+    </string>
 
     <string name="btn_ok">OK</string>
 

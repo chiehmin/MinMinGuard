@@ -23,6 +23,14 @@ public class MinMinGuardIntro extends AppIntro {
                 getResources().getString(R.string.intro_manual_title),
                 getResources().getString(R.string.intro_manual_content),
                 R.drawable.intro2, Color.parseColor("#4CAE50")));
+        addSlide(AppIntroFragment.newInstance(
+                getResources().getString(R.string.intro_tap_icon_title),
+                getResources().getString(R.string.intro_tap_icon_content),
+                R.drawable.intro3, Color.parseColor("#4CAE50")));
+        addSlide(AppIntroFragment.newInstance(
+                getResources().getString(R.string.intro_app_detail_title),
+                getResources().getString(R.string.intro_app_detail_content),
+                R.drawable.intro4, Color.parseColor("#4CAE50")));
     }
 
     @Override
