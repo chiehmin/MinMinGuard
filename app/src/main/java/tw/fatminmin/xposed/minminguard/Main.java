@@ -1,5 +1,8 @@
 package tw.fatminmin.xposed.minminguard;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.blocker.HostBlock;
 import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
@@ -83,6 +87,14 @@ public class Main implements IXposedHookZygoteInit,
     public static Set<String> urls;
     public static Resources res;
 
+    public static Class[] adNetworks = {
+            Ad2iction.class, Adfurikun.class, AdMarvel.class, Admob.class, AdmobGms.class, Amazon.class,
+            Amobee.class, AppBrain.class, Bonzai.class, Chartboost.class, Domob.class, Facebook.class, Flurry.class,
+            GmsDoubleClick.class, Hodo.class, ImpAct.class, Inmobi.class, Intowow.class, KuAd.class, mAdserve.class,
+            Madvertise.class, MasAd.class, MdotM.class, Millennial.class, Mobclix.class, MoPub.class, Nend.class,
+            Og.class, Onelouder.class, OpenX.class, SmartAdserver.class, Smarti.class, Startapp.class, Tapfortap.class,
+            TWMads.class, UnityAds.class, Vpadn.class, Vpon.class, Waystorm.class, Yahoo.class
+    };
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -156,36 +168,31 @@ public class Main implements IXposedHookZygoteInit,
             });
         }
     }
-    
-    static final ArrayList<String> banners = new ArrayList<String>(Arrays.asList(
-        Ad2iction.banner, Adfurikun.banner, AdMarvel.banner, Admob.banner, AdmobGms.banner, Amazon.banner, Amobee.banner, AppBrain.banner, Bonzai.banner,
-        Chartboost.banner, Domob.banner, Facebook.banner, Flurry.banner, GmsDoubleClick.banner, Hodo.banner, ImpAct.banner, Inmobi.banner, Intowow.banner, KuAd.banner, mAdserve.banner,
-        Madvertise.banner, MasAd.banner, MdotM.banner, Millennial.banner, Mobclix.banner, MoPub.banner, Nend.banner, Og.banner,  
-        Onelouder.banner, OpenX.banner, SmartAdserver.banner, Smarti.banner, Startapp.banner, Tapfortap.banner, TWMads.banner, Vpadn.banner,
-        Vpon.banner, Waystorm.banner, Yahoo.banner));
-    static final ArrayList<String> bannerPrefix = new ArrayList<String>(Arrays.asList(
-        Ad2iction.bannerPrefix, Adfurikun.bannerPrefix, AdMarvel.bannerPrefix, Admob.bannerPrefix, AdmobGms.bannerPrefix, Amazon.bannerPrefix, Amobee.bannerPrefix, Bonzai.bannerPrefix,
-        Chartboost.bannerPrefix, Domob.bannerPrefix, Facebook.bannerPrefix, Flurry.bannerPrefix, GmsDoubleClick.bannerPrefix, Hodo.bannerPrefix, ImpAct.bannerPrefix, Inmobi.bannerPrefix, Intowow.bannerPrefix, KuAd.bannerPrefix, mAdserve.bannerPrefix,
-        Madvertise.bannerPrefix, MasAd.bannerPrefix, MdotM.bannerPrefix, Millennial.bannerPrefix, Mobclix.bannerPrefix, MoPub.bannerPrefix, Nend.bannerPrefix, Og.bannerPrefix,
-        Onelouder.bannerPrefix, OpenX.bannerPrefix, SmartAdserver.bannerPrefix, Smarti.bannerPrefix, Startapp.bannerPrefix, Tapfortap.bannerPrefix, TWMads.bannerPrefix, Vpadn.bannerPrefix,
-        Vpon.bannerPrefix, Waystorm.bannerPrefix, Yahoo.bannerPrefix));
-    static
-    {
-        bannerPrefix.add("com.google.ads");
-    }
 
-    private static boolean isAdView(String name)
+    private static boolean isAdView(Context context, String pkgName, String clazzName)
     {
-        if(banners.contains(name))
-        {
+        // corner case
+        if(clazzName.startsWith("com.google.ads")) {
             return true;
         }
-        // detect adview obfuscate by proguard
-        for(String prefix : bannerPrefix)
-        {
-            if(name.startsWith(prefix))
-            {
-                return true;
+        for (Class network : adNetworks) {
+            try {
+                Field fBanner = network.getDeclaredField("banner");
+                Field fBannerPrefix = network.getDeclaredField("bannerPrefix");
+
+                String banner = (String) fBanner.get(null);
+                String bannerPrefix = (String) fBannerPrefix.get(null);
+
+                // prefix is used to detect adview obfuscate by proguard
+                if(banner.equals(clazzName) || clazzName.startsWith(bannerPrefix))
+                {
+                    Util.notifyAdNetwork(context, pkgName, network.getSimpleName());
+                    return true;
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
         return false;
@@ -193,7 +200,7 @@ public class Main implements IXposedHookZygoteInit,
 
     private static void clearAdViewInLayout(final String packageName, final View view) {
         
-        if(isAdView(view.getClass().getName())) {
+        if(isAdView(view.getContext(), packageName, view.getClass().getName())) {
             removeAdView(view, packageName, true);
             Util.log(packageName, "clearAdViewInLayout: " + view.getClass().getName());
         }
@@ -214,7 +221,7 @@ public class Main implements IXposedHookZygoteInit,
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View v = (View) param.args[0];
 
-                if(isAdView(v.getClass().getName()))
+                if(isAdView(v.getContext(), packageName, v.getClass().getName()))
                 {
                     removeAdView(v, packageName, true);
                     Util.log(packageName, "Name based blocking: " + v.getClass().getName());
@@ -226,113 +233,24 @@ public class Main implements IXposedHookZygoteInit,
     
     private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
 
-        if(Adfurikun.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Adfurikun");
-        }
-        if(AdMarvel.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "AdMarvel");
-        }
-        if(Admob.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "AdMob");
-        }
-        if(AdmobGms.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "AdMobGms");
-        }
-        if(Amazon.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Amazon");
-        }
-        if(Amobee.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Amobee");
-        }
-        if(AppBrain.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "AppBrain");
-        }
-        if(Bonzai.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Bonzai");
-        }
-        if(Chartboost.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Chartboost");
-        }
-        if(Domob.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Domob");
-        }
-        if(Facebook.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Facebook");
-        }
-        if(Flurry.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Flurry");
-        }
-        if(GmsDoubleClick.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "GmsDoubleClick");
-        }
-        if(Hodo.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "HODo");
-        }
-        if(Inmobi.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Inmobi");
-        }
-        if(Intowow.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Intowow");
-        }
-        if(KuAd.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "KuAd");
-        }
-        if(mAdserve.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "mAdserve");
-        }
-        if(Madvertise.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Madvertise");
-        }
-        if(MasAd.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "MasAd");
-        }
-        if(MdotM.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "MdotM");
-        }
-        if(Millennial.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Millennial");
-        }
-        if(Mobclix.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Mobclix");
-        }
-        if(MoPub.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "MoPub");
-        }
-        if(Nend.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Nend");
-        }
-        if(Og.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Og");
-        }
-        if(Onelouder.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Onelouder");
-        }
-        if(OpenX.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "OpenX");
-        }
-        if(SmartAdserver.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "SmartAdserver");
-        }
-        if(Startapp.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Startapp");
-        }
-        if(Tapfortap.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Tapfortap");
-        }
-        if(TWMads.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "TWMads");
-        }
-        if(UnityAds.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "UnityAds");
-        }
-        if(Vpadn.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Vpadn");
-        }
-        if(Vpon.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Vpon");
-        }
-        if(Waystorm.handleLoadPackage(packageName, lpparam, test)) {
-            Util.notifyAdNetwork(context, packageName, "Waystorm");
+        for (Class network : adNetworks) {
+            try {
+                // primitive boolean (Should not use Boolean.class)
+                Method handleLoadPackage =
+                        network.getDeclaredMethod("handleLoadPackage", String.class, LoadPackageParam.class, boolean.class);
+                // invoke a static function
+                Boolean result = (Boolean) handleLoadPackage.invoke(null, packageName, lpparam, test);
+                if(result) {
+                    Util.notifyAdNetwork(context, packageName, network.getSimpleName());
+                }
+
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
         }
     }
 

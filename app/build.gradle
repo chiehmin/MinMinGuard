@@ -23,8 +23,8 @@ android {
         applicationId "tw.fatminmin.xposed.minminguard"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 37
-        versionName "2.0 alpha2"
+        versionCode 38
+        versionName "2.0 alpha3"
     }
     buildTypes {
         release {
