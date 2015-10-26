@@ -13,7 +13,9 @@ import java.util.Set;
 
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.HostBlock;
+import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ad2iction;
@@ -124,19 +126,17 @@ public class Main implements IXposedHookZygoteInit,
         for (Class network : adNetworks) {
             try {
                 Map<String, String> m = new HashMap<>();
-                Field fBanner = network.getDeclaredField("banner");
-                Field fBannerPrefix = network.getDeclaredField("bannerPrefix");
 
-                String banner = (String) fBanner.get(null);
-                String bannerPrefix = (String) fBannerPrefix.get(null);
+                String banner = (String) XposedHelpers.getStaticObjectField(network, "banner");
+                String bannerPrefix = (String) XposedHelpers.getStaticObjectField(network, "bannerPrefix");
 
                 m.put("name", network.getSimpleName());
                 m.put("banner", banner);
                 m.put("bannerPrefix", bannerPrefix);
 
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                adNetworkFields.add(m);
+
+            } catch (NoSuchFieldError e) {
                 e.printStackTrace();
             }
         }
@@ -154,11 +154,6 @@ public class Main implements IXposedHookZygoteInit,
 
         final String packageName = lpparam.packageName;
 
-        if (pref.getBoolean(packageName + "_host", false)) {
-            Util.log(packageName, packageName + " is using host blocking now");
-            HostBlock.block(lpparam);
-        }
-
         Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
         XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
            @Override
@@ -167,7 +162,7 @@ public class Main implements IXposedHookZygoteInit,
                 Context context = (Context) param.thisObject;
                 
                 if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
-                    adNetwork(packageName, lpparam, false, context);
+                    ApiBlocking.handle(context, packageName, lpparam, false);
                     appSpecific(packageName, lpparam);
 
                     if(Main.pref.getBoolean(packageName + "_url", false))
@@ -175,11 +170,11 @@ public class Main implements IXposedHookZygoteInit,
                         UrlFiltering.removeWebViewAds(packageName, lpparam, false);
                     }
                     
-                    nameBasedBlocking(packageName, lpparam);
+                    NameBlocking.nameBasedBlocking(packageName, lpparam);
                     
                 }
                 else {
-                    adNetwork(packageName, lpparam, true, context);
+                    ApiBlocking.handle(context, packageName, lpparam, true);
                 }
             }  
         });    
@@ -189,88 +184,12 @@ public class Main implements IXposedHookZygoteInit,
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     Activity ac = (Activity)(param.thisObject);
                     ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
-                    clearAdViewInLayout(packageName, root);
+                    NameBlocking.clearAdViewInLayout(packageName, root);
                 }
             });
         }
     }
 
-    private static boolean isAdView(Context context, String pkgName, String clazzName)
-    {
-        // corner case
-        if(clazzName.startsWith("com.google.ads")) {
-            return true;
-        }
-        for (Map<String, String> m : adNetworkFields) {
-            String name = m.get("name");
-            String banner = m.get("banner");
-            String bannerPrefix = m.get("bannerPrefix");
-
-            // prefix is used to detect adview obfuscate by proguard
-            if(banner.equals(clazzName) || clazzName.startsWith(bannerPrefix))
-            {
-                Util.notifyAdNetwork(context, pkgName, name);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void clearAdViewInLayout(final String packageName, final View view) {
-        
-        if(isAdView(view.getContext(), packageName, view.getClass().getName())) {
-            removeAdView(view, packageName, true);
-            Util.log(packageName, "clearAdViewInLayout: " + view.getClass().getName());
-        }
-        
-        if(view instanceof ViewGroup) {
-            ViewGroup vg = (ViewGroup) view;
-            for(int i = 0; i < vg.getChildCount(); i++) {
-                clearAdViewInLayout(packageName, vg.getChildAt(i));
-            }
-        }
-    }
-    
-    private static void nameBasedBlocking(final String packageName, final LoadPackageParam lpparam) {
-        
-        Class<?> viewGroup = XposedHelpers.findClass("android.view.ViewGroup", lpparam.classLoader);
-        XposedBridge.hookAllMethods(viewGroup, "addView", new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                View v = (View) param.args[0];
-
-                if(isAdView(v.getContext(), packageName, v.getClass().getName()))
-                {
-                    removeAdView(v, packageName, true);
-                    Util.log(packageName, "Name based blocking: " + v.getClass().getName());
-                }
-
-            }
-        });
-    }
-    
-    private static void adNetwork(String packageName, LoadPackageParam lpparam, boolean test, Context context) {
-
-        for (Class network : adNetworks) {
-            try {
-                // primitive boolean (Should not use Boolean.class)
-                Method handleLoadPackage =
-                        network.getDeclaredMethod("handleLoadPackage", String.class, LoadPackageParam.class, boolean.class);
-                // invoke a static function
-                Boolean result = (Boolean) handleLoadPackage.invoke(null, packageName, lpparam, test);
-                if(result) {
-                    Util.notifyAdNetwork(context, packageName, network.getSimpleName());
-                }
-
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, false);
@@ -286,7 +205,12 @@ public class Main implements IXposedHookZygoteInit,
         if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
             LayoutParams params = view.getLayoutParams();
-            params.height = 0;
+            if (params == null) {
+                params = new LayoutParams(LayoutParams.MATCH_PARENT, 0);
+            }
+            else {
+                params.height = 0;
+            }
             view.setLayoutParams(params);
         }
         ViewTreeObserver observer= view.getViewTreeObserver();

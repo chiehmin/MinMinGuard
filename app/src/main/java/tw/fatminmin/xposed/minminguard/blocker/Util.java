@@ -43,10 +43,7 @@ public class Util {
     }    
 
     static public void log(String packageName, String msg) {
-        if(pref.getBoolean(packageName + "_log", false)) {
-            XposedBridge.log(msg);
-            Log.d(TAG, msg);
-        }
+        Log.d(TAG, msg);
     }
     
     static public Application getCurrentApplication() {
