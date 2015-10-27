@@ -14,6 +14,7 @@ import java.util.Set;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.HostBlock;
 import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
@@ -91,16 +92,14 @@ public class Main implements IXposedHookZygoteInit,
     public static Set<String> urls;
     public static Resources res;
 
-    public static Class[] adNetworks = {
-            Ad2iction.class, Adfurikun.class, AdMarvel.class, Admob.class, AdmobGms.class, Amazon.class,
-            Amobee.class, AppBrain.class, Bonzai.class, Chartboost.class, Domob.class, Facebook.class, Flurry.class,
-            GmsDoubleClick.class, Hodo.class, ImpAct.class, Inmobi.class, Intowow.class, KuAd.class, mAdserve.class,
-            Madvertise.class, MasAd.class, MdotM.class, Millennial.class, Mobclix.class, MoPub.class, Nend.class,
-            Og.class, Onelouder.class, OpenX.class, SmartAdserver.class, Smarti.class, Startapp.class, Tapfortap.class,
-            TWMads.class, UnityAds.class, Vpadn.class, Vpon.class, Waystorm.class, Yahoo.class
+    public static Blocker[] blockers = {
+            new Ad2iction(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
+            new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
+            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
+            new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
+            new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(),
+            new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
     };
-
-    public static List<Map<String, String>> adNetworkFields;
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
@@ -119,26 +118,6 @@ public class Main implements IXposedHookZygoteInit,
         urls = new HashSet<>();
         for(String url : sUrls) {
             urls.add(url);
-        }
-
-        adNetworkFields = new ArrayList<>();
-
-        for (Class network : adNetworks) {
-            try {
-                Map<String, String> m = new HashMap<>();
-
-                String banner = (String) XposedHelpers.getStaticObjectField(network, "banner");
-                String bannerPrefix = (String) XposedHelpers.getStaticObjectField(network, "bannerPrefix");
-
-                m.put("name", network.getSimpleName());
-                m.put("banner", banner);
-                m.put("bannerPrefix", bannerPrefix);
-
-                adNetworkFields.add(m);
-
-            } catch (NoSuchFieldError e) {
-                e.printStackTrace();
-            }
         }
     }
 

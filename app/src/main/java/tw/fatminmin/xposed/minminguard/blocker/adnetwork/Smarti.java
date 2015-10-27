@@ -1,6 +1,21 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
-public class Smarti {
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
+
+public class Smarti extends Blocker {
     public final static String banner = "jp.co.dac.smarti.android.AdView";
     public final static String bannerPrefix = "jp.co.dac.smarti.android";
+    @Override
+    public String getBannerPrefix() {
+        return bannerPrefix;
+    }
+
+    @Override
+    public String getBanner() {
+        return banner;
+    }
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+        return false;
+    }
 }

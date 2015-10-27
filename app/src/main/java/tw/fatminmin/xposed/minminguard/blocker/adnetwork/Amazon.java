@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
@@ -9,12 +10,12 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Amazon {
+public class Amazon extends Blocker {
     
     public final static String banner = "com.amazon.device.ads.AdLayout";
     public final static String bannerPrefix = "com.amazon.device.ads";
     
-	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.amazon.device.ads.AdLayout", lpparam.classLoader);
 			
@@ -30,7 +31,7 @@ public class Amazon {
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
 			    }
-            });
+			});
 			
 			XposedBridge.hookAllMethods(adView, "loadAd", new XC_MethodHook() {
 				
@@ -52,5 +53,14 @@ public class Amazon {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public String getBannerPrefix() {
+		return bannerPrefix;
+	}
+
+	@Override
+	public String getBanner() {
+		return banner;
 	}
 }

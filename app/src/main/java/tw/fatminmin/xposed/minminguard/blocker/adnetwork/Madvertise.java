@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,21 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Madvertise {
+public class Madvertise extends Blocker {
     
     public final static String banner = "de.madvertise.android.sdk.MadvertiseMraidView";
     public final static String bannerPrefix = "de.madvertise.android.sdk";
-    
-	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+
+	@Override
+	public String getBannerPrefix() {
+		return bannerPrefix;
+	}
+
+	@Override
+	public String getBanner() {
+		return banner;
+	}
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("de.madvertise.android.sdk.MadvertiseMraidView", lpparam.classLoader);
 			

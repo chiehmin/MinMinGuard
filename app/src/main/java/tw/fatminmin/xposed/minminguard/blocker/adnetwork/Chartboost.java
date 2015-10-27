@@ -1,5 +1,6 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -7,12 +8,12 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Chartboost {
-    
+public class Chartboost extends Blocker {
+
     public final static String banner = "com.chartboost.sdk.Chartboost";
     public final static String bannerPrefix = "com.chartboost.sdk";
     
-	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.chartboost.sdk.Chartboost", lpparam.classLoader);
 			XposedBridge.hookAllMethods(adView, "showInterstitial", new XC_MethodHook() {
@@ -33,5 +34,14 @@ public class Chartboost {
 			return false;
 		}
 		return true;
+	}
+	@Override
+	public String getBannerPrefix() {
+		return bannerPrefix;
+	}
+
+	@Override
+	public String getBanner() {
+		return banner;
 	}
 }

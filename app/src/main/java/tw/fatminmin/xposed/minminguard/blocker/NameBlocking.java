@@ -16,19 +16,28 @@ import tw.fatminmin.xposed.minminguard.Main;
  * Created by fatminmin on 2015/10/27.
  */
 public class NameBlocking {
+    private static boolean matchBannerName(String clazzName, String banner, String bannerPrefix) {
+        if(banner != null && banner.equals(clazzName)) {
+            return true;
+        }
+        if(bannerPrefix != null && clazzName.startsWith(bannerPrefix)) {
+            return true;
+        }
+        return false;
+    }
     private static boolean isAdView(Context context, String pkgName, String clazzName)
     {
         // corner case
         if(clazzName.startsWith("com.google.ads")) {
             return true;
         }
-        for (Map<String, String> m : Main.adNetworkFields) {
-            String name = m.get("name");
-            String banner = m.get("banner");
-            String bannerPrefix = m.get("bannerPrefix");
+        for (Blocker blocker : Main.blockers) {
+            String name = blocker.getClass().getSimpleName();
+            String banner = blocker.getBanner();
+            String bannerPrefix = blocker.getBannerPrefix();
 
             // prefix is used to detect adview obfuscate by proguard
-            if(banner.equals(clazzName) || clazzName.startsWith(bannerPrefix))
+            if(matchBannerName(clazzName, banner, bannerPrefix))
             {
                 Util.notifyAdNetwork(context, pkgName, name);
                 return true;

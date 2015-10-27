@@ -7,17 +7,27 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-public class Facebook {
+public class Facebook extends Blocker {
     public final static String banner = "com.facebook.ads.AdView";
     public final static String bannerPrefix = "com.facebook.ads";
     public final static String inter = "com.facebook.ads.InterstitialAd";
     public final static String nativeAd = "com.facebook.ads.NativeAd";
 
-    public static boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    @Override
+    public String getBannerPrefix() {
+        return bannerPrefix;
+    }
+
+    @Override
+    public String getBanner() {
+        return banner;
+    }
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
         try {
 
             Class<?> facebookBanner = findClass(banner, lpparam.classLoader);

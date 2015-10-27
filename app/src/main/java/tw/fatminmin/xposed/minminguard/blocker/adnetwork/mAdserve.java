@@ -1,5 +1,6 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -7,12 +8,21 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class mAdserve {
+public class mAdserve extends Blocker {
     
     public final static String banner = "com.adsdk.sdk.banner.InAppWebView";
     public final static String bannerPrefix = "com.adsdk.sdk.banner";
-    
-    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+
+    @Override
+    public String getBannerPrefix() {
+        return bannerPrefix;
+    }
+
+    @Override
+    public String getBanner() {
+        return banner;
+    }
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.adsdk.sdk.banner.InAppWebView", lpparam.classLoader);
             XposedBridge.hookAllConstructors(adView, new XC_MethodHook() {

@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
 import de.robv.android.xposed.XC_MethodHook;
@@ -9,12 +10,21 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class GmsDoubleClick {
+public class GmsDoubleClick extends Blocker {
     
     public final static String banner = "com.google.android.gms.ads.doubleclick.PublisherAdView";
     public final static String bannerPrefix = "com.google.android.gms.ads.doubleclick";
-    
-	public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+
+	@Override
+	public String getBannerPrefix() {
+		return bannerPrefix;
+	}
+
+	@Override
+	public String getBanner() {
+		return banner;
+	}
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
 		try {
 			
 			Class<?> admobBanner = findClass("com.google.android.gms.ads.doubleclick.PublisherAdView", lpparam.classLoader);
