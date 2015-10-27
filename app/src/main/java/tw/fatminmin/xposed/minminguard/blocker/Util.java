@@ -73,22 +73,34 @@ public class Util {
             }
         });
     }
-    static public void notifyAdNetwork(Context context, String pkgName, String adNetwork) {
-        ContentResolver resolver = context.getContentResolver();
-        Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+    static public void notifyAdNetwork(final Context context, final String pkgName, final String adNetwork) {
 
-        ContentValues values = new ContentValues();
-        values.put(Common.KEY_PKG_NAME, pkgName);
-        values.put(Common.KEY_NETWORK, adNetwork);
-        resolver.update(uri, values, null, null);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentResolver resolver = context.getContentResolver();
+                Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+
+                ContentValues values = new ContentValues();
+                values.put(Common.KEY_PKG_NAME, pkgName);
+                values.put(Common.KEY_NETWORK, adNetwork);
+                resolver.update(uri, values, null, null);
+            }
+        });
     }
-    static public void notifyRemoveAdView(Context context, String pkgName, int blockNum) {
-        ContentResolver resolver = context.getContentResolver();
-        Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+    static public void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum) {
 
-        ContentValues values = new ContentValues();
-        values.put(Common.KEY_PKG_NAME, pkgName);
-        values.put(Common.KEY_BLOCK_NUM, blockNum);
-        resolver.update(uri, values, null, null);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentResolver resolver = context.getContentResolver();
+                Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+
+                ContentValues values = new ContentValues();
+                values.put(Common.KEY_PKG_NAME, pkgName);
+                values.put(Common.KEY_BLOCK_NUM, blockNum);
+                resolver.update(uri, values, null, null);
+            }
+        });
     }
 }

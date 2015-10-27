@@ -135,27 +135,25 @@ public class Main implements IXposedHookZygoteInit,
 
         Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
         XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
-           @Override
+            @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 
                 Context context = (Context) param.thisObject;
-                
-                if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
+
+                if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
                     ApiBlocking.handle(context, packageName, lpparam, false);
                     appSpecific(packageName, lpparam);
 
-                    if(Main.pref.getBoolean(packageName + "_url", false))
-                    {
+                    if (Main.pref.getBoolean(packageName + "_url", false)) {
                         UrlFiltering.removeWebViewAds(packageName, lpparam, false);
                     }
-                    
+
                     NameBlocking.nameBasedBlocking(packageName, lpparam);
-                    
-                }
-                else {
+
+                } else {
                     ApiBlocking.handle(context, packageName, lpparam, true);
                 }
-            }  
+            }
         });    
         if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
             XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
@@ -177,7 +175,9 @@ public class Main implements IXposedHookZygoteInit,
 
     public static void removeAdView(final View view, final String packageName, final boolean apiBased, final boolean first, final float heightLimit) {
 
-        Util.notifyRemoveAdView(view.getContext(), packageName, 1);
+        if (first) {
+            Util.notifyRemoveAdView(view.getContext(), packageName, 1);
+        }
 
         float adHeight = convertPixelsToDp(view.getHeight());
 
