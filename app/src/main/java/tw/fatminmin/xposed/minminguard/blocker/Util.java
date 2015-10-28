@@ -61,12 +61,12 @@ public class Util {
     static public void saveLog(final File dest, final Context context, final Handler handler) {
         
         handler.post(new Runnable() {
-            
+
             @Override
             public void run() {
                 try {
 
-                    
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -78,29 +78,39 @@ public class Util {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ContentResolver resolver = context.getContentResolver();
-                Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+                try {
+                    ContentResolver resolver = context.getContentResolver();
+                    Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
 
-                ContentValues values = new ContentValues();
-                values.put(Common.KEY_PKG_NAME, pkgName);
-                values.put(Common.KEY_NETWORK, adNetwork);
-                resolver.update(uri, values, null, null);
+                    ContentValues values = new ContentValues();
+                    values.put(Common.KEY_PKG_NAME, pkgName);
+                    values.put(Common.KEY_NETWORK, adNetwork);
+                    resolver.update(uri, values, null, null);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }).start();
     }
     static public void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ContentResolver resolver = context.getContentResolver();
-                Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
+                try {
+                    ContentResolver resolver = context.getContentResolver();
+                    Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
 
-                ContentValues values = new ContentValues();
-                values.put(Common.KEY_PKG_NAME, pkgName);
-                values.put(Common.KEY_BLOCK_NUM, blockNum);
-                resolver.update(uri, values, null, null);
+                    ContentValues values = new ContentValues();
+                    values.put(Common.KEY_PKG_NAME, pkgName);
+                    values.put(Common.KEY_BLOCK_NUM, blockNum);
+                    resolver.update(uri, values, null, null);
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }).start();
     }
 }

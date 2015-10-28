@@ -118,6 +118,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         final AppData appData;
         if (list.size() == 1) {
             appData = list.get(0);
+            appDataDao.refresh(appData);
             int blockNum = appData.getBlockNum();
             String msg = mContext.getString(R.string.msg_block_num, blockNum);
             holder.txtBlockNum.setText(msg);
