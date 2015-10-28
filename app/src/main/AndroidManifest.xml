@@ -39,7 +39,7 @@
             android:value="2.0*" />
         <meta-data
             android:name="xposeddescription"
-            android:value="" />
+            android:value="Ads blocker" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
