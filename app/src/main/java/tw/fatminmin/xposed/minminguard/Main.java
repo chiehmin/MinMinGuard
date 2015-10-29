@@ -3,7 +3,9 @@ package tw.fatminmin.xposed.minminguard;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
@@ -50,6 +52,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yahoo;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.PeriodCalendar;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 import android.app.Activity;
 import android.content.res.Resources;
@@ -70,7 +73,8 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Main implements IXposedHookZygoteInit,
-                             IXposedHookLoadPackage {
+                             IXposedHookLoadPackage,
+                             IXposedHookInitPackageResources{
 
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
@@ -149,6 +153,7 @@ public class Main implements IXposedHookZygoteInit,
     }
 
 
+
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, true);
         OneWeather.handleLoadPackage(packageName, lpparam, true);
@@ -205,5 +210,17 @@ public class Main implements IXposedHookZygoteInit,
         DisplayMetrics metrics = res.getDisplayMetrics();
         float dp = px / (metrics.densityDpi / 160f);
         return dp;
+    }
+
+    @Override
+    public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) throws Throwable {
+
+        pref.reload();
+
+        final String packageName = resparam.packageName;
+
+        if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
+            PeriodCalendar.handleInitPackageResources(resparam);
+        }
     }
 }

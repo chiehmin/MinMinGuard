@@ -48,6 +48,20 @@ public class Facebook extends Blocker {
                 }
 
             });
+            XposedBridge.hookAllMethods(facebookBanner, "setAdListener", new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    Util.log(packageName, "Detect facebookBanner setAdListener in " + packageName);
+
+                    if (removeAd) {
+                        param.setResult(new Object());
+                        Main.removeAdView((View) param.thisObject, packageName, true);
+                    }
+                }
+            });
+
 
             XposedBridge.hookAllMethods(facebookInter, "loadAd",  new XC_MethodHook() {
 

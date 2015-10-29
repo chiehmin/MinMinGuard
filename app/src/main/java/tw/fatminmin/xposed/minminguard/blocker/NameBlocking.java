@@ -49,7 +49,7 @@ public class NameBlocking {
                 return true;
             }
         }
-        return null;
+        return false;
 
     }
 
@@ -74,7 +74,7 @@ public class NameBlocking {
 //            }
 //        }
 
-        return null;
+        return false;
     }
 
     public static void clearAdViewInLayout(final String packageName, final View view) {
