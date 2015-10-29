@@ -22,7 +22,7 @@ public class mAdserve extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.adsdk.sdk.banner.InAppWebView", lpparam.classLoader);
             XposedBridge.hookAllConstructors(adView, new XC_MethodHook() {
@@ -30,7 +30,7 @@ public class mAdserve extends Blocker {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect mAdserve InAppWebView constructor in " + packageName);
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

@@ -15,7 +15,7 @@ public class AdMarvel extends Blocker {
     public final static String banner = "com.admarvel.android.ads.AdMarvelView";
     public final static String bannerPrefix = "com.admarvel.android.ads";
 
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.admarvel.android.ads.AdMarvelView", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "requestNewAd", new XC_MethodHook() {
@@ -24,7 +24,7 @@ public class AdMarvel extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect AdMarvelView requestNewAd in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -39,7 +39,7 @@ public class AdMarvel extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect AdMarvelInterstitialAds requestNewInterstitialAd in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

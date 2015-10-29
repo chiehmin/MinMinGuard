@@ -24,7 +24,7 @@ public class GmsDoubleClick extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			
 			Class<?> admobBanner = findClass("com.google.android.gms.ads.doubleclick.PublisherAdView", lpparam.classLoader);
@@ -36,7 +36,7 @@ public class GmsDoubleClick extends Blocker {
 							
 							Util.log(packageName, "Detect GmsDoubleClick PublisherAdView loadAd in " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}

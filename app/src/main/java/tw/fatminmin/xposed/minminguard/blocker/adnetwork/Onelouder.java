@@ -25,7 +25,7 @@ public class Onelouder extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.onelouder.adlib.AdView", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "setVisibility", new XC_MethodHook() {

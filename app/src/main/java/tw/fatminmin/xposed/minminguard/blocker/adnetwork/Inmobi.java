@@ -24,7 +24,7 @@ public class Inmobi extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.inmobi.monetization.IMBanner", lpparam.classLoader);
 			Class<?> adInter = XposedHelpers.findClass("com.inmobi.monetization.IMInterstitial", lpparam.classLoader);
@@ -36,7 +36,7 @@ public class Inmobi extends Blocker {
 					
 					Util.log(packageName, "Detect inmobi loadBanner in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
@@ -51,7 +51,7 @@ public class Inmobi extends Blocker {
 					
 					Util.log(packageName, "Detect IMInterstitial loadInterstitial in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 					}
 					
@@ -65,7 +65,7 @@ public class Inmobi extends Blocker {
 					
 					Util.log(packageName, "Detect IMInterstitial show in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 					}
 					

@@ -10,7 +10,7 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
 
 public class _2chMate {
-    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         if (!packageName.equals("jp.co.airfront.android.a2chMate")) {
             return false;
         }
@@ -23,7 +23,7 @@ public class _2chMate {
                     final View view = (View) param.args[0];
                     if (view.getClass().getName().equals("jp.syoboi.a2chMate.view.MyAdView")) {
                         Util.log(packageName, "Detect 2chmate MyAdView in " + packageName);
-                        if (!test) {
+                        if (removeAd) {
                             param.setResult(null);
                         }
                     }

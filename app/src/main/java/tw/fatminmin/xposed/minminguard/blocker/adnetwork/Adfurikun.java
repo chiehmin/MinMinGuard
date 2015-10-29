@@ -15,7 +15,7 @@ public class Adfurikun extends Blocker {
     public final static String banner = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
     public final static String bannerPrefix = "jp.tjkapp.adfurikunsdk";
     
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("jp.tjkapp.adfurikunsdk.AdfurikunBase", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "a", new XC_MethodHook() {
@@ -24,7 +24,7 @@ public class Adfurikun extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect AdfurikunAdView update in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }

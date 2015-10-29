@@ -33,7 +33,7 @@ public class HostBlock {
                 else if(obj.getClass().getName().equals("java.net.InetAddress")) {
                     host = ((InetAddress) obj).getHostName();
                 }
-                if(Main.urls.contains(host)) {
+                if(Main.patterns.contains(host)) {
                     param.args[0] = null;
                     param.setResult(new Object());
                 }
@@ -45,7 +45,7 @@ public class HostBlock {
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 String host = (String) param.args[0];
 
-                if(Main.urls.contains(host)) {
+                if(Main.patterns.contains(host)) {
                     Log.d("inet_before_host", host);
                     param.setResult(new Object());
                     param.setThrowable(new UnknownHostException("Unable to resolve host"));
@@ -55,7 +55,7 @@ public class HostBlock {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 String host = (String) param.args[0];
 
-                if(Main.urls.contains(host)) {
+                if(Main.patterns.contains(host)) {
                     Log.d("inet_after_host", host);
                     param.setResult(new Object());
                     param.setThrowable(new UnknownHostException("Unable to resolve host"));
@@ -73,7 +73,7 @@ public class HostBlock {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 String host = (String) param.args[0];
-                if(Main.urls.contains(host)) {
+                if(Main.patterns.contains(host)) {
                     Log.d("inet_before_host", host);
                     param.args[0] = "localhost";
                     param.setResult(new Object());
@@ -95,7 +95,7 @@ public class HostBlock {
 
                 Log.d("fatminmin_iobridge", host + ":" + ip);
 
-                if(Main.urls.contains(host) || Main.urls.contains(ip)) {
+                if(Main.patterns.contains(host) || Main.patterns.contains(ip)) {
                     param.setResult(Boolean.valueOf(false));
                     param.setThrowable(new UnknownHostException("Unable to resolve host"));
                 }
@@ -107,7 +107,7 @@ public class HostBlock {
                 String host = addr.getHostName();
                 String ip = addr.getHostAddress();
 
-                if(Main.urls.contains(host) || Main.urls.contains(ip)) {
+                if(Main.patterns.contains(host) || Main.patterns.contains(ip)) {
                     param.setResult(Boolean.valueOf(false));
                     param.setThrowable(new UnknownHostException("Unable to resolve host"));
                 }

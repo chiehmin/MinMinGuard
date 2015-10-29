@@ -15,7 +15,7 @@ public class ImpAct extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         return false;
     }
 }

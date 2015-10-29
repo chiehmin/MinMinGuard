@@ -27,7 +27,7 @@ public class Facebook extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
             Class<?> facebookBanner = findClass(banner, lpparam.classLoader);
@@ -41,7 +41,7 @@ public class Facebook extends Blocker {
 
                     Util.log(packageName, "Detect facebookBanner loadAd in " + packageName);
 
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -56,7 +56,7 @@ public class Facebook extends Blocker {
 
                     Util.log(packageName, "Detect facebookInter loadAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }
@@ -69,7 +69,7 @@ public class Facebook extends Blocker {
 
                     Util.log(packageName, "Detect facebookNativeAd loadAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }
@@ -82,7 +82,7 @@ public class Facebook extends Blocker {
 
                     Util.log(packageName, "Detect facebookNativeAd registerViewForInteraction in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         View nativeAd = (View) param.args[0];
                         Main.removeAdView(nativeAd, packageName, true);
                         param.setResult(new Object());

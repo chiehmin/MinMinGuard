@@ -21,7 +21,7 @@ public class Ad2iction extends Blocker {
         return getClass().getSimpleName();
     }
 
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
             Class<?> ad2ictionBanner = findClass(banner, lpparam.classLoader);
@@ -34,7 +34,7 @@ public class Ad2iction extends Blocker {
 
                     Util.log(packageName, "Detect ad2ictionBanner loadAd in " + packageName);
 
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -49,7 +49,7 @@ public class Ad2iction extends Blocker {
 
                     Util.log(packageName, "Detect ad2ictionInter loadAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

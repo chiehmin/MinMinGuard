@@ -52,7 +52,6 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.util.DisplayMetrics;
@@ -77,7 +76,7 @@ public class Main implements IXposedHookZygoteInit,
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     public static String MODULE_PATH = null;
     public static XSharedPreferences pref;
-    public static Set<String> urls;
+    public static Set<String> patterns;
     public static Resources res;
 
     public static Blocker[] blockers = {
@@ -105,9 +104,15 @@ public class Main implements IXposedHookZygoteInit,
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
 
-        urls = new HashSet<>();
+        patterns = new HashSet<>();
         for(String url : sUrls) {
-            urls.add(url);
+            patterns.add(url);
+        }
+        array = XposedHelpers.assetAsByteArray(res, "host/mmg_pattern");
+        decoded = new String(array);
+        sUrls = decoded.split("\n");
+        for(String url : sUrls) {
+            patterns.add(url);
         }
     }
 
@@ -123,52 +128,41 @@ public class Main implements IXposedHookZygoteInit,
 
         final String packageName = lpparam.packageName;
 
-        Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
-        XposedBridge.hookAllMethods(activity, "onCreate", new XC_MethodHook() {
-            @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 
-                Context context = (Context) param.thisObject;
+        if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
 
-                if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
-                    ApiBlocking.handle(context, packageName, lpparam, false);
-                    appSpecific(packageName, lpparam);
+            // Api based blocking
+            ApiBlocking.handle(packageName, lpparam, true);
+            appSpecific(packageName, lpparam);
 
-                    if (Main.pref.getBoolean(packageName + "_url", false)) {
-                        UrlFiltering.removeWebViewAds(packageName, lpparam, false);
-                    }
+            // Name based blocking
+            NameBlocking.nameBasedBlocking(packageName, lpparam);
 
-                } else {
-                    ApiBlocking.handle(context, packageName, lpparam, true);
-                }
+            // url filtering
+            if (Main.pref.getBoolean(packageName + "_url", false)) {
+                UrlFiltering.removeWebViewAds(packageName, lpparam);
             }
-        });
-        
-        NameBlocking.nameBasedBlocking(packageName, lpparam);
 
-        if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
-            XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    Activity ac = (Activity)(param.thisObject);
-                    ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
-                    NameBlocking.clearAdViewInLayout(packageName, root);
-                }
-            });
+        } else {
+            ApiBlocking.handle(packageName, lpparam, false);
         }
     }
 
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
-        _2chMate.handleLoadPackage(packageName, lpparam, false);
-        OneWeather.handleLoadPackage(packageName, lpparam, false);
+        _2chMate.handleLoadPackage(packageName, lpparam, true);
+        OneWeather.handleLoadPackage(packageName, lpparam, true);
     }
 
-    public static void removeAdView(final View view, final String packageName, final boolean apiBased, final boolean first, final float heightLimit) {
+    public static void removeAdView(View view, String packageName, boolean remove) {
 
-        if (first) {
+        if (remove) {
             Util.notifyRemoveAdView(view.getContext(), packageName, 1);
+            removeAdView(view, packageName, true, 50);
         }
+    }
+
+    public static void removeAdView(final View view, final String packageName, final boolean first, final float heightLimit) {
 
         float adHeight = convertPixelsToDp(view.getHeight());
 
@@ -188,7 +182,7 @@ public class Main implements IXposedHookZygoteInit,
             @Override
             public void onGlobalLayout() {
                 float heightDp = convertPixelsToDp(view.getHeight());
-                if(heightDp <= heightLimit) {
+                if (heightDp <= heightLimit) {
 
                     LayoutParams params = view.getLayoutParams();
                     params.height = 0;
@@ -203,12 +197,8 @@ public class Main implements IXposedHookZygoteInit,
             {
                 currentLimit = Math.max(adHeight + 5, currentLimit);
             }
-            removeAdView((View)view.getParent(), packageName, apiBased, false, currentLimit);
+            removeAdView((View) view.getParent(), packageName, false, currentLimit);
         }
-    }
-
-    public static void removeAdView(final View view, final String packageName, final boolean apiBased) {
-        removeAdView(view, packageName, apiBased, true, 50);
     }
 
     private static float convertPixelsToDp(float px){

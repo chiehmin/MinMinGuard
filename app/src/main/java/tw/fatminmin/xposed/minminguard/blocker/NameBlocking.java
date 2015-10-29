@@ -1,12 +1,9 @@
 package tw.fatminmin.xposed.minminguard.blocker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -28,7 +25,14 @@ public class NameBlocking {
         return false;
     }
 
-    private static boolean isAdView(Context context, String pkgName, String clazzName) {
+    // return adnetwork name
+    private static Boolean isAdView(Context context, String pkgName, String clazzName) {
+
+        // android widgets
+        if(clazzName.startsWith("android")) {
+            return false;
+        }
+
         // corner case
         if(clazzName.startsWith("com.google.ads")) {
             return true;
@@ -45,23 +49,32 @@ public class NameBlocking {
                 return true;
             }
         }
-        return false;
+        return null;
 
     }
 
-    // find also parent classes
-    private static boolean isAdView(Context context, String pkgName, View view)
+    private static Boolean isAdView(Context context, String pkgName, View view)
     {
         Class clazz = view.getClass();
-        for (int level = 0; level < 3 && clazz != null; level++) {
+        // find also parent classes
+        int level = 1;
+        for (int i = 0; i < level && clazz != null; i++) {
             String clazzName = clazz.getName();
+
             if (isAdView(context, pkgName, clazzName)) {
                 return true;
             }
             clazz = clazz.getSuperclass();
         }
 
-        return false;
+//        if (view instanceof ViewGroup) {
+//            ViewGroup vg = (ViewGroup) view;
+//            for(int i = 0; i < vg.getChildCount(); i++) {
+//                clearAdViewInLayout(pkgName, vg.getChildAt(i));
+//            }
+//        }
+
+        return null;
     }
 
     public static void clearAdViewInLayout(final String packageName, final View view) {
@@ -92,6 +105,15 @@ public class NameBlocking {
                     Util.log(packageName, "Name based blocking: " + v.getClass().getName());
                 }
 
+            }
+        });
+        Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
+        XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                Activity ac = (Activity)(param.thisObject);
+                ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
+                NameBlocking.clearAdViewInLayout(packageName, root);
             }
         });
     }

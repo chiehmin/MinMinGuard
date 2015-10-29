@@ -24,7 +24,7 @@ public class Vpon extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			
 			Class<?> adView = XposedHelpers.findClass("com.vpon.ads.VponBanner", lpparam.classLoader);
@@ -35,7 +35,7 @@ public class Vpon extends Blocker {
 							
 							Util.log(packageName, "Detect VponBanner loadAd in " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
@@ -49,7 +49,7 @@ public class Vpon extends Blocker {
                     
                     Util.log(packageName, "Detect VponInterstitialAd show in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

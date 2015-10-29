@@ -24,7 +24,7 @@ public class Millennial extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adView = XposedHelpers.findClass("com.millennialmedia.android.MMAdView", lpparam.classLoader);
@@ -35,7 +35,7 @@ public class Millennial extends Blocker {
                             
                             Util.log(packageName, "Detect MMAdView getAd in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -49,7 +49,7 @@ public class Millennial extends Blocker {
                     
                     Util.log(packageName, "Detect MMInterstitial display in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

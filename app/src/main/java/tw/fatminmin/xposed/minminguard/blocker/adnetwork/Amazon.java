@@ -15,7 +15,7 @@ public class Amazon extends Blocker {
     public final static String banner = "com.amazon.device.ads.AdLayout";
     public final static String bannerPrefix = "com.amazon.device.ads";
     
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.amazon.device.ads.AdLayout", lpparam.classLoader);
 			
@@ -26,7 +26,7 @@ public class Amazon extends Blocker {
 			        
 			        Util.log(packageName, "Prevent amazon setlistener");
 			        
-			        if(!test) {
+			        if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -40,7 +40,7 @@ public class Amazon extends Blocker {
 					
 					Util.log(packageName, "Detect Amazon loadAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(Boolean.valueOf(true));
 						Main.removeAdView((View) param.thisObject, packageName, true);
 					}

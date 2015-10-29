@@ -13,7 +13,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class AppBrain extends Blocker {
     public final static String banner = "com.appbrain.AppBrainBanner";
     
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adView = XposedHelpers.findClass("com.appbrain.AppBrainBanner", lpparam.classLoader);
@@ -24,7 +24,7 @@ public class AppBrain extends Blocker {
                             
                             Util.log(packageName, "Detect AppBrainBanner requestAd in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -38,7 +38,7 @@ public class AppBrain extends Blocker {
                     
                     Util.log(packageName, "Detect appbrain AppBrain getAds in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

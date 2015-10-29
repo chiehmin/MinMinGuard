@@ -24,7 +24,7 @@ public class MdotM extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adView = XposedHelpers.findClass("com.mdotm.android.view.MdotMAdView", lpparam.classLoader);
@@ -35,7 +35,7 @@ public class MdotM extends Blocker {
                             
                             Util.log(packageName, "Detect MdotMAdView loadBannerAd in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -49,7 +49,7 @@ public class MdotM extends Blocker {
                     
                     Util.log(packageName, "Detect MdotMInterstitial loadInterstitial in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

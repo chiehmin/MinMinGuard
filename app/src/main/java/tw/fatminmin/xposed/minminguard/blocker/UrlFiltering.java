@@ -15,7 +15,7 @@ import tw.fatminmin.xposed.minminguard.Main;
 
 public class UrlFiltering {
     static boolean adExist = false;
-    static public boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    static public boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam) {
 
         try {
 
@@ -27,8 +27,8 @@ public class UrlFiltering {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     
                     String url = (String) param.args[0];
-                    adExist = urlFiltering(url, "", param, packageName, test);
-                    if(adExist && !test) {
+                    adExist = urlFiltering(url, "", param, packageName);
+                    if(adExist) {
                         param.setResult(new Object());
                     }
                 }
@@ -40,8 +40,8 @@ public class UrlFiltering {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     String data = (String) param.args[0];
-                    adExist = urlFiltering("", data, param, packageName, test);
-                    if(adExist && !test) {
+                    adExist = urlFiltering("", data, param, packageName);
+                    if(adExist) {
                         param.setResult(new Object());
                     }
                 }
@@ -53,8 +53,8 @@ public class UrlFiltering {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];
-                    adExist = urlFiltering(url, data, param, packageName, test);
-                    if(adExist && !test) {
+                    adExist = urlFiltering(url, data, param, packageName);
+                    if(adExist) {
                         param.setResult(new Object());
                     }
                 }
@@ -68,7 +68,7 @@ public class UrlFiltering {
         return adExist;
     }
 
-    static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName, boolean test) {
+    static private boolean urlFiltering(String url, String data, MethodHookParam param, String packageName) {
 
 
         Util.log(packageName, "Url filtering");
@@ -84,15 +84,12 @@ public class UrlFiltering {
         
         Util.log(packageName, packageName + " url:\n" + url);
 
-        for(String adUrl : Main.urls) {
+        for(String adUrl : Main.patterns) {
             if(url.contains(adUrl)) {
                 Util.log(packageName, "Detect " + packageName + " load url from " + adUrl);
-                if(!test) {
-                    param.setResult(new Object());
-                    Main.removeAdView((View) param.thisObject, packageName, false);
-                    return true;
-                }
-                break;
+                param.setResult(new Object());
+                Main.removeAdView((View) param.thisObject, packageName, false);
+                return true;
             }
         }
 
@@ -104,15 +101,12 @@ public class UrlFiltering {
             e.printStackTrace();
         }
 
-        for(String adUrl : Main.urls) {
+        for(String adUrl : Main.patterns) {
             if(data.contains(adUrl)) {
                 Util.log(packageName, "Detect " + packageName + " load data from " + adUrl);
-                if (!test) {
-                    param.setResult(new Object());
-                    Main.removeAdView((View) param.thisObject, packageName, false);
-                    return true;
-                }
-                break;
+                param.setResult(new Object());
+                Main.removeAdView((View) param.thisObject, packageName, false);
+                return true;
             }
         }
 

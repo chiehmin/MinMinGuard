@@ -26,7 +26,7 @@ public class Intowow extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adview = findClass(banner, lpparam.classLoader);
 
@@ -36,7 +36,7 @@ public class Intowow extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     Util.log(packageName, "Detect intowow adview start in " + packageName);
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }

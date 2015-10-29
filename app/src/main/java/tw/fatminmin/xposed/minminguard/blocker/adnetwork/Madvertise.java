@@ -27,7 +27,7 @@ public class Madvertise extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("de.madvertise.android.sdk.MadvertiseMraidView", lpparam.classLoader);
 			
@@ -38,7 +38,7 @@ public class Madvertise extends Blocker {
 					
 					Util.log(packageName, "Detect Madvertise loadAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 						Main.removeAdView((View) param.thisObject, packageName, true);
 					}

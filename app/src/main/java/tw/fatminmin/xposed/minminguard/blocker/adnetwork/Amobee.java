@@ -13,7 +13,7 @@ public class Amobee extends Blocker {
     public final static String banner = "com.amobee.adsdk.AdManager";
     public final static String bannerPrefix = "com.amobee.adsdk";
     
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.amobee.adsdk.AdManager", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "getAd", new XC_MethodHook() {
@@ -21,7 +21,7 @@ public class Amobee extends Blocker {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect Amobee getAd in " + packageName);
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

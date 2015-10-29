@@ -10,7 +10,7 @@ import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class OneWeather {
-    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.handmark.expressweather.billing.BillingUtils", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "isPurchased", new XC_MethodHook() {
@@ -18,7 +18,7 @@ public class OneWeather {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(Boolean.valueOf(true));
                     }
                 }

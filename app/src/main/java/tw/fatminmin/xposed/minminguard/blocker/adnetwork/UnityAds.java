@@ -19,7 +19,7 @@ public class UnityAds extends Blocker {
     public String getBanner() {
         return null;
     }
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> unityAds = findClass("com.unity3d.ads.android.UnityAds", lpparam.classLoader);
 
@@ -29,7 +29,7 @@ public class UnityAds extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     Util.log(packageName, "Detect unityAds show in " + packageName);
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(new Object());
                     }
                 }
@@ -40,7 +40,7 @@ public class UnityAds extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     Util.log(packageName, "Detect unityAds canShow in " + packageName);
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(Boolean.valueOf(false));
                     }
                 }
@@ -51,7 +51,7 @@ public class UnityAds extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     Util.log(packageName, "Detect unityAds canShowAds in " + packageName);
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(Boolean.valueOf(false));
                     }
                 }

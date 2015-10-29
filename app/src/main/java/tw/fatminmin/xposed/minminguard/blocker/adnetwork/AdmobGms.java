@@ -15,7 +15,7 @@ public class AdmobGms extends Blocker {
     public final static String banner = "com.google.android.gms.ads.AdView";
     public final static String bannerPrefix = "com.google.android.gms.ads";
 
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			
 			Class<?> admobBanner = findClass("com.google.android.gms.ads.AdView", lpparam.classLoader);
@@ -28,7 +28,7 @@ public class AdmobGms extends Blocker {
 							
 							Util.log(packageName, "Detect AdmobGms Banner loadAd in " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
@@ -42,7 +42,7 @@ public class AdmobGms extends Blocker {
 					
 					Util.log(packageName, "Detect AdmobGms SearchBanner loadAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
@@ -57,7 +57,7 @@ public class AdmobGms extends Blocker {
 					
 					Util.log(packageName, "Detect AdmobGms InterstitialAd loadAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 					}
 				}
@@ -70,7 +70,7 @@ public class AdmobGms extends Blocker {
 					
 					Util.log(packageName, "Detect AdmobGms InterstitialAd show in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 					}
 				}

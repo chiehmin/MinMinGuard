@@ -15,7 +15,7 @@ public class Domob extends Blocker {
     public final static String banner = "cn.domob.android.ads.DomobAdView";
     public final static String bannerPrefix = "cn.domob.android.ads";
     
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adBanner = findClass("cn.domob.android.ads.DomobAdView", lpparam.classLoader);
@@ -28,7 +28,7 @@ public class Domob extends Blocker {
                             
                             Util.log(packageName, "Detect DomobAdView setAdEventListener in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -42,7 +42,7 @@ public class Domob extends Blocker {
                     
                     Util.log(packageName, "Detect DomobInterstitialAd setInterstitialAdListener in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -57,7 +57,7 @@ public class Domob extends Blocker {
                     
                     Util.log(packageName, "Detect DomobInterstitialAd setInterstitialAdListener in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }

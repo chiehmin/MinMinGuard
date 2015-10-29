@@ -26,7 +26,7 @@ public class Waystorm extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
             Class<?> waystormBanner = findClass(banner, lpparam.classLoader);
@@ -39,7 +39,7 @@ public class Waystorm extends Blocker {
 
                     Util.log(packageName, "Detect waystormBanner loadAd in " + packageName);
 
-                    if (!test) {
+                    if (removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -54,7 +54,7 @@ public class Waystorm extends Blocker {
 
                     Util.log(packageName, "Detect waystormInter loadAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

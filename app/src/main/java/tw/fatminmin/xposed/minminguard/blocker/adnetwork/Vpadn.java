@@ -25,7 +25,7 @@ public class Vpadn extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
@@ -38,7 +38,7 @@ public class Vpadn extends Blocker {
                             
                             Util.log(packageName, "Detect VpadnBanner loadAd in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -52,7 +52,7 @@ public class Vpadn extends Blocker {
                     
                     Util.log(packageName, "Detect VpadnInterstitialAd show in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }
@@ -64,7 +64,7 @@ public class Vpadn extends Blocker {
 
                     Util.log(packageName, "Detect vpadnNativeAd loadAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }
@@ -76,7 +76,7 @@ public class Vpadn extends Blocker {
 
                     Util.log(packageName, "Detect vpadnNativeAd registerViewForInteraction in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         View nativeAd = (View) param.args[0];
                         Main.removeAdView(nativeAd, packageName, true);
                         param.setResult(new Object());

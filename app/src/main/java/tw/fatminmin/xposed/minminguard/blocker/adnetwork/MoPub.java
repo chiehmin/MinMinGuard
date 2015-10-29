@@ -26,7 +26,7 @@ public class MoPub extends Blocker {
     public String getBanner() {
         return banner;
     }
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 					
 			Class<?> mopubBanner = findClass(banner, lpparam.classLoader);
@@ -40,7 +40,7 @@ public class MoPub extends Blocker {
 							
 							Util.log(packageName, "Detect MoPub loadAd in " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
@@ -56,7 +56,7 @@ public class MoPub extends Blocker {
 
                     Util.log(packageName, "Detect mopubInter load in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
@@ -71,7 +71,7 @@ public class MoPub extends Blocker {
 
                     Util.log(packageName, "Detect mopubNativeAd loadAds in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

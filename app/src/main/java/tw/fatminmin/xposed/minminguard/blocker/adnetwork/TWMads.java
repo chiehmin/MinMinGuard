@@ -25,7 +25,7 @@ public class TWMads extends Blocker {
     public String getBanner() {
         return banner;
     }
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
             Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
@@ -37,7 +37,7 @@ public class TWMads extends Blocker {
                             
                             Util.log(packageName, "Detect TWMAdView activeAd in " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
@@ -51,7 +51,7 @@ public class TWMads extends Blocker {
                     
                     Util.log(packageName, "Detect TWMAdViewInterstitial show in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

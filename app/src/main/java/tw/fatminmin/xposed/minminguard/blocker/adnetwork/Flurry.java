@@ -24,7 +24,7 @@ public class Flurry extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			Class<?> adView = XposedHelpers.findClass("com.flurry.android.FlurryAds", lpparam.classLoader);
             Class<?> nativeAdView = XposedHelpers.findClass("com.flurry.android.ads.FlurryAdNative", lpparam.classLoader);
@@ -34,7 +34,7 @@ public class Flurry extends Blocker {
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					Util.log(packageName, "Detect FlurryAds fetchAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 					}
 				}
@@ -47,7 +47,7 @@ public class Flurry extends Blocker {
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					Util.log(packageName, "Detect FlurryAds displayAd in " + packageName);
 					
-					if(!test) {
+					if(removeAd) {
 						param.setResult(new Object());
 						Main.removeAdView((View) param.thisObject, packageName, true);
 					}
@@ -60,7 +60,7 @@ public class Flurry extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect FlurryAdNative fetchAd in " + packageName);
 
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                     }
                 }

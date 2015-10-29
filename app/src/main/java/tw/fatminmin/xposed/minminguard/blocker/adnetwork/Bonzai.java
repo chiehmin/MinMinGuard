@@ -15,7 +15,7 @@ public class Bonzai extends Blocker {
     public final static String banner = "com.bonzai.view.BonzaiAdView";
     public final static String bannerPrefix = "com.bonzai.view";
     
-    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+    public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.bonzai.view.BonzaiAdView", lpparam.classLoader);
             XposedBridge.hookAllMethods(adView, "update", new XC_MethodHook() {
@@ -24,7 +24,7 @@ public class Bonzai extends Blocker {
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     Util.log(packageName, "Detect BonzaiAdView update in " + packageName);
                     
-                    if(!test) {
+                    if(removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }

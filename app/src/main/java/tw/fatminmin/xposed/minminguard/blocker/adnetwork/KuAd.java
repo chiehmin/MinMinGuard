@@ -24,7 +24,7 @@ public class KuAd extends Blocker {
 	public String getBanner() {
 		return banner;
 	}
-	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean test) {
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 			
 			Class<?> wsBanner = findClass("com.waystorm.ads.WSAdBanner", lpparam.classLoader);
@@ -35,7 +35,7 @@ public class KuAd extends Blocker {
 							
 							Util.log(packageName, "Detect WSAdBanner setWSAdListener " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
@@ -54,7 +54,7 @@ public class KuAd extends Blocker {
 							
 							Util.log(packageName, "Detect WSAdBanner setApplicationId " + packageName);
 							
-							if(!test) {
+							if(removeAd) {
 								param.setResult(new Object());
 								Main.removeAdView((View) param.thisObject, packageName, true);
 							}
@@ -67,7 +67,7 @@ public class KuAd extends Blocker {
                             
                             Util.log(packageName, "Detect WSAdBanner mediationLoadAd " + packageName);
                             
-                            if(!test) {
+                            if(removeAd) {
                                 param.setResult(new Object());
                                 Main.removeAdView((View) param.thisObject, packageName, true);
                             }
