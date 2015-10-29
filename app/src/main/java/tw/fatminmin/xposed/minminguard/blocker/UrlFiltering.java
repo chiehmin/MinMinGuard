@@ -105,7 +105,7 @@ public class UrlFiltering {
             }
         }
 
-        if(Main.pref.getBoolean(packageName + "_url", true)) {
+        if(Main.pref.getBoolean(packageName + "_url_data", false)) {
             
             try {
                 data = URLDecoder.decode(data, "UTF-8");

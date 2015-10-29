@@ -65,4 +65,14 @@
         android:layout_toRightOf="@+id/holder_blocked"
         android:layout_alignTop="@+id/holder_blocked"/>
 
+    <Switch
+        android:id="@+id/switch_url_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/option_enable_url_filter"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_below="@+id/holder_blocked" />
+
 </RelativeLayout>
