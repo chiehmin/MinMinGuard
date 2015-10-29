@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -25,8 +27,8 @@ public class NameBlocking {
         }
         return false;
     }
-    private static boolean isAdView(Context context, String pkgName, String clazzName)
-    {
+
+    private static boolean isAdView(Context context, String pkgName, String clazzName) {
         // corner case
         if(clazzName.startsWith("com.google.ads")) {
             return true;
@@ -44,11 +46,27 @@ public class NameBlocking {
             }
         }
         return false;
+
+    }
+
+    // find also parent classes
+    private static boolean isAdView(Context context, String pkgName, View view)
+    {
+        Class clazz = view.getClass();
+        while (clazz != null) {
+            String clazzName = clazz.getName();
+            if (isAdView(context, pkgName, clazzName)) {
+                return true;
+            }
+            clazz = clazz.getSuperclass();
+        }
+
+        return false;
     }
 
     public static void clearAdViewInLayout(final String packageName, final View view) {
 
-        if(isAdView(view.getContext(), packageName, view.getClass().getName())) {
+        if(isAdView(view.getContext(), packageName, view)) {
             Main.removeAdView(view, packageName, true);
             Util.log(packageName, "clearAdViewInLayout: " + view.getClass().getName());
         }
@@ -69,7 +87,7 @@ public class NameBlocking {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View v = (View) param.args[0];
 
-                if (isAdView(v.getContext(), packageName, v.getClass().getName())) {
+                if (isAdView(v.getContext(), packageName, v)) {
                     Main.removeAdView(v, packageName, true);
                     Util.log(packageName, "Name based blocking: " + v.getClass().getName());
                 }
