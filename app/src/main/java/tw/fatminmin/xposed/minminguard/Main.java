@@ -148,13 +148,14 @@ public class Main implements IXposedHookZygoteInit,
                         UrlFiltering.removeWebViewAds(packageName, lpparam, false);
                     }
 
-                    NameBlocking.nameBasedBlocking(packageName, lpparam);
-
                 } else {
                     ApiBlocking.handle(context, packageName, lpparam, true);
                 }
             }
-        });    
+        });
+        
+        NameBlocking.nameBasedBlocking(packageName, lpparam);
+
         if(pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
             XposedBridge.hookAllMethods(activity, "setContentView", new XC_MethodHook() {
                 @Override
