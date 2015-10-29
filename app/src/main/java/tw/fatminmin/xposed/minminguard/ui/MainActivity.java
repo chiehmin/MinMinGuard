@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(it);
                     break;
                 case R.id.action_about:
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://fatminmin.com/pages/minminguard.html")));
                     break;
             }
             return true;

@@ -72,7 +72,6 @@ public class UrlFiltering {
 
 
         Util.log(packageName, "Url filtering");
-        String[] array;
 
         if(url == null) 
             url = "";
@@ -82,60 +81,41 @@ public class UrlFiltering {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        array = url.split("[/\\s):]");
         
         Util.log(packageName, packageName + " url:\n" + url);
-        
-        for(String hostname : array) {
 
-            hostname = hostname.trim();
-
-            if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-
-                if(Main.urls.contains(hostname)) {
-
-                    Util.log(packageName, "Detect Ads(url) with hostname: " + hostname + " in " + packageName);
-                    if(!test) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, false);
-                        return true;
-                    }
-                    break;
+        for(String adUrl : Main.urls) {
+            if(url.contains(adUrl)) {
+                Util.log(packageName, "Detect " + packageName + " load url from " + adUrl);
+                if(!test) {
+                    param.setResult(new Object());
+                    Main.removeAdView((View) param.thisObject, packageName, false);
+                    return true;
                 }
+                break;
             }
         }
 
-        if(Main.pref.getBoolean(packageName + "_url", true)) {
-            
-            try {
-                data = URLDecoder.decode(data, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            
-            Util.log(packageName, packageName + " data:\n" + data);
-            
-            array = data.split("[/\\s):]");
+        Util.log(packageName, packageName + " data:\n" + data);
 
-            for(String hostname : array) {
+        try {
+            data = URLDecoder.decode(data, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-                hostname = hostname.trim();
-
-                if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-
-                    if(Main.urls.contains(hostname)) {
-
-                        Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
-                        if(!test) {
-                            param.setResult(new Object());
-                            Main.removeAdView((View) param.thisObject, packageName, false);
-                            return true;
-                        }
-                        break;
-                    }
+        for(String adUrl : Main.urls) {
+            if(data.contains(adUrl)) {
+                Util.log(packageName, "Detect " + packageName + " load data from " + adUrl);
+                if (!test) {
+                    param.setResult(new Object());
+                    Main.removeAdView((View) param.thisObject, packageName, false);
+                    return true;
                 }
+                break;
             }
         }
+
         return false;
     }
 }
