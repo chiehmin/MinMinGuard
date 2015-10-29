@@ -53,7 +53,7 @@ public class NameBlocking {
     private static boolean isAdView(Context context, String pkgName, View view)
     {
         Class clazz = view.getClass();
-        while (clazz != null) {
+        for (int level = 0; level < 3 && clazz != null; level++) {
             String clazzName = clazz.getName();
             if (isAdView(context, pkgName, clazzName)) {
                 return true;
