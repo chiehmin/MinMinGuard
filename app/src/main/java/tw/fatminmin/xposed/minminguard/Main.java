@@ -1,21 +1,11 @@
 package tw.fatminmin.xposed.minminguard;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
-import tw.fatminmin.xposed.minminguard.blocker.HostBlock;
 import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
@@ -62,9 +52,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.util.DisplayMetrics;
@@ -93,12 +81,14 @@ public class Main implements IXposedHookZygoteInit,
     public static Resources res;
 
     public static Blocker[] blockers = {
+            /* Popular adnetwork */
             new Ad2iction(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
             new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
             new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
             new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
             new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(),
             new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
+            /* Custom Mod*/
     };
 
     @Override

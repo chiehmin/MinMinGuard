@@ -105,36 +105,48 @@ public class UrlFiltering {
             }
         }
 
-        if(Main.pref.getBoolean(packageName + "_url_data", false)) {
-            
+        if(Main.pref.getBoolean(packageName + "_url", false)) {
+
+            Util.log(packageName, packageName + " data:\n" + data);
+
             try {
                 data = URLDecoder.decode(data, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            
-            Util.log(packageName, packageName + " data:\n" + data);
-            
-            array = data.split("[/\\s):]");
 
-            for(String hostname : array) {
-
-                hostname = hostname.trim();
-
-                if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
-
-                    if(Main.urls.contains(hostname)) {
-
-                        Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
-                        if(!test) {
-                            param.setResult(new Object());
-                            Main.removeAdView((View) param.thisObject, packageName, false);
-                            return true;
-                        }
-                        break;
+            for(String adUrl : Main.urls) {
+                if(data.contains(adUrl)) {
+                    Util.log(packageName, "Detect Ads(data) in " + packageName);
+                    if (!test) {
+                        param.setResult(new Object());
+                        Main.removeAdView((View) param.thisObject, packageName, false);
+                        return true;
                     }
+                    break;
                 }
             }
+
+//            array = data.split("[/\\s):]");
+//
+//            for(String hostname : array) {
+//
+//                hostname = hostname.trim();
+//
+//                if(hostname.contains(".") &&  hostname.length() > 5 && hostname.length() < 50) {
+//
+//                    if(Main.urls.contains(hostname)) {
+//
+//                        Util.log(packageName, "Detect Ads(data) with hostname: " + hostname + " in " + packageName);
+//                        if(!test) {
+//                            param.setResult(new Object());
+//                            Main.removeAdView((View) param.thisObject, packageName, false);
+//                            return true;
+//                        }
+//                        break;
+//                    }
+//                }
+//            }
         }
         return false;
     }
