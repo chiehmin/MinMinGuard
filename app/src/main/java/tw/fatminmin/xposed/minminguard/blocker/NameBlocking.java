@@ -96,17 +96,12 @@ public class NameBlocking {
 
         Class<?> viewGroup = XposedHelpers.findClass("android.view.ViewGroup", lpparam.classLoader);
         XposedBridge.hookAllMethods(viewGroup, "addView", new XC_MethodHook() {
-            
+
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                ViewGroup root = (ViewGroup) param.thisObject;
                 View view = (View) param.args[0];
                 if (isAdView(view.getContext(), packageName, view)) {
                     Main.removeAdView(view, packageName, true);
-                    if (root.getChildCount() == 1) {
-                        root.removeAllViews();
-                        Main.removeAdView(root, packageName, true);
-                    }
                 }
             }
         });

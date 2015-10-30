@@ -208,9 +208,17 @@ public class Main implements IXposedHookZygoteInit,
 
         if(view.getParent() != null && view.getParent() instanceof ViewGroup) {
             float currentLimit = heightLimit;
+            ViewGroup parent = (ViewGroup) view.getParent();
             if(first)
             {
                 currentLimit = Math.max(adHeight + 5, currentLimit);
+                /*
+                  Some adview(AdbertAdview) still showing after set height to 0
+                  In this case, I have to set its visibility to GONE
+                 */
+                if(parent.getChildCount() == 1) {
+                    view.setVisibility(View.GONE);
+                }
             }
             removeAdView((View) view.getParent(), packageName, false, currentLimit);
         }
