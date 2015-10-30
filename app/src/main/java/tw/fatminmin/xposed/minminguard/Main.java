@@ -13,6 +13,7 @@ import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ad2iction;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AdMarvel;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adbert;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AdmobGms;
@@ -85,7 +86,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
+            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
             new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
             new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
             new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
