@@ -97,14 +97,16 @@ public class NameBlocking {
         Class<?> viewGroup = XposedHelpers.findClass("android.view.ViewGroup", lpparam.classLoader);
         XposedBridge.hookAllMethods(viewGroup, "addView", new XC_MethodHook() {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                ViewGroup root = (ViewGroup) param.thisObject;
                 View v = (View) param.args[0];
-
                 if (isAdView(v.getContext(), packageName, v)) {
-                    Main.removeAdView(v, packageName, true);
-                    Util.log(packageName, "Name based blocking: " + v.getClass().getName());
+                    param.setResult(new Object());
+                    if (root.getChildCount() == 0 || Main.convertPixelsToDp(root.getHeight()) <= 50) {
+                        Main.removeAdView(root, packageName, true);
+                    }
+                    Util.log(packageName, "Prevent adview being added: " + v.getClass().getName());
                 }
-
             }
         });
         Class<?> activity = XposedHelpers.findClass("android.app.Activity", lpparam.classLoader);
@@ -113,8 +115,31 @@ public class NameBlocking {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 Activity ac = (Activity)(param.thisObject);
                 ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
-                NameBlocking.clearAdViewInLayout(packageName, root);
+                clearAdViewInLayout(packageName, root);
             }
         });
+
+        Class<?> inflaterClazz = XposedHelpers.findClass("android.view.LayoutInflater", lpparam.classLoader);
+        XposedBridge.hookAllMethods(inflaterClazz, "inflate", new XC_MethodHook() {
+
+            /*
+              http://developer.android.com/intl/zh-tw/reference/android/view/LayoutInflater.html
+              inflate(int resource, ViewGroup root)
+              inflate(XmlPullParser parser, ViewGroup root)
+              inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot)
+              inflate(int resource, ViewGroup root, boolean attachToRoot)
+
+                Returns
+                The root View of the inflated hierarchy. If root was supplied and attachToRoot is true,
+                this is root; otherwise it is the root of the inflated XML file.
+             */
+
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                View root = (View) param.getResult();
+                clearAdViewInLayout(packageName, root);
+            }
+        });
+
     }
 }
