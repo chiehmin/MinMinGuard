@@ -172,6 +172,10 @@ public class Main implements IXposedHookZygoteInit,
 
         float adHeight = convertPixelsToDp(view.getHeight());
 
+        /*
+            adview may not have been created
+            reference: http://stackoverflow.com/questions/8170915/getheight-returns-0-for-all-android-ui-objects
+        */
         if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
             LayoutParams params = view.getLayoutParams();
@@ -188,10 +192,15 @@ public class Main implements IXposedHookZygoteInit,
             @Override
             public void onGlobalLayout() {
                 float heightDp = convertPixelsToDp(view.getHeight());
-                if (heightDp <= heightLimit) {
+                if (first || heightDp <= heightLimit) {
 
                     LayoutParams params = view.getLayoutParams();
-                    params.height = 0;
+                    if (params == null) {
+                        params = new LayoutParams(LayoutParams.MATCH_PARENT, 0);
+                    }
+                    else {
+                        params.height = 0;
+                    }
                     view.setLayoutParams(params);
                 }
             }
