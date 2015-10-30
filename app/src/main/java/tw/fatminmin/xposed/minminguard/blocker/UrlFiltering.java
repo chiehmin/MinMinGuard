@@ -88,7 +88,7 @@ public class UrlFiltering {
             if(url.contains(adUrl)) {
                 Util.log(packageName, "Detect " + packageName + " load url from " + adUrl);
                 param.setResult(new Object());
-                Main.removeAdView((View) param.thisObject, packageName, false);
+                Main.removeAdView((View) param.thisObject, packageName, true);
                 return true;
             }
         }
@@ -105,7 +105,7 @@ public class UrlFiltering {
             if(data.contains(adUrl)) {
                 Util.log(packageName, "Detect " + packageName + " load data from " + adUrl);
                 param.setResult(new Object());
-                Main.removeAdView((View) param.thisObject, packageName, false);
+                Main.removeAdView((View) param.thisObject, packageName, true);
                 return true;
             }
         }
