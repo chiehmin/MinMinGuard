@@ -31,6 +31,12 @@
     <string name="intro_app_detail_content">
         Tap on the app name to show MinMinGuard blocking statistic for the app.
     </string>
+    <string name="intro_url_filtering_title">
+        Url filtering
+    </string>
+    <string name="intro_url_filtering_content">
+        If some app still shows ads, you can try to enable url filtering feature. Caution: this may result problem for webview-based app.
+    </string>
 
     <string name="btn_ok">OK</string>
 
