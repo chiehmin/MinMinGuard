@@ -164,7 +164,7 @@ public class Main implements IXposedHookZygoteInit,
 
         if (remove) {
             Util.notifyRemoveAdView(view.getContext(), packageName, 1);
-            removeAdView(view, packageName, true, 50);
+            removeAdView(view, packageName, true, 51);
         }
     }
 
@@ -220,7 +220,7 @@ public class Main implements IXposedHookZygoteInit,
                     view.setVisibility(View.GONE);
                 }
             }
-            removeAdView((View) view.getParent(), packageName, false, currentLimit);
+            removeAdView(parent, packageName, false, currentLimit);
         }
     }
 

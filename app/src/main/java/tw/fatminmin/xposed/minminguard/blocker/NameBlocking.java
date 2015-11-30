@@ -92,16 +92,29 @@ public class NameBlocking {
         }
     }
 
-    public static void nameBasedBlocking(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam) {
+    public static void nameBasedBlocking(final String pkgName, final XC_LoadPackage.LoadPackageParam lpparam) {
 
         Class<?> viewGroup = XposedHelpers.findClass("android.view.ViewGroup", lpparam.classLoader);
         XposedBridge.hookAllMethods(viewGroup, "addView", new XC_MethodHook() {
 
             @Override
+            protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                View view = (View) param.args[0];
+                ViewGroup thisView = (ViewGroup) param.thisObject;
+                if (isAdView(view.getContext(), pkgName, view)) {
+                    Util.log(pkgName, "NameBasedBlocking before addView: " + view.getClass().getName());
+                    if (thisView.getChildCount() == 0) {
+                        Main.removeAdView(thisView, pkgName, true);
+                    }
+                }
+            }
+
+            @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View view = (View) param.args[0];
-                if (isAdView(view.getContext(), packageName, view)) {
-                    Main.removeAdView(view, packageName, true);
+                if (isAdView(view.getContext(), pkgName, view)) {
+                    Util.log(pkgName, "NameBasedBlocking after addView: " + view.getClass().getName());
+                    Main.removeAdView(view, pkgName, true);
                 }
             }
         });
@@ -111,7 +124,7 @@ public class NameBlocking {
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 Activity ac = (Activity)(param.thisObject);
                 ViewGroup root = (ViewGroup) ac.getWindow().getDecorView().findViewById(android.R.id.content);
-                clearAdViewInLayout(packageName, root);
+                clearAdViewInLayout(pkgName, root);
             }
         });
 
@@ -133,7 +146,7 @@ public class NameBlocking {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View root = (View) param.getResult();
-                clearAdViewInLayout(packageName, root);
+                clearAdViewInLayout(pkgName, root);
             }
         });
 
