@@ -22,6 +22,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AppBrain;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Chartboost;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Clickforce;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Domob;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Facebook;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Flurry;
@@ -86,12 +87,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
-            new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
-            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
-            new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
-            new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(),
-            new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
+            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(), new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
             /* Custom Mod*/
     };
 
