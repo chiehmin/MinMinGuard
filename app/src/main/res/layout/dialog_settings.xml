@@ -10,7 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="true"
+        android:enabled="false"
         android:text="@string/msg_enabled_crash_report" />
+    <CheckBox
+        android:id="@+id/cb_show_system_apps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/msg_show_system_apps"/>
     <Button
         android:id="@+id/btn_ok"
         android:layout_margin="10dp"

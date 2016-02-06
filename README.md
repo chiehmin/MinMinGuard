@@ -112,6 +112,11 @@ Above is a classic example. After you complete the new blocker, you have to reme
 
 After you confirm the new blocker is working, you can send me a pull request. I will double check it and merge it into the MinMinGuard. Finally, I will list you as a contributer :).
 
+## Todo
+
+* extend sibling view to fullsize after removing banner
+* Count number of nativead removal
+
 ## Contributers
 
 * FatMinMin

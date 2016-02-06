@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, MainFragment.newInstance())
+                    .add(R.id.fragment_container, MainFragment.newInstance(), Common.FRG_MAIN)
                     .commit();
         }
     }

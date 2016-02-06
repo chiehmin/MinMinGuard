@@ -41,9 +41,8 @@
     <string name="btn_ok">OK</string>
 
     <string name="msg_xposed_not_enabled">Xposed is not enabled</string>
-    <string name="msg_enabled_crash_report">
-        Enable crash report
-    </string>
+    <string name="msg_enabled_crash_report">Enable crash report</string>
+    <string name="msg_show_system_apps">Show system apps</string>
     <string name="msg_mode_manual">Manual</string>
     <string name="msg_mode_auto">Auto</string>
     <string name="msg_block_num">Blocked %d ads</string>

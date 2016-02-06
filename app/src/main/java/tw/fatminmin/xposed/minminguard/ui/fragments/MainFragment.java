@@ -132,7 +132,6 @@ public class MainFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refresh();
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -140,18 +139,27 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    private void refresh() {
+    public void refresh() {
+        if (!mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
         updateAppList();
         mAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private void updateAppList() {
         final PackageManager pm = getActivity().getPackageManager();
+        final SharedPreferences mUiPref = getActivity().getSharedPreferences(Common.UI_PREFS,
+                Context.MODE_PRIVATE);
+
         mAppList.clear();
+
+        boolean showSystemApps = mUiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false);
 
         List<PackageInfo> list = pm.getInstalledPackages(0);
         for (PackageInfo info : list) {
-            if ((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+            if (showSystemApps || (info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 mAppList.add(info);
             }
         }
