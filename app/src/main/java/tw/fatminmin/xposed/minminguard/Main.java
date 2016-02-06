@@ -168,10 +168,6 @@ public class Main implements IXposedHookZygoteInit,
 
         float adHeight = convertPixelsToDp(view.getHeight());
 
-        /*
-            adview may not have been created
-            reference: http://stackoverflow.com/questions/8170915/getheight-returns-0-for-all-android-ui-objects
-        */
         if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
             LayoutParams params = view.getLayoutParams();
@@ -183,6 +179,10 @@ public class Main implements IXposedHookZygoteInit,
             }
             view.setLayoutParams(params);
         }
+        /*
+            adview may not have been created
+            reference: http://stackoverflow.com/questions/8170915/getheight-returns-0-for-all-android-ui-objects
+        */
         ViewTreeObserver observer= view.getViewTreeObserver();
         observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
             @Override

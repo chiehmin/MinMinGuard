@@ -64,7 +64,6 @@ public class MinMinProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         String pkgName = values.getAsString(Common.KEY_PKG_NAME);
-        Log.d("fatminmin", pkgName);
 
         String network = values.getAsString(Common.KEY_NETWORK);
         Integer blockNum = values.getAsInteger(Common.KEY_BLOCK_NUM);
