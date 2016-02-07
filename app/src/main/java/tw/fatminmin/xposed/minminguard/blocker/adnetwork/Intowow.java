@@ -31,6 +31,12 @@ public class Intowow extends Blocker {
     public final static String contentAdHelper = "com.intowow.sdk.ContentADHelper";
     public final static String helperFunc = "requestAD";
 
+    public final static String streamHelper = "com.intowow.sdk.StreamHelper";
+    public final static String streamHelperFunc1 = "getAD";
+    public final static String streamHelperFunc2 = "setActive";
+    public final static String streamHelperFunc3 = "setListener";
+
+
     @Override
     public String getBannerPrefix() {
         return bannerPrefix;
@@ -45,25 +51,16 @@ public class Intowow extends Blocker {
         result |= ApiBlocking.removeBanner(packageName, banner, bannerFunc, lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, splashAd, splashAdFunc, lpparam, removeAd);
 
-        result |= ApiBlocking.blockAdFunctionWithNull(packageName, I2WAPI, apiFunc1, lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunctionWithNull(packageName, I2WAPI, apiFunc2, lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunctionWithNull(packageName, I2WAPI, apiFunc3, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, I2WAPI, apiFunc1, null, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, I2WAPI, apiFunc2, null, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, I2WAPI, apiFunc3, null, lpparam, removeAd);
 
-        result |= ApiBlocking.blockAdFunctionWithNull(packageName, contentAdHelper, helperFunc, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, contentAdHelper, helperFunc, null, lpparam, removeAd);
 
-        try {
-            Class<?> splashAdActivity = findClass("com.intowow.sdk.SplashAdActivity", lpparam.classLoader);
-            XposedBridge.hookAllMethods(splashAdActivity, "onCreate", new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    Activity activity = (Activity) param.thisObject;
-                    activity.finish();
-                }
-            });
-        }
-        catch (XposedHelpers.ClassNotFoundError e) {
-            // pass
-        }
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, streamHelper, streamHelperFunc1, null, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc2, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc3, lpparam, removeAd);
+
 
         return result;
     }

@@ -87,7 +87,7 @@ public class ApiBlocking {
         }
         return true;
     }
-    public static boolean blockAdFunctionWithNull(final String packageName, final String ad, final String adFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+    public static boolean blockAdFunctionWithResult(final String packageName, final String ad, final String adFunc, final Object result, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> bannerClazz = findClass(ad, lpparam.classLoader);
             XposedBridge.hookAllMethods(bannerClazz, adFunc, new XC_MethodHook() {
@@ -98,7 +98,7 @@ public class ApiBlocking {
                     String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
-                        param.setResult(null);
+                        param.setResult(result);
                     }
                 }
             });
