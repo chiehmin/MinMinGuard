@@ -57,7 +57,7 @@ public class Intowow extends Blocker {
 
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, contentAdHelper, helperFunc, null, lpparam, removeAd);
 
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, streamHelper, streamHelperFunc1, null, lpparam, removeAd);
+//        result |= ApiBlocking.blockAdFunctionWithResult(packageName, streamHelper, streamHelperFunc1, null, lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc2, lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc3, lpparam, removeAd);
 
