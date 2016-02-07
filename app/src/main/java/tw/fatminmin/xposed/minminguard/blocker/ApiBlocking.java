@@ -39,21 +39,45 @@ public class ApiBlocking {
         });
     }
     /*
-        Helper function used for removing banners
+        Used for blocking banner function and removing banner
      */
-    public static boolean removeBanner(final String packageName, final String banner, final String bannerLoadFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+    public static boolean removeBanner(final String packageName, final String banner, final String bannerFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
-            XposedBridge.hookAllMethods(bannerClazz, bannerLoadFunc, new XC_MethodHook() {
+            XposedBridge.hookAllMethods(bannerClazz, bannerFunc, new XC_MethodHook() {
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s in %s", banner, bannerLoadFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s in %s", banner, bannerFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         param.setResult(new Object());
                         Main.removeAdView((View) param.thisObject, packageName, true);
+                    }
+                }
+            });
+        }
+        catch(XposedHelpers.ClassNotFoundError e) {
+            return false;
+        }
+        return true;
+    }
+    /*
+        Used for blocking ad functions
+     */
+    public static boolean blockAdFunction(final String packageName, final String ad, final String adFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+            Class<?> bannerClazz = findClass(ad, lpparam.classLoader);
+            XposedBridge.hookAllMethods(bannerClazz, adFunc, new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        param.setResult(new Object());
                     }
                 }
             });
