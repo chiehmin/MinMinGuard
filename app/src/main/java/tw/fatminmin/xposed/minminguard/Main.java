@@ -37,6 +37,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MasAd;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MdotM;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Millennial;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MobFox;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Mobclix;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Nend;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Og;
@@ -87,7 +88,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(), new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
+            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(), new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
             /* Custom Mod*/
     };
 

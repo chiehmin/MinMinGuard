@@ -14,6 +14,8 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
 
+import static de.robv.android.xposed.XposedHelpers.findClass;
+
 /**
  * Created by fatminmin on 2015/10/27.
  */
@@ -34,5 +36,29 @@ public class ApiBlocking {
                 }
             }
         });
+    }
+    /*
+        Helper function used for removing banners
+     */
+    public static boolean removeBanner(final String packageName, final String banner, final String bannerLoadFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+            Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
+            XposedBridge.hookAllMethods(bannerClazz, bannerLoadFunc, new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s in %s", banner, bannerLoadFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        param.setResult(new Object());
+                    }
+                }
+            });
+        }
+        catch(XposedHelpers.ClassNotFoundError e) {
+            return false;
+        }
+        return true;
     }
 }
