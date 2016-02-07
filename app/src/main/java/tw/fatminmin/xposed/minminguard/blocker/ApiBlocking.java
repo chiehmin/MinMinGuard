@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.blocker;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.lang.reflect.InvocationTargetException;
@@ -52,6 +53,7 @@ public class ApiBlocking {
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         param.setResult(new Object());
+                        Main.removeAdView((View) param.thisObject, packageName, true);
                     }
                 }
             });
