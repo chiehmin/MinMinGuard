@@ -19,26 +19,8 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
  */
 public class NextMedia  {
 
-    final public static String adapter = "com.nextmediatw.apple.tw.adapter.NewsListAdapter";
-    final public static String adapterFunc1 = "addAD";
-    final public static String adapterFunc2 = "reloadAd";
-    final public static String adapterFunc3 = "reloadAdInRange";
-
-    final public static String news = "com.nextmediatw.unit.News";
-    final public static String newsFunc = "isAd";
-
-    final public static String streamHelper = "com.nextmediatw.data.AdUtils.StreamHelper";
-    final public static String streamHelperFunc1 = "setAdListener";
-    final public static String streamHelperFunc2 = "getAd";
-    final public static String streamHelperFunc3 = "preallocte";
-
+    final public static String adUtils = "com.nextmediatw.data.AdUtils";
     static public void handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, boolean removeAd) {
-        ApiBlocking.blockAdFunctionWithResult(packageName, adapter, adapterFunc1, null, lpparam, removeAd);
-        ApiBlocking.blockAdFunctionWithResult(packageName, adapter, adapterFunc2, null, lpparam, removeAd);
-
-        ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc1, lpparam, removeAd);
-        ApiBlocking.blockAdFunctionWithResult(packageName, streamHelper, streamHelperFunc2, null, lpparam, removeAd);
-        ApiBlocking.blockAdFunction(packageName, streamHelper, streamHelperFunc3, lpparam, removeAd);
-
+        ApiBlocking.blockAdFunctionWithResult(packageName, adUtils, "skipAd", Boolean.valueOf(true), lpparam, removeAd);
     }
 }

@@ -156,7 +156,7 @@ public class Main implements IXposedHookZygoteInit,
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, true);
         OneWeather.handleLoadPackage(packageName, lpparam, true);
-        //NextMedia.handleLoadPackage(packageName, lpparam, true);
+        NextMedia.handleLoadPackage(packageName, lpparam, true);
     }
 
     public static void removeAdView(View view, String packageName, boolean remove) {
