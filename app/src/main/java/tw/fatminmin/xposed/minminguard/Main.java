@@ -54,6 +54,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yahoo;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.PeriodCalendar;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
@@ -155,6 +156,7 @@ public class Main implements IXposedHookZygoteInit,
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, true);
         OneWeather.handleLoadPackage(packageName, lpparam, true);
+        NextMedia.handleLoadPackage(packageName, lpparam, true);
     }
 
     public static void removeAdView(View view, String packageName, boolean remove) {

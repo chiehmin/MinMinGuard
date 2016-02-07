@@ -87,4 +87,25 @@ public class ApiBlocking {
         }
         return true;
     }
+    public static boolean blockAdFunctionWithNull(final String packageName, final String ad, final String adFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+            Class<?> bannerClazz = findClass(ad, lpparam.classLoader);
+            XposedBridge.hookAllMethods(bannerClazz, adFunc, new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        param.setResult(null);
+                    }
+                }
+            });
+        }
+        catch(XposedHelpers.ClassNotFoundError e) {
+            return false;
+        }
+        return true;
+    }
 }
