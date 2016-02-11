@@ -2,6 +2,8 @@ package tw.fatminmin.xposed.minminguard;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.XC_MethodReplacement;
@@ -93,6 +95,8 @@ public class Main implements IXposedHookZygoteInit,
             /* Custom Mod*/
     };
 
+    public static ExecutorService notifyWorker;
+
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
 
@@ -117,6 +121,8 @@ public class Main implements IXposedHookZygoteInit,
         for(String url : sUrls) {
             patterns.add(url);
         }
+
+        notifyWorker = Executors.newSingleThreadExecutor();
     }
 
     @Override

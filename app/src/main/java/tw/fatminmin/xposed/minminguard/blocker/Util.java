@@ -3,6 +3,8 @@ package tw.fatminmin.xposed.minminguard.blocker;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import tw.fatminmin.xposed.minminguard.Common;
+import tw.fatminmin.xposed.minminguard.Main;
 
 public class Util {
     
@@ -95,7 +98,7 @@ public class Util {
     }
     static public void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum) {
 
-        new Thread(new Runnable() {
+        Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -111,6 +114,7 @@ public class Util {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        };
+        Main.notifyWorker.submit(task);
     }
 }
