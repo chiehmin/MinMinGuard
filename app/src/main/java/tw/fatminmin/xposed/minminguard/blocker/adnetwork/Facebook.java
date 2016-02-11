@@ -7,6 +7,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 
@@ -28,75 +29,28 @@ public class Facebook extends Blocker {
         return banner;
     }
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
-        try {
 
-            Class<?> facebookBanner = findClass(banner, lpparam.classLoader);
-            Class<?> facebookInter = findClass(inter, lpparam.classLoader);
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, banner, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.removeBanner(packageName, banner, "setAdListener", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, inter, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, nativeAd, "loadAd", lpparam, removeAd);
+        result |= customHandle(packageName, lpparam, removeAd);
+        return result;
+    }
+
+    public boolean customHandle(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
             Class<?> facebookNativeAd = findClass(nativeAd, lpparam.classLoader);
 
-            XposedBridge.hookAllMethods(facebookBanner, "loadAd", new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect facebookBanner loadAd in " + packageName);
-
-                    if (removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-
-            });
-            XposedBridge.hookAllMethods(facebookBanner, "setAdListener", new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect facebookBanner setAdListener in " + packageName);
-
-                    if (removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-            });
-
-
-            XposedBridge.hookAllMethods(facebookInter, "loadAd",  new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect facebookInter loadAd in " + packageName);
-
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-            });
-
-            XposedBridge.hookAllMethods(facebookNativeAd, "loadAd",  new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect facebookNativeAd loadAd in " + packageName);
-
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-            });
-
-            XposedBridge.hookAllMethods(facebookNativeAd, "registerViewForInteraction",  new XC_MethodHook() {
+            XposedBridge.hookAllMethods(facebookNativeAd, "registerViewForInteraction", new XC_MethodHook() {
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
                     Util.log(packageName, "Detect facebookNativeAd registerViewForInteraction in " + packageName);
 
-                    if(removeAd) {
+                    if (removeAd) {
                         View nativeAd = (View) param.args[0];
                         Main.removeAdView(nativeAd, packageName, true);
                         param.setResult(new Object());
@@ -104,8 +58,6 @@ public class Facebook extends Blocker {
                 }
             });
 
-
-            Util.log(packageName, packageName + " uses facebook");
         }
         catch(XposedHelpers.ClassNotFoundError e) {
             return false;

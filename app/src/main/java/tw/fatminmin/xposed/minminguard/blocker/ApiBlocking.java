@@ -77,6 +77,7 @@ public class ApiBlocking {
                     String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
+                        Util.notifyRemoveAdView(null, packageName, 1);
                         param.setResult(new Object());
                     }
                 }
@@ -98,6 +99,7 @@ public class ApiBlocking {
                     String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
+                        Util.notifyRemoveAdView(null, packageName, 1);
                         param.setResult(result);
                     }
                 }

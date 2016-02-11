@@ -20,6 +20,7 @@ import android.util.Log;
 import android.widget.Toast;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
 
@@ -52,7 +53,7 @@ public class Util {
     static public Application getCurrentApplication() {
         try {
             Application app = (Application)Class.forName("android.app.ActivityThread").
-                    getMethod("currentApplication", new Class[0]).invoke(null, new Object[]{ null });
+                    getMethod("currentApplication", new Class[0]).invoke(null);
             return app;
         }
         catch (Exception e) {
@@ -98,11 +99,19 @@ public class Util {
     }
     static public void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum) {
 
+        final Context mContext;
+        if (context == null) {
+            mContext = getCurrentApplication();
+        }
+        else {
+            mContext = context;
+        }
+
         Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
-                    ContentResolver resolver = context.getContentResolver();
+                    ContentResolver resolver = mContext.getContentResolver();
                     Uri uri = Uri.parse("content://tw.fatminmin.xposed.minminguard/");
 
                     ContentValues values = new ContentValues();
