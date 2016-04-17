@@ -82,12 +82,11 @@ public class AppDataDao extends AbstractDao<AppData, String> {
     /** @inheritdoc */
     @Override
     public AppData readEntity(Cursor cursor, int offset) {
-        AppData entity = new AppData( //
+        return new AppData( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // pkgName
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // adNetworks
             cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2) // blockNum
         );
-        return entity;
     }
      
     /** @inheritdoc */

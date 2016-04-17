@@ -232,8 +232,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static float convertPixelsToDp(float px){
         DisplayMetrics metrics = res.getDisplayMetrics();
-        float dp = px / (metrics.densityDpi / 160f);
-        return dp;
+        return px / (metrics.densityDpi / 160f);
     }
 
     @Override

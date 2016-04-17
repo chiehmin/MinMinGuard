@@ -52,9 +52,8 @@ public class Util {
     
     static public Application getCurrentApplication() {
         try {
-            Application app = (Application)Class.forName("android.app.ActivityThread").
+            return (Application)Class.forName("android.app.ActivityThread").
                     getMethod("currentApplication", new Class[0]).invoke(null);
-            return app;
         }
         catch (Exception e) {
             e.printStackTrace();

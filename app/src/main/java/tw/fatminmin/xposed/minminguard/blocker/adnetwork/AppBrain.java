@@ -31,8 +31,8 @@ public class AppBrain extends Blocker {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.appbrain.AppBrain", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "getAds" ,new XC_MethodHook() {
+            Class<?> interAds = XposedHelpers.findClass("com.appbrain.AppBrain", lpparam.classLoader);
+            XposedBridge.hookAllMethods(interAds, "getAds" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     

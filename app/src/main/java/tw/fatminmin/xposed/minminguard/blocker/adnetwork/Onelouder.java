@@ -68,8 +68,8 @@ public class Onelouder extends Blocker {
                 
             });
             
-            Class<?> Interad  = XposedHelpers.findClass("com.onelouder.adlib.AdInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(Interad, "displayInterstitial", new XC_MethodHook() {
+            Class<?> interad  = XposedHelpers.findClass("com.onelouder.adlib.AdInterstitial", lpparam.classLoader);
+            XposedBridge.hookAllMethods(interad, "displayInterstitial", new XC_MethodHook() {
                 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

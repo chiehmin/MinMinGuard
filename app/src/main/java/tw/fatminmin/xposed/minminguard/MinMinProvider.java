@@ -20,11 +20,11 @@ import tw.fatminmin.xposed.minminguard.orm.DaoSession;
  */
 public class MinMinProvider extends ContentProvider {
 
-    DaoMaster.DevOpenHelper helper;
-    SQLiteDatabase db;
-    DaoMaster daoMaster;
-    DaoSession daoSession;
-    AppDataDao appDataDao;
+    private DaoMaster.DevOpenHelper helper;
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private AppDataDao appDataDao;
 
     @Override
     public boolean onCreate() {

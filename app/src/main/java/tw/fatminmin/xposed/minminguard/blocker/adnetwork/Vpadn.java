@@ -29,7 +29,7 @@ public class Vpadn extends Blocker {
         try {
             
             Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
-            Class<?> InterAds = XposedHelpers.findClass(inter, lpparam.classLoader);
+            Class<?> interAds = XposedHelpers.findClass(inter, lpparam.classLoader);
             Class<?> vpadnNativeAd = XposedHelpers.findClass(nativeAd, lpparam.classLoader);
             
             XposedBridge.hookAllMethods(adView, "loadAd" ,new XC_MethodHook() {
@@ -46,7 +46,7 @@ public class Vpadn extends Blocker {
                     });
             
 
-            XposedBridge.hookAllMethods(InterAds, "show" ,new XC_MethodHook() {
+            XposedBridge.hookAllMethods(interAds, "show" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     
