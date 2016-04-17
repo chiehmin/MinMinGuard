@@ -40,11 +40,11 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     private List<PackageInfo> mFilteredList;
     private SharedPreferences mPref;
 
-    DaoMaster.DevOpenHelper helper;
-    SQLiteDatabase db;
-    DaoMaster daoMaster;
-    DaoSession daoSession;
-    AppDataDao appDataDao;
+    private DaoMaster.DevOpenHelper helper;
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private AppDataDao appDataDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -98,8 +98,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.card_app, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override

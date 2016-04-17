@@ -42,8 +42,8 @@ public class Tapfortap extends Blocker {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.tapfortap.Interstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "show" ,new XC_MethodHook() {
+            Class<?> interAds = XposedHelpers.findClass("com.tapfortap.Interstitial", lpparam.classLoader);
+            XposedBridge.hookAllMethods(interAds, "show" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     

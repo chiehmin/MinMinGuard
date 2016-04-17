@@ -29,7 +29,7 @@ public class TWMads extends Blocker {
         try {
             
             Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
-            Class<?> InterAds = XposedHelpers.findClass(inter, lpparam.classLoader);
+            Class<?> interAds = XposedHelpers.findClass(inter, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(adView, "activeAd" ,new XC_MethodHook() {
                         @Override
@@ -45,7 +45,7 @@ public class TWMads extends Blocker {
                     });
             
 
-            XposedBridge.hookAllMethods(InterAds, "loadAd" ,new XC_MethodHook() {
+            XposedBridge.hookAllMethods(interAds, "loadAd" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     

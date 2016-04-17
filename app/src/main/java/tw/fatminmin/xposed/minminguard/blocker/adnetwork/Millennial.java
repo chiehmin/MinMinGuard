@@ -42,8 +42,8 @@ public class Millennial extends Blocker {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.millennialmedia.android.MMInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "display" ,new XC_MethodHook() {
+            Class<?> interAds = XposedHelpers.findClass("com.millennialmedia.android.MMInterstitial", lpparam.classLoader);
+            XposedBridge.hookAllMethods(interAds, "display" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     

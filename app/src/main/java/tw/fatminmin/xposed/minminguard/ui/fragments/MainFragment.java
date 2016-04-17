@@ -59,8 +59,7 @@ public class MainFragment extends Fragment {
     };
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        return fragment;
+        return new MainFragment();
     }
 
     public MainFragment() {

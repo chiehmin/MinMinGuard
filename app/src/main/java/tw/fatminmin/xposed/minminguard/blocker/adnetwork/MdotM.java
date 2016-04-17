@@ -42,8 +42,8 @@ public class MdotM extends Blocker {
                         }
                     });
             
-            Class<?> InterAds = XposedHelpers.findClass("com.mdotm.android.view.MdotMInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(InterAds, "loadInterstitial" ,new XC_MethodHook() {
+            Class<?> interAds = XposedHelpers.findClass("com.mdotm.android.view.MdotMInterstitial", lpparam.classLoader);
+            XposedBridge.hookAllMethods(interAds, "loadInterstitial" ,new XC_MethodHook() {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     

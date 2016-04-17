@@ -14,7 +14,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import tw.fatminmin.xposed.minminguard.Main;
 
 public class UrlFiltering {
-    static boolean adExist = false;
+    private static boolean adExist = false;
     static public boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam) {
 
         try {
