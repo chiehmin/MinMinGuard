@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
     private SharedPreferences mPref;
 
 
-    private View.OnClickListener btnModeClick = new View.OnClickListener() {
+    private final View.OnClickListener btnModeClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Boolean autoMode = !mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false);

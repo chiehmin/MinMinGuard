@@ -35,16 +35,16 @@ import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
  */
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     private List<PackageInfo> mAppList;
     private List<PackageInfo> mFilteredList;
-    private SharedPreferences mPref;
+    private final SharedPreferences mPref;
 
-    private DaoMaster.DevOpenHelper helper;
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private AppDataDao appDataDao;
+    private final DaoMaster.DevOpenHelper helper;
+    private final SQLiteDatabase db;
+    private final DaoMaster daoMaster;
+    private final DaoSession daoSession;
+    private final AppDataDao appDataDao;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 

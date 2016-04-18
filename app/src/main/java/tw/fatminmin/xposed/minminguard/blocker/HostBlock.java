@@ -14,6 +14,8 @@ import tw.fatminmin.xposed.minminguard.Main;
 
 public class HostBlock {
 
+    private static final String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
+
     public static void block(XC_LoadPackage.LoadPackageParam lpparam) {
 
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
@@ -48,7 +50,7 @@ public class HostBlock {
                 if(Main.patterns.contains(host)) {
                     Log.d("inet_before_host", host);
                     param.setResult(new Object());
-                    param.setThrowable(new UnknownHostException("Unable to resolve host"));
+                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
             @Override
@@ -58,7 +60,7 @@ public class HostBlock {
                 if(Main.patterns.contains(host)) {
                     Log.d("inet_after_host", host);
                     param.setResult(new Object());
-                    param.setThrowable(new UnknownHostException("Unable to resolve host"));
+                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
         };
@@ -77,7 +79,7 @@ public class HostBlock {
                     Log.d("inet_before_host", host);
                     param.args[0] = "localhost";
                     param.setResult(new Object());
-                    param.setThrowable(new UnknownHostException("Unable to resolve host"));
+                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
         });
@@ -97,7 +99,7 @@ public class HostBlock {
 
                 if(Main.patterns.contains(host) || Main.patterns.contains(ip)) {
                     param.setResult(Boolean.valueOf(false));
-                    param.setThrowable(new UnknownHostException("Unable to resolve host"));
+                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
 
@@ -109,7 +111,7 @@ public class HostBlock {
 
                 if(Main.patterns.contains(host) || Main.patterns.contains(ip)) {
                     param.setResult(Boolean.valueOf(false));
-                    param.setThrowable(new UnknownHostException("Unable to resolve host"));
+                    param.setThrowable(new UnknownHostException(UNABLE_TO_RESOLVE_HOST));
                 }
             }
         };

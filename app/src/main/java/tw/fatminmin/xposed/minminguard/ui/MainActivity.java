@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mUiPref;
 
-    private NavigationView.OnNavigationItemSelectedListener mNavListener = new NavigationView.OnNavigationItemSelectedListener() {
+    private final NavigationView.OnNavigationItemSelectedListener mNavListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(MenuItem menuItem) {
             mDrawerLayout.closeDrawers();
