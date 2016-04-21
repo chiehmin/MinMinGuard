@@ -137,7 +137,7 @@ public class MainFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAppList = new ArrayList<>();
-        mAdapter = new AppsAdapter(getActivity(), mAppList);
+        mAdapter = new AppsAdapter(getActivity(), mAppList, mMode);
         mRecyclerView.setAdapter(mAdapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

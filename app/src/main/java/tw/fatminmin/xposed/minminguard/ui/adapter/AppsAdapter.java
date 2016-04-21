@@ -32,6 +32,7 @@ import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
 import tw.fatminmin.xposed.minminguard.orm.DaoSession;
 import tw.fatminmin.xposed.minminguard.ui.UIUtils;
 import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
+import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 /**
  * Created by fatminmin on 2015/10/1.
@@ -52,6 +53,8 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     private final DaoSession daoSession;
     private final AppDataDao appDataDao;
 
+    MainFragment.FragmentMode mMode;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public View card;
@@ -70,7 +73,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         }
     }
 
-    public AppsAdapter(Context context, List<PackageInfo> list) {
+    public AppsAdapter(Context context, List<PackageInfo> list, MainFragment.FragmentMode mode) {
         super();
         mContext = context;
         mFilteredList = mAppList = list;
@@ -81,6 +84,8 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
         appDataDao = daoSession.getAppDataDao();
+
+        mMode = mode;
     }
 
     public void setAppList(List<PackageInfo> list) {
@@ -148,7 +153,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         holder.imgAppIcon.setImageDrawable(appIcon);
         holder.txtAppName.setText(appName);
 
-        if (mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false)) {
+        if (mMode == MainFragment.FragmentMode.AUTO) {
             holder.switchEnable.setVisibility(View.GONE);
         } else {
             holder.switchEnable.setVisibility(View.VISIBLE);
