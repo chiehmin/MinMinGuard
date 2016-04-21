@@ -35,7 +35,7 @@ public class Train {
 		if(!resparam.packageName.equals(pkg))
 			return;
 		
-		resparam.res.hookLayout("idv.nightgospel.TWRailScheduleLookUp", "layout", "adlayout", new XC_LayoutInflated() {
+		resparam.res.hookLayout(pkg, "layout", "adlayout", new XC_LayoutInflated() {
 			
 			@Override
 			public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
@@ -43,7 +43,7 @@ public class Train {
 				Util.log(pkg, "Handle train ad layout");
 				
 				View ad = (View) liparam.view.findViewById(
-						liparam.res.getIdentifier("adLayout", "id", "idv.nightgospel.TWRailScheduleLookUp"));
+						liparam.res.getIdentifier("adLayout", "id", pkg));
 				
 				ad.setVisibility(View.GONE);
 						

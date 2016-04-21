@@ -11,7 +11,8 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class AdmobGms extends Blocker {
-    
+
+	private static final String LOAD_AD = "loadAd";
     public final static String banner = "com.google.android.gms.ads.AdView";
     public final static String bannerPrefix = "com.google.android.gms.ads";
 
@@ -22,7 +23,7 @@ public class AdmobGms extends Blocker {
 			Class<?> admobSearchBanner = findClass("com.google.android.gms.ads.search.SearchAdView", lpparam.classLoader);
 			Class<?> admobInter = findClass("com.google.android.gms.ads.InterstitialAd", lpparam.classLoader);
 			
-			XposedBridge.hookAllMethods(admobBanner, "loadAd", new XC_MethodHook() {
+			XposedBridge.hookAllMethods(admobBanner, LOAD_AD, new XC_MethodHook() {
 						@Override
 						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 							
@@ -36,7 +37,7 @@ public class AdmobGms extends Blocker {
 					
 					});
 			
-			XposedBridge.hookAllMethods(admobSearchBanner, "loadAd", new XC_MethodHook() {
+			XposedBridge.hookAllMethods(admobSearchBanner, LOAD_AD, new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
@@ -50,7 +51,7 @@ public class AdmobGms extends Blocker {
 			
 			});
 			
-			XposedBridge.hookAllMethods(admobInter, "loadAd",  new XC_MethodHook() {
+			XposedBridge.hookAllMethods(admobInter, LOAD_AD,  new XC_MethodHook() {
 				
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
