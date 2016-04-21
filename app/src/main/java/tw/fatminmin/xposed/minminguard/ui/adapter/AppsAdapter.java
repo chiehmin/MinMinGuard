@@ -102,8 +102,6 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
             if (results.size() == 1) {
                 appData = results.get(0);
                 appDataDao.refresh(appData);
-                Log.d(TAG, pkgName);
-                Log.d(TAG, "" + appData.getBlockNum());
             }
             mAppDataMap.put(pkgName, appData);
         }
@@ -127,6 +125,32 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         View v = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.card_app, parent, false);
         return new ViewHolder(v);
+    }
+
+    private boolean isEnabled(String pkgName) {
+        /* auto mode */
+        if(mMode == MainFragment.FragmentMode.AUTO) return true;
+        /* blacklist mode */
+        if(mMode == MainFragment.FragmentMode.BLACKLIST) return mPref.getBoolean(pkgName, false);
+        /* whitelist mode */
+        return mPref.getBoolean(Common.getWhiteListKey(pkgName), false);
+    }
+    private void setEnabled(String pkgName, boolean checked) {
+        /* auto mode */
+        if(mMode == MainFragment.FragmentMode.AUTO) return;
+
+        if(mMode == MainFragment.FragmentMode.BLACKLIST) {
+            /* blacklist mode */
+            mPref.edit()
+                .putBoolean(pkgName, checked)
+                .commit();
+        } else {
+            /* whitelist mode */
+            mPref.edit()
+                .putBoolean(Common.getWhiteListKey(pkgName), checked)
+                .commit();
+        }
+
     }
 
     @Override
@@ -159,14 +183,12 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
             holder.switchEnable.setVisibility(View.VISIBLE);
         }
 
-        holder.switchEnable.setChecked(mPref.getBoolean(pkgName, false));
+        holder.switchEnable.setChecked(isEnabled(pkgName));
         holder.switchEnable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Switch sw = (Switch) v;
-                mPref.edit()
-                        .putBoolean(pkgName, sw.isChecked())
-                        .commit();
+                setEnabled(pkgName, sw.isChecked());
             }
         });
 

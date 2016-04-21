@@ -39,6 +39,8 @@ public class MainFragment extends Fragment {
         WHITELIST;
     };
 
+    public boolean isAlive = false; // changing to true after onCreateView is called.
+
     private FragmentMode mMode;
     private Context mContext;
 
@@ -56,11 +58,10 @@ public class MainFragment extends Fragment {
     private final View.OnClickListener btnModeClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Boolean autoMode = !mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false);
-            mBtnMode.setText(autoMode ? R.string.msg_mode_auto : R.string.msg_mode_manual);
             mPref.edit()
-                    .putBoolean(Common.KEY_AUTO_MODE_ENABLED, autoMode)
+                    .putString(Common.KEY_MODE, Common.getModeString(mMode))
                     .commit();
+            mBtnMode.setVisibility(View.GONE);
             mAdapter.notifyDataSetChanged();
         }
     };
@@ -90,6 +91,14 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refresh();
+    }
+
+    public void refreshUI() {
+        if(mPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+            mBtnMode.setVisibility(View.GONE);
+        } else {
+            mBtnMode.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -128,9 +137,11 @@ public class MainFragment extends Fragment {
             mTxtXposedEnabled.setVisibility(View.VISIBLE);
         }
 
-        Boolean autoMode = mPref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false);
-        mBtnMode.setText(autoMode ? R.string.msg_mode_auto : R.string.msg_mode_manual);
+        /* setup apply button */
         mBtnMode.setOnClickListener(btnModeClick);
+        if(mPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+            mBtnMode.setVisibility(View.GONE);
+        }
 
 
         mLayoutManager = new LinearLayoutManager(mContext);
@@ -148,6 +159,7 @@ public class MainFragment extends Fragment {
         });
 
         refresh();
+        isAlive = true;
         return view;
     }
 

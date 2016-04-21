@@ -126,6 +126,28 @@ public class Main implements IXposedHookZygoteInit,
         notifyWorker = Executors.newSingleThreadExecutor();
     }
 
+    private boolean isEnabled(String pkgName) {
+        String mode = pref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST);
+
+        if(mode.equals(Common.VALUE_MODE_AUTO)) {
+            return true;
+        } else if(mode.equals(Common.VALUE_MODE_BLACKLIST)) {
+            return pref.getBoolean(pkgName, false);
+        } else {
+            /*
+                com.joshua.jptt loads com.google.android.gms
+                com.joshua.jptt D/MinMinGuard: com.google.android.gms_whitelist
+
+                com.joshua.jptt D/MinMinGuard: parent pkgName: com.joshua.jptt
+                com.joshua.jptt D/MinMinGuard: current pkgName: com.google.android.gms
+
+             */
+            String parentPkgName = Util.getCurrentApplication().getPackageName();
+            return !pref.getBoolean(Common.getWhiteListKey(pkgName), false) &&
+                    !pref.getBoolean(Common.getWhiteListKey(parentPkgName), false);
+        }
+    }
+
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 
@@ -139,7 +161,7 @@ public class Main implements IXposedHookZygoteInit,
         final String packageName = lpparam.packageName;
 
 
-        if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
+        if (isEnabled(packageName)) {
 
             // Api based blocking
             ApiBlocking.handle(packageName, lpparam, true);
@@ -242,7 +264,7 @@ public class Main implements IXposedHookZygoteInit,
 
         final String packageName = resparam.packageName;
 
-        if (pref.getBoolean(Common.KEY_AUTO_MODE_ENABLED, false) || pref.getBoolean(packageName, false)) {
+        if (isEnabled(packageName)) {
             PeriodCalendar.handleInitPackageResources(resparam);
         }
     }

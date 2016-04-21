@@ -1,5 +1,7 @@
 package tw.fatminmin.xposed.minminguard;
 
+import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
+
 /**
  * Created by fatminmin on 2015/10/1.
  */
@@ -12,7 +14,10 @@ public class Common {
     public final static String KEY_SHOW_SYSTEM_APPS = "show_system_apps";
 
     // Xposed Mod Pref
-    public final static String KEY_AUTO_MODE_ENABLED = "auto";
+    public final static String KEY_MODE = "mode";
+    public final static String VALUE_MODE_AUTO = "auto";
+    public final static String VALUE_MODE_BLACKLIST = "blacklist";
+    public final static String VALUE_MODE_WHITELIST = "whitelist";
 
     // Fragment Name
     public final static String FRG_MAIN = "main_fragment";
@@ -22,4 +27,19 @@ public class Common {
     public final static String KEY_NETWORK = "AD_NETWORKS";
     public final static String KEY_BLOCK_NUM = "BLOCK_NUM";
 
+
+    public static String getModeString(MainFragment.FragmentMode mode) {
+        switch (mode) {
+            case AUTO:
+                return Common.VALUE_MODE_AUTO;
+            case BLACKLIST:
+                return Common.VALUE_MODE_BLACKLIST;
+            case WHITELIST:
+                return Common.VALUE_MODE_WHITELIST;
+        }
+        return Common.VALUE_MODE_BLACKLIST;
+    }
+    public static String getWhiteListKey(String pkgName) {
+        return pkgName + "_whitelist";
+    }
 }

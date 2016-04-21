@@ -34,8 +34,8 @@
         android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/blue"
+        android:background="@color/red"
         android:layout_alignParentBottom="true"
-        tools:text="@string/msg_mode_manual" />
+        android:text="@string/msg_mode_apply" />
 
 </RelativeLayout>

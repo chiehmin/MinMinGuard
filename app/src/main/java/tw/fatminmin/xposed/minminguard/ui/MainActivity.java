@@ -22,6 +22,7 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
+    private ModeFragmentAdapter mAdapter;
     private TabLayout mTabLayout;
 
     private DrawerLayout mDrawerLayout;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
 
     private SharedPreferences mUiPref;
+    private SharedPreferences mModPref;
 
     private final NavigationView.OnNavigationItemSelectedListener mNavListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mUiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
+        mModPref = getSharedPreferences(Common.MOD_PREFS, MODE_WORLD_READABLE);
 
         if (mUiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
             mUiPref.edit()
@@ -102,10 +105,34 @@ public class MainActivity extends AppCompatActivity {
 
         // setup tabview
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this));
+        mAdapter = new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this);
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            @Override
+            public void onPageSelected(int position) {
+                MainFragment fragment = (MainFragment) mAdapter.getItem(position);
+                if(fragment.isAlive) fragment.refreshUI();
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
 
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        switch (mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST)) {
+            case Common.VALUE_MODE_AUTO:
+                mViewPager.setCurrentItem(0);
+                break;
+            case Common.VALUE_MODE_BLACKLIST:
+                mViewPager.setCurrentItem(1);
+                break;
+            case Common.VALUE_MODE_WHITELIST:
+                mViewPager.setCurrentItem(2);
+                break;
+        }
     }
 
     @Override
