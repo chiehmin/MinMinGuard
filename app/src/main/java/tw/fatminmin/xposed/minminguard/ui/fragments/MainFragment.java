@@ -33,6 +33,13 @@ import tw.fatminmin.xposed.minminguard.ui.adapter.AppsAdapter;
 
 public class MainFragment extends Fragment {
 
+    static public enum FragmentMode {
+        AUTO,
+        BLACKLIST,
+        WHITELIST;
+    };
+
+    private FragmentMode mMode;
     private Context mContext;
 
     private TextView mTxtXposedEnabled;
@@ -58,8 +65,12 @@ public class MainFragment extends Fragment {
         }
     };
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public static MainFragment newInstance(FragmentMode mode) {
+        MainFragment fragment = new MainFragment();
+        Bundle args = new Bundle();
+        args.putInt("mode", mode.ordinal());
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public MainFragment() {
@@ -71,6 +82,8 @@ public class MainFragment extends Fragment {
         setHasOptionsMenu(true);
         mContext = getActivity();
         mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
+
+        mMode = FragmentMode.values()[getArguments().getInt("mode")];
     }
 
     @Override

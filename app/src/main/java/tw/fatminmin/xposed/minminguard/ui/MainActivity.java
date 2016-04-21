@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +15,14 @@ import android.view.View;
 
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
+import tw.fatminmin.xposed.minminguard.ui.adapter.ModeFragmentAdapter;
 import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -68,10 +74,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
-        
+
+
+        // actionbar setup
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        // drawerview and navigation view setup
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
@@ -91,11 +100,12 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mToggle);
         mToggle.syncState();
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, MainFragment.newInstance(), Common.FRG_MAIN)
-                    .commit();
-        }
+        // setup tabview
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this));
+
+        mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
