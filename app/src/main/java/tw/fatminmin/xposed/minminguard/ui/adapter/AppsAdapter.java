@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
@@ -35,9 +38,12 @@ import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
  */
 public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
+    static final String TAG = AppsAdapter.class.getName();
+
     private final Context mContext;
     private List<PackageInfo> mAppList;
     private List<PackageInfo> mFilteredList;
+    private Map<String, AppData> mAppDataMap; // retrieved AppData from sqlite
     private final SharedPreferences mPref;
 
     private final DaoMaster.DevOpenHelper helper;
@@ -79,6 +85,23 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
     public void setAppList(List<PackageInfo> list) {
         mFilteredList = mAppList = list;
+
+        /* update appdata map */
+        mAppDataMap = new HashMap<>();
+        for(PackageInfo info : mAppList) {
+            final String pkgName = info.packageName;
+            List<AppData> results = appDataDao.queryBuilder()
+                       .where(AppDataDao.Properties.PkgName.eq(pkgName))
+                       .list();
+            AppData appData = null;
+            if (results.size() == 1) {
+                appData = results.get(0);
+                appDataDao.refresh(appData);
+                Log.d(TAG, pkgName);
+                Log.d(TAG, "" + appData.getBlockNum());
+            }
+            mAppDataMap.put(pkgName, appData);
+        }
     }
 
     public void filterApp(String keyword) {
@@ -110,22 +133,17 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         final String appName = (String) info.applicationInfo.loadLabel(pm);
         final String pkgName = info.packageName;
 
-        List<AppData> list = appDataDao.queryBuilder()
-                               .where(AppDataDao.Properties.PkgName.eq(pkgName))
-                               .list();
 
-        final AppData appData;
-        if (list.size() == 1) {
-            appData = list.get(0);
-            appDataDao.refresh(appData);
+        final AppData appData = mAppDataMap.get(pkgName);
+        if (appData != null && appData.getBlockNum() != 0) {
             int blockNum = appData.getBlockNum();
             String msg = mContext.getString(R.string.msg_block_num, blockNum);
             holder.txtBlockNum.setText(msg);
         }
         else {
-            appData = null;
             holder.txtBlockNum.setText("");
         }
+
 
         holder.imgAppIcon.setImageDrawable(appIcon);
         holder.txtAppName.setText(appName);
