@@ -186,6 +186,13 @@ public class MainFragment extends Fragment {
             if (showSystemApps || (info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 mAppList.add(info);
             }
+            // setting initial value for system apps
+            if((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1 && !mPref.contains(info.packageName)) {
+                mPref.edit()
+                        .putBoolean(info.packageName, false)
+                        .putBoolean(Common.getWhiteListKey(info.packageName), true)
+                        .commit();
+            }
         }
 
         Collections.sort(mAppList, new Comparator<PackageInfo>() {

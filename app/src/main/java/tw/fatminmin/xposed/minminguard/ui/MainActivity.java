@@ -135,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public MainFragment getCurrentFragment() {
+        return (MainFragment) mAdapter.getItem(mViewPager.getCurrentItem());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToggle.onOptionsItemSelected(item))
