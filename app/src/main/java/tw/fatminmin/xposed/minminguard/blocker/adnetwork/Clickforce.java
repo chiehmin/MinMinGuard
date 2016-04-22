@@ -17,13 +17,13 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
  */
 public class Clickforce extends Blocker {
 
-    public final static String banner = "com.adcustom.sdk.ads.AdBanner";
-    public final static String bannerPrefix = "com.adcustom.sdk.ads";
+    public static final String BANNER = "com.adcustom.sdk.ads.AdBanner";
+    public static final String BANNER_PREFIX = "com.adcustom.sdk.ads";
 
     @Override
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
-            Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
+            Class<?> bannerClazz = findClass(BANNER, lpparam.classLoader);
             XposedBridge.hookAllMethods(bannerClazz, "show", new XC_MethodHook() {
 
                 @Override
@@ -47,11 +47,11 @@ public class Clickforce extends Blocker {
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 }

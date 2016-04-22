@@ -12,8 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Amazon extends Blocker {
     
-    public final static String banner = "com.amazon.device.ads.AdLayout";
-    public final static String bannerPrefix = "com.amazon.device.ads";
+    public static final String BANNER = "com.amazon.device.ads.AdLayout";
+    public static final String BANNER_PREFIX = "com.amazon.device.ads";
     
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
@@ -56,11 +56,11 @@ public class Amazon extends Blocker {
 	}
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 }

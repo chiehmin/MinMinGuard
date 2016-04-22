@@ -12,8 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Adfurikun extends Blocker {
     
-    public final static String banner = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
-    public final static String bannerPrefix = "jp.tjkapp.adfurikunsdk";
+    public static final String BANNER = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
+    public static final String BANNER_PREFIX = "jp.tjkapp.adfurikunsdk";
     
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
@@ -40,11 +40,11 @@ public class Adfurikun extends Blocker {
     }
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 }

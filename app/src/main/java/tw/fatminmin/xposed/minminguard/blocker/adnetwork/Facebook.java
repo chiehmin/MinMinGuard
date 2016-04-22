@@ -15,34 +15,34 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class Facebook extends Blocker {
     private static final String LOAD_AD = "loadAd";
-    public final static String banner = "com.facebook.ads.AdView";
-    public final static String bannerPrefix = "com.facebook.ads";
-    public final static String inter = "com.facebook.ads.InterstitialAd";
-    public final static String nativeAd = "com.facebook.ads.NativeAd";
+    public static final String BANNER = "com.facebook.ads.AdView";
+    public static final String BANNER_PREFIX = "com.facebook.ads";
+    public static final String INTER = "com.facebook.ads.InterstitialAd";
+    public static final String NATIVE_AD = "com.facebook.ads.NativeAd";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
 
         boolean result = false;
-        result |= ApiBlocking.removeBanner(packageName, banner, LOAD_AD, lpparam, removeAd);
-        result |= ApiBlocking.removeBanner(packageName, banner, "setAdListener", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, inter, LOAD_AD, lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, nativeAd, LOAD_AD, lpparam, removeAd);
+        result |= ApiBlocking.removeBanner(packageName, BANNER, LOAD_AD, lpparam, removeAd);
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "setAdListener", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, LOAD_AD, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, LOAD_AD, lpparam, removeAd);
         result |= customHandle(packageName, lpparam, removeAd);
         return result;
     }
 
     public boolean customHandle(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
-            Class<?> facebookNativeAd = findClass(nativeAd, lpparam.classLoader);
+            Class<?> facebookNativeAd = findClass(NATIVE_AD, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(facebookNativeAd, "registerViewForInteraction", new XC_MethodHook() {
 

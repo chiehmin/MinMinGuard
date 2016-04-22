@@ -13,24 +13,24 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class Waystorm extends Blocker {
-    public final static String banner = "com.waystorm.ads.WSAdBanner";
-    public final static String bannerPrefix = "com.waystorm.ads";
-    public final static String inter = "com.waystorm.ads.WSAdInterstitial";
+    public static final String BANNER = "com.waystorm.ads.WSAdBanner";
+    public static final String BANNER_PREFIX = "com.waystorm.ads";
+    public static final String INTER = "com.waystorm.ads.WSAdInterstitial";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
-            Class<?> waystormBanner = findClass(banner, lpparam.classLoader);
-            Class<?> waystormInter = findClass(inter, lpparam.classLoader);
+            Class<?> waystormBanner = findClass(BANNER, lpparam.classLoader);
+            Class<?> waystormInter = findClass(INTER, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(waystormBanner, "loadAd", new XC_MethodHook() {
 

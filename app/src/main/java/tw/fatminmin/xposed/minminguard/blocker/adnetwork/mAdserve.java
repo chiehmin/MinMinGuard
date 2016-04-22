@@ -10,17 +10,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class mAdserve extends Blocker {
     
-    public final static String banner = "com.adsdk.sdk.banner.InAppWebView";
-    public final static String bannerPrefix = "com.adsdk.sdk.banner";
+    public static final String BANNER = "com.adsdk.sdk.banner.InAppWebView";
+    public static final String BANNER_PREFIX = "com.adsdk.sdk.banner";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {

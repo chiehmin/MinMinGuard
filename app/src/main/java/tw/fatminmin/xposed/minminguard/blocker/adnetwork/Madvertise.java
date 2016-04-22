@@ -15,17 +15,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Madvertise extends Blocker {
     
-    public final static String banner = "de.madvertise.android.sdk.MadvertiseMraidView";
-    public final static String bannerPrefix = "de.madvertise.android.sdk";
+    public static final String BANNER = "de.madvertise.android.sdk.MadvertiseMraidView";
+    public static final String BANNER_PREFIX = "de.madvertise.android.sdk";
 
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {

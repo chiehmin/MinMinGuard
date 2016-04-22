@@ -12,17 +12,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class GmsDoubleClick extends Blocker {
     
-    public final static String banner = "com.google.android.gms.ads.doubleclick.PublisherAdView";
-    public final static String bannerPrefix = "com.google.android.gms.ads.doubleclick";
+    public static final String BANNER = "com.google.android.gms.ads.doubleclick.PublisherAdView";
+    public static final String BANNER_PREFIX = "com.google.android.gms.ads.doubleclick";
 
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {

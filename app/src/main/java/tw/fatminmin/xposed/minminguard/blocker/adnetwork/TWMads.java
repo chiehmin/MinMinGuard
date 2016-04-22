@@ -12,24 +12,24 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class TWMads extends Blocker {
     
-    public final static String banner = "com.taiwanmobile.pt.adp.view.TWMAdView";
-    public final static String bannerPrefix = "com.taiwanmobile.pt.adp.view";
-    public final static String inter = "com.taiwanmobile.pt.adp.view.TWMInterstitialAd";
+    public static final String BANNER = "com.taiwanmobile.pt.adp.view.TWMAdView";
+    public static final String BANNER_PREFIX = "com.taiwanmobile.pt.adp.view";
+    public static final String INTER = "com.taiwanmobile.pt.adp.view.TWMInterstitialAd";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
-            Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
-            Class<?> interAds = XposedHelpers.findClass(inter, lpparam.classLoader);
+            Class<?> adView = XposedHelpers.findClass(BANNER, lpparam.classLoader);
+            Class<?> interAds = XposedHelpers.findClass(INTER, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(adView, "activeAd" ,new XC_MethodHook() {
                         @Override

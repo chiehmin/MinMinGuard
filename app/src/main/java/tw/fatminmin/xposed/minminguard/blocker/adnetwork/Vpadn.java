@@ -11,26 +11,26 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Vpadn extends Blocker {
-    public final static String banner = "com.vpadn.ads.VpadnBanner";
-    public final static String bannerPrefix = "com.vpadn.ads";
-    public final static String inter = "com.vpadn.ads.VpadnInterstitialAd";
-    public final static String nativeAd = "com.vpadn.ads.VpadnNativeAd";
+    public static final String BANNER = "com.vpadn.ads.VpadnBanner";
+    public static final String BANNER_PREFIX = "com.vpadn.ads";
+    public static final String INTER = "com.vpadn.ads.VpadnInterstitialAd";
+    public static final String NATIVE_AD = "com.vpadn.ads.VpadnNativeAd";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             
-            Class<?> adView = XposedHelpers.findClass(banner, lpparam.classLoader);
-            Class<?> interAds = XposedHelpers.findClass(inter, lpparam.classLoader);
-            Class<?> vpadnNativeAd = XposedHelpers.findClass(nativeAd, lpparam.classLoader);
+            Class<?> adView = XposedHelpers.findClass(BANNER, lpparam.classLoader);
+            Class<?> interAds = XposedHelpers.findClass(INTER, lpparam.classLoader);
+            Class<?> vpadnNativeAd = XposedHelpers.findClass(NATIVE_AD, lpparam.classLoader);
             
             XposedBridge.hookAllMethods(adView, "loadAd" ,new XC_MethodHook() {
                         @Override
