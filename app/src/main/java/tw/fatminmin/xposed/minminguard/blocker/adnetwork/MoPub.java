@@ -12,26 +12,27 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MoPub extends Blocker {
     
-    public final static String banner = "com.mopub.mobileads.MoPubView";
-    public final static String bannerPrefix = "com.mopub.mobileads";
-    public final static String inter = "com.mopub.mobileads.MoPubInterstitial";
-    public final static String nativeAd = "com.mopub.nativeads.MoPubAdAdapter";
+    public static final String BANNER = "com.mopub.mobileads.MoPubView";
+    public static final String BANNER_PREFIX = "com.mopub.mobileads";
+    public static final String INTER = "com.mopub.mobileads.MoPubInterstitial";
+    public static final String NATIVE_AD
+            = "com.mopub.nativeads.MoPubAdAdapter";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 					
-			Class<?> mopubBanner = findClass(banner, lpparam.classLoader);
-            Class<?> mopubInter = findClass(inter, lpparam.classLoader);
-            Class<?> mopubNativeAd = findClass(nativeAd, lpparam.classLoader);
+			Class<?> mopubBanner = findClass(BANNER, lpparam.classLoader);
+            Class<?> mopubInter = findClass(INTER, lpparam.classLoader);
+            Class<?> mopubNativeAd = findClass(NATIVE_AD, lpparam.classLoader);
 			
 			XposedBridge.hookAllMethods(mopubBanner, "loadAd", new XC_MethodHook() {
 				

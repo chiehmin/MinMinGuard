@@ -13,8 +13,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class AdmobGms extends Blocker {
 
 	private static final String LOAD_AD = "loadAd";
-    public final static String banner = "com.google.android.gms.ads.AdView";
-    public final static String bannerPrefix = "com.google.android.gms.ads";
+    public static final String BANNER = "com.google.android.gms.ads.AdView";
+    public static final String BANNER_PREFIX = "com.google.android.gms.ads";
 
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
@@ -86,11 +86,11 @@ public class AdmobGms extends Blocker {
 	}
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 }

@@ -11,17 +11,17 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Mobclix extends Blocker {
-    public final static String banner = "com.mobclix.android.sdk.MobclixMMABannerXLAdView";
-    public final static String bannerPrefix = "com.mobclix.android.sdk";
+    public static final String BANNER = "com.mobclix.android.sdk.MobclixMMABannerXLAdView";
+    public static final String BANNER_PREFIX = "com.mobclix.android.sdk";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {

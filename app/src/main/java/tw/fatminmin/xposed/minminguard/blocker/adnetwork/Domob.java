@@ -12,8 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Domob extends Blocker {
     
-    public final static String banner = "cn.domob.android.ads.DomobAdView";
-    public final static String bannerPrefix = "cn.domob.android.ads";
+    public static final String BANNER = "cn.domob.android.ads.DomobAdView";
+    public static final String BANNER_PREFIX = "cn.domob.android.ads";
     
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
@@ -74,11 +74,11 @@ public class Domob extends Blocker {
     }
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 }
