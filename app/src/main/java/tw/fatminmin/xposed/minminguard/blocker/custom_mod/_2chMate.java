@@ -10,6 +10,11 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
 
 public class _2chMate {
+
+    private _2chMate() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         if (!packageName.equals("jp.co.airfront.android.a2chMate")) {
             return false;

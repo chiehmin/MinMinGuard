@@ -12,6 +12,10 @@ public class Train {
 	
 	
 	protected static String pkg = "idv.nightgospel.TWRailScheduleLookUp";
+
+	private Train() throws InstantiationException {
+		throw new InstantiationException("This class is not for instantiation");
+	}
 	
 	public static void handleLoadPackage(LoadPackageParam lpparam) {
 		if(!lpparam.packageName.equals(pkg))

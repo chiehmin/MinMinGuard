@@ -21,6 +21,11 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
  * Created by fatminmin on 2015/10/27.
  */
 public class ApiBlocking {
+    
+    private ApiBlocking() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static void handle(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
 
         Class<?> activity = XposedHelpers.findClass("android.app.Application", lpparam.classLoader);

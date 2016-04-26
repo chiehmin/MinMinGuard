@@ -15,6 +15,11 @@ import tw.fatminmin.xposed.minminguard.Main;
  * Created by fatminmin on 2015/10/27.
  */
 public class NameBlocking {
+    
+    private NameBlocking() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     private static boolean matchBannerName(String clazzName, String banner, String bannerPrefix) {
         if(banner != null && banner.equals(clazzName)) {
             return true;

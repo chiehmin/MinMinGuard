@@ -32,6 +32,10 @@ public class Util {
     final static public String TAG = "MinMinGuard";
     final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
 
+    private Util() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     static public Boolean xposedEnabled() {
         return false;
     }

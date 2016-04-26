@@ -16,6 +16,10 @@ public class HostBlock {
 
     private static final String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
 
+    private HostBlock() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static void block(XC_LoadPackage.LoadPackageParam lpparam) {
 
         Class<?> inetAddrClz = XposedHelpers.findClass("java.net.InetAddress", lpparam.classLoader);
