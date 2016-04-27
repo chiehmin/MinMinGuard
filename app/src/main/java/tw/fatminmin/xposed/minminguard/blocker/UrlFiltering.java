@@ -15,6 +15,11 @@ import tw.fatminmin.xposed.minminguard.Main;
 
 public class UrlFiltering {
     private static boolean adExist = false;
+
+    private UrlFiltering() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     static public boolean removeWebViewAds(final String packageName, LoadPackageParam lpparam) {
 
         try {

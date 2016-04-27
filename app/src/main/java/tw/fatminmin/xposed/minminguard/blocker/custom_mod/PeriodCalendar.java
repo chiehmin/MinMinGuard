@@ -13,6 +13,10 @@ public class PeriodCalendar {
 
     public static String pkgName = "com.popularapp.periodcalendar";
 
+    private PeriodCalendar() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) {
         if(!resparam.packageName.equals(pkgName)) {
             return;

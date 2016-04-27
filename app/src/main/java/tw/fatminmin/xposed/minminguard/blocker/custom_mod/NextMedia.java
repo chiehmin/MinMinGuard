@@ -9,6 +9,11 @@ import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 public class NextMedia  {
 
     public static final String AD_UTILS = "com.nextmediatw.data.AdUtils";
+
+    private NextMedia() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     static public void handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, boolean removeAd) {
         ApiBlocking.blockAdFunctionWithResult(packageName, AD_UTILS, "skipAd", Boolean.valueOf(true), lpparam, removeAd);
     }

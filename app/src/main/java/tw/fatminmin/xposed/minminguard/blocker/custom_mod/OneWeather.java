@@ -11,6 +11,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class OneWeather {
     private static final String LAYOUT = "com.handmark.expressweather";
+
+    private OneWeather() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> adView = XposedHelpers.findClass("com.handmark.expressweather.billing.BillingUtils", lpparam.classLoader);

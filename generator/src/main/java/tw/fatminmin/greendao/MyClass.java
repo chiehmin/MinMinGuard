@@ -7,6 +7,11 @@ import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Schema;
 
 public class MyClass {
+
+    private MyClass() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
+
     public static void main(String args[]) {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
