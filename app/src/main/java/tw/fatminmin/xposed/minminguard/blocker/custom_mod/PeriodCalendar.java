@@ -9,7 +9,7 @@ import tw.fatminmin.xposed.minminguard.Main;
 /**
  * Created by fatminmin on 2015/10/30.
  */
-public class PeriodCalendar {
+public final class PeriodCalendar {
 
     public static String pkgName = "com.popularapp.periodcalendar";
 

@@ -10,7 +10,7 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 /**
  * Created by fatminmin on 4/21/16.
  */
-public class ModeFragmentAdapter extends FragmentPagerAdapter {
+public final class ModeFragmentAdapter extends FragmentPagerAdapter {
 
     static final int PAGE_COUNT = 3;
     private String[] mTabTitles = new String[] { "AUTO", "Blacklist", "Whitelist" };

@@ -13,7 +13,7 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import tw.fatminmin.xposed.minminguard.Main;
 
-public class UrlFiltering {
+public final class UrlFiltering {
     private static boolean adExist = false;
 
     private UrlFiltering() throws InstantiationException {

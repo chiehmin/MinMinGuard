@@ -12,7 +12,7 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
 
-public class HostBlock {
+public final class HostBlock {
 
     private static final String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
 

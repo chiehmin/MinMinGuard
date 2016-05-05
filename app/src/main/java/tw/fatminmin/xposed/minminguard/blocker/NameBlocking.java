@@ -14,7 +14,7 @@ import tw.fatminmin.xposed.minminguard.Main;
 /**
  * Created by fatminmin on 2015/10/27.
  */
-public class NameBlocking {
+public final class NameBlocking {
     
     private NameBlocking() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");

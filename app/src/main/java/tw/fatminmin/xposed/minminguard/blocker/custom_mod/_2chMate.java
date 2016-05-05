@@ -9,7 +9,7 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 
 import android.view.View;
 
-public class _2chMate {
+public final class _2chMate {
 
     private _2chMate() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");

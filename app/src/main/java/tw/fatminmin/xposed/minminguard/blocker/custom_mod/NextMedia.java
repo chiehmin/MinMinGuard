@@ -6,7 +6,7 @@ import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 /**
  * Created by fatminmin on 2016/2/7.
  */
-public class NextMedia  {
+public final class NextMedia  {
 
     public static final String AD_UTILS = "com.nextmediatw.data.AdUtils";
 

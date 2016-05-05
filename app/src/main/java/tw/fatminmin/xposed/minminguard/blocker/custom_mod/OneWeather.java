@@ -9,7 +9,7 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class OneWeather {
+public final class OneWeather {
     private static final String LAYOUT = "com.handmark.expressweather";
 
     private OneWeather() throws InstantiationException {

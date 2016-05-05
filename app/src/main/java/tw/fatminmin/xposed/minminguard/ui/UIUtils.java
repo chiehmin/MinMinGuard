@@ -8,7 +8,7 @@ import android.content.Intent;
 /**
  * Created by fatminmin on 2015/10/25.
  */
-public class UIUtils {
+public final class UIUtils {
 
     private UIUtils() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");
