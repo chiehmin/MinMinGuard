@@ -20,7 +20,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 /**
  * Created by fatminmin on 2015/10/27.
  */
-public class ApiBlocking {
+public final class ApiBlocking {
     
     private ApiBlocking() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");

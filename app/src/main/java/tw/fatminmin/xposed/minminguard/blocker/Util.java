@@ -24,7 +24,7 @@ import de.robv.android.xposed.XposedHelpers;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
 
-public class Util {
+public final class Util {
     
     public static XSharedPreferences pref;
     

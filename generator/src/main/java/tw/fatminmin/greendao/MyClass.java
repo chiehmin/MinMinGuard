@@ -6,7 +6,7 @@ import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Schema;
 
-public class MyClass {
+public final class MyClass {
 
     private MyClass() throws InstantiationException {
         throw new InstantiationException("This class is not for instantiation");
