@@ -127,7 +127,7 @@ public class Main implements IXposedHookZygoteInit,
         notifyWorker = Executors.newSingleThreadExecutor();
     }
 
-    private boolean isEnabled(String pkgName) {
+    private static boolean isEnabled(String pkgName) {
         String mode = pref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST);
 
         if(mode.equals(Common.VALUE_MODE_AUTO)) {
@@ -141,10 +141,7 @@ public class Main implements IXposedHookZygoteInit,
 
                 com.joshua.jptt D/MinMinGuard: parent pkgName: com.joshua.jptt
                 com.joshua.jptt D/MinMinGuard: current pkgName: com.google.android.gms
-
-
              */
-            if(pkgName.equals("com.google.android.gms")) return true;
             return !pref.getBoolean(Common.getWhiteListKey(pkgName), false);
         }
     }
