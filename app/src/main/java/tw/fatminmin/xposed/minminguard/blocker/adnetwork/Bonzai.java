@@ -12,8 +12,8 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Bonzai extends Blocker {
     
-    public final static String banner = "com.bonzai.view.BonzaiAdView";
-    public final static String bannerPrefix = "com.bonzai.view";
+    public static final String BANNER = "com.bonzai.view.BonzaiAdView";
+    public static final String BANNER_PREFIX = "com.bonzai.view";
     
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
@@ -40,11 +40,11 @@ public class Bonzai extends Blocker {
     }
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 }

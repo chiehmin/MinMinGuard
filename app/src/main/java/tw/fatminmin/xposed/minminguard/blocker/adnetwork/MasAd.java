@@ -12,17 +12,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MasAd extends Blocker {
     
-    public final static String banner = "mediba.ad.sdk.android.openx.MasAdView";
-    public final static String bannerPrefix = "mediba.ad.sdk.android.openx";
+    public static final String BANNER = "mediba.ad.sdk.android.openx.MasAdView";
+    public static final String BANNER_PREFIX = "mediba.ad.sdk.android.openx";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {

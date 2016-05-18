@@ -12,9 +12,13 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
 
-public class HostBlock {
+public final class HostBlock {
 
     private static final String UNABLE_TO_RESOLVE_HOST = "Unable to resolve host";
+
+    private HostBlock() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
 
     public static void block(XC_LoadPackage.LoadPackageParam lpparam) {
 

@@ -24,13 +24,17 @@ import de.robv.android.xposed.XposedHelpers;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
 
-public class Util {
+public final class Util {
     
     public static XSharedPreferences pref;
     
     
     final static public String TAG = "MinMinGuard";
     final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
+
+    private Util() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
 
     static public Boolean xposedEnabled() {
         return false;

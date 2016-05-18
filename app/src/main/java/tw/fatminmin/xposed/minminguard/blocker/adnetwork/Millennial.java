@@ -12,17 +12,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Millennial extends Blocker {
     
-    public final static String banner = "com.millennialmedia.android.MMAdView";
-    public final static String bannerPrefix = "com.millennialmedia.android";
+    public static final String BANNER = "com.millennialmedia.android.MMAdView";
+    public static final String BANNER_PREFIX = "com.millennialmedia.android";
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {

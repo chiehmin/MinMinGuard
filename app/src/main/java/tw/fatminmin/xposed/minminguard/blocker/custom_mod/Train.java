@@ -8,10 +8,14 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class Train {
+public final class Train {
 	
 	
 	protected static String pkg = "idv.nightgospel.TWRailScheduleLookUp";
+
+	private Train() throws InstantiationException {
+		throw new InstantiationException("This class is not for instantiation");
+	}
 	
 	public static void handleLoadPackage(LoadPackageParam lpparam) {
 		if(!lpparam.packageName.equals(pkg))

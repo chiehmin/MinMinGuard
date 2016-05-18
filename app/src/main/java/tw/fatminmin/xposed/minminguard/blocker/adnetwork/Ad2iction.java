@@ -13,9 +13,9 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class Ad2iction extends Blocker {
-    public final static String banner = "com.ad2iction.mobileads.Ad2ictionView";
-    public final static String bannerPrefix = "com.ad2iction.mobileads";
-    public final static String inter = "com.ad2iction.mobileads.Ad2ictionInterstitial";
+    public static final String BANNER = "com.ad2iction.mobileads.Ad2ictionView";
+    public static final String BANNER_PREFIX = "com.ad2iction.mobileads";
+    public static final String INTER = "com.ad2iction.mobileads.Ad2ictionInterstitial";
 
     public String getName() {
         return getClass().getSimpleName();
@@ -24,8 +24,8 @@ public class Ad2iction extends Blocker {
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
-            Class<?> ad2ictionBanner = findClass(banner, lpparam.classLoader);
-            Class<?> ad2ictionInter = findClass(inter, lpparam.classLoader);
+            Class<?> ad2ictionBanner = findClass(BANNER, lpparam.classLoader);
+            Class<?> ad2ictionInter = findClass(INTER, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(ad2ictionBanner, "loadAd", new XC_MethodHook() {
 
@@ -65,11 +65,11 @@ public class Ad2iction extends Blocker {
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 }

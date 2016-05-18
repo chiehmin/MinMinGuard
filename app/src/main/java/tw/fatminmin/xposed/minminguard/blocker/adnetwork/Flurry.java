@@ -13,19 +13,19 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Flurry extends Blocker {
     
-    public final static String banner = "com.flurry.android.FlurryAds";
-    public final static String bannerPrefix = "com.flurry.android";
+    public static final String BANNER = "com.flurry.android.FlurryAds";
+    public static final String BANNER_PREFIX = "com.flurry.android";
 
     public final static String nativeAd = "com.flurry.android.ads.FlurryAdNative";
 
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {

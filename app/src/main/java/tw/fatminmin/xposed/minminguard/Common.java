@@ -27,6 +27,9 @@ public class Common {
     public final static String KEY_NETWORK = "AD_NETWORKS";
     public final static String KEY_BLOCK_NUM = "BLOCK_NUM";
 
+    private Common() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
 
     public static String getModeString(MainFragment.FragmentMode mode) {
         switch (mode) {

@@ -11,7 +11,7 @@ import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class AppBrain extends Blocker {
-    public final static String banner = "com.appbrain.AppBrainBanner";
+    public static final String BANNER = "com.appbrain.AppBrainBanner";
     
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         try {
@@ -58,6 +58,6 @@ public class AppBrain extends Blocker {
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 }

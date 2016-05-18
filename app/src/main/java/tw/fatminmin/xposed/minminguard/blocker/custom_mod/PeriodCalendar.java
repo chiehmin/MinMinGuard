@@ -9,9 +9,13 @@ import tw.fatminmin.xposed.minminguard.Main;
 /**
  * Created by fatminmin on 2015/10/30.
  */
-public class PeriodCalendar {
+public final class PeriodCalendar {
 
     public static String pkgName = "com.popularapp.periodcalendar";
+
+    private PeriodCalendar() throws InstantiationException {
+        throw new InstantiationException("This class is not for instantiation");
+    }
 
     public static void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) {
         if(!resparam.packageName.equals(pkgName)) {

@@ -12,17 +12,17 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class OpenX extends Blocker {
     
-    public final static String banner = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
-    public final static String bannerPrefix = "com.openx.ad.mobile.sdk.interfaces";
+    public static final String BANNER = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
+    public static final String BANNER_PREFIX = "com.openx.ad.mobile.sdk.interfaces";
 
 	@Override
 	public String getBannerPrefix() {
-		return bannerPrefix;
+		return BANNER_PREFIX;
 	}
 
 	@Override
 	public String getBanner() {
-		return banner;
+		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {

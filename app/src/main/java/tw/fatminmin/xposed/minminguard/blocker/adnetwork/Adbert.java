@@ -18,17 +18,17 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
  */
 public class Adbert extends Blocker {
 
-    public final static String banner = "com.adbert.AdbertADView";
-    public final static String bannerPrefix = "com.adbert";
-    public final static String inter = "com.adbert.AdbertInterstitialAD";
+    public static final String BANNER = "com.adbert.AdbertADView";
+    public static final String BANNER_PREFIX = "com.adbert";
+    public static final String INTER = "com.adbert.AdbertInterstitialAD";
 
     @Override
     public boolean handleLoadPackage(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
 
         try {
 
-            Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
-            Class<?> interClazz = findClass(inter, lpparam.classLoader);
+            Class<?> bannerClazz = findClass(BANNER, lpparam.classLoader);
+            Class<?> interClazz = findClass(INTER, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(bannerClazz, "start", new XC_MethodHook() {
 
@@ -68,11 +68,11 @@ public class Adbert extends Blocker {
 
     @Override
     public String getBanner() {
-        return banner;
+        return BANNER;
     }
 
     @Override
     public String getBannerPrefix() {
-        return bannerPrefix;
+        return BANNER_PREFIX;
     }
 }
