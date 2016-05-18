@@ -30,17 +30,11 @@ public class Inmobi extends Blocker {
 		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-		try {
-			ApiBlocking.removeBanner(packageName, BANNER, "load", lpparam, removeAd);
-			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam, removeAd);
-			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "load", lpparam, removeAd);
-			
-			Util.log(packageName, packageName + " uses inmobi");
-		}
-		catch(ClassNotFoundError e) {
-			return false;
-		}
-		return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "load", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "load", lpparam, removeAd);
+		return result;
 	}
 }

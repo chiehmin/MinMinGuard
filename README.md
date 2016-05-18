@@ -35,10 +35,10 @@ You can implement a ad network blocker by extending `Blocker` class. Method `han
 ```java
 public class Flurry extends Blocker {
 
-    public static final String BANNER = "com.flurry.android.FlurryAds";
-    public static final String BANNER_PREFIX = "com.flurry.android";
+  public static final String BANNER = "com.flurry.android.FlurryAds";
+  public static final String BANNER_PREFIX = "com.flurry.android";
 
-    public static final String NATIVE_AD = "com.flurry.android.ads.FlurryAdNative";
+  public static final String NATIVE_AD = "com.flurry.android.ads.FlurryAdNative";
 
 	@Override
 	public String getBannerPrefix() {
@@ -50,32 +50,25 @@ public class Flurry extends Blocker {
 		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-		try {
-
-            ApiBlocking.removeBanner(packageName, BANNER, "displayAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, BANNER, "fetchAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "fetchAd", lpparam, removeAd);
-
-			Util.log(packageName, packageName + " uses FlurryAds");
-		}
-		catch(ClassNotFoundError e) {
-			return false;
-		}
-		return true;
+    boolean result = false;
+    result |= ApiBlocking.removeBanner(packageName, BANNER, "displayAd", lpparam, removeAd);
+    result |= ApiBlocking.blockAdFunction(packageName, BANNER, "fetchAd", lpparam, removeAd);
+    result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "fetchAd", lpparam, removeAd);
+		return result;
 	}
 }
 ```
 
 ```java
 public static Blocker[] blockers = {
-            /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
-            new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
-            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
-            new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
-            new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(),
-            new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
-    };
+        /* Popular adnetwork */
+        new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Amazon(),
+        new Amobee(), new AppBrain(), new Bonzai(), new Chartboost(), new Domob(), new Facebook(), new Flurry(),
+        new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(),
+        new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MoPub(), new Nend(),
+        new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(),
+        new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
+};
 ```
 
 Above is a classic example. After you complete the new blocker, you have to remember to add it to the `blockers` array at the `Main` class to activiate the new blocker.

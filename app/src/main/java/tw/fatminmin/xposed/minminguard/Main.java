@@ -142,10 +142,10 @@ public class Main implements IXposedHookZygoteInit,
                 com.joshua.jptt D/MinMinGuard: parent pkgName: com.joshua.jptt
                 com.joshua.jptt D/MinMinGuard: current pkgName: com.google.android.gms
 
+
              */
-            String parentPkgName = Util.getCurrentApplication().getPackageName();
-            return !pref.getBoolean(Common.getWhiteListKey(pkgName), false) &&
-                    !pref.getBoolean(Common.getWhiteListKey(parentPkgName), false);
+            if(pkgName.equals("com.google.android.gms")) return true;
+            return !pref.getBoolean(Common.getWhiteListKey(pkgName), false);
         }
     }
 

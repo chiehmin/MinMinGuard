@@ -23,21 +23,13 @@ public class AdmobGms extends Blocker {
     public static final String AD_LOADER = "com.google.android.gms.ads.AdLoader";
 
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-		try {
-
-			ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
-			ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam, removeAd);
-			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
-			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
-
-            ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam, removeAd);
-
-			Util.log(packageName, packageName + " uses AdmobGms");
-		}
-		catch(ClassNotFoundError e) {
-			return false;
-		}
-		return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam, removeAd);
+		return result;
 	}
 	@Override
 	public String getBannerPrefix() {

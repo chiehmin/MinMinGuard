@@ -16,16 +16,10 @@ public class Aotter extends Blocker {
 
     @Override
     public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam, boolean removeAd) {
-        try {
-            ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "setAdListener", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam, removeAd);
-
-            Util.log(packageName, packageName + " uses Aotter");
-        }
-        catch(XposedHelpers.ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "setAdListener", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam, removeAd);
+        return result;
     }
 
     @Override

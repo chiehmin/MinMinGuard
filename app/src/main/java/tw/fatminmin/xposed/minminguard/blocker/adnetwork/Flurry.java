@@ -23,17 +23,11 @@ public class Flurry extends Blocker {
 		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-		try {
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "displayAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "fetchAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "fetchAd", lpparam, removeAd);
 
-            ApiBlocking.removeBanner(packageName, BANNER, "displayAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, BANNER, "fetchAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "fetchAd", lpparam, removeAd);
-
-			Util.log(packageName, packageName + " uses FlurryAds");
-		}
-		catch(ClassNotFoundError e) {
-			return false;
-		}
-		return true;
+		return result;
 	}
 }

@@ -27,18 +27,11 @@ public class Vpadn extends Blocker {
         return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-
-            ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "loadAd", lpparam, removeAd);
-            ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam, removeAd);
-            
-            Util.log(packageName, packageName + " uses Vpadn");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam, removeAd);
+        return result;
     }
 }
