@@ -19,6 +19,9 @@ public class AdmobGms extends Blocker {
 	public static final String SEARCH_BANNER = "com.google.android.gms.ads.search.SearchAdView";
 	public static final String INTER_ADS = "com.google.android.gms.ads.InterstitialAd";
 
+    // native ads
+    public static final String AD_LOADER = "com.google.android.gms.ads.AdLoader";
+
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 
@@ -26,6 +29,8 @@ public class AdmobGms extends Blocker {
 			ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam, removeAd);
 			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
 			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+
+            ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam, removeAd);
 
 			Util.log(packageName, packageName + " uses AdmobGms");
 		}

@@ -18,6 +18,9 @@ public class Admob extends Blocker {
 
 	public static final String INTER_ADS = "com.google.ads.InterstitialAd";
 
+	// native ads
+	public static final String AD_LOADER = "com.google.android.gms.ads.AdLoader";
+
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
 
@@ -25,6 +28,7 @@ public class Admob extends Blocker {
 			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
 			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
 
+			ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam, removeAd);
 			
 			Util.log(packageName, packageName + " uses Admob");
 		}
