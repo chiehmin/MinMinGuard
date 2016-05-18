@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -14,44 +15,14 @@ public class AdMarvel extends Blocker {
     
     public static final String BANNER = "com.admarvel.android.ads.AdMarvelView";
     public static final String BANNER_PREFIX = "com.admarvel.android.ads";
+    public static final String INTER_ADS = "com.admarvel.android.ads.AdMarvelInterstitialAds";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            Class<?> adView = XposedHelpers.findClass("com.admarvel.android.ads.AdMarvelView", lpparam.classLoader);
-            XposedBridge.hookAllMethods(adView, "requestNewAd", new XC_MethodHook() {
-                
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    Util.log(packageName, "Detect AdMarvelView requestNewAd in " + packageName);
-                    
-                    if(removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-                
-            });
-            
-            Class<?> interads = XposedHelpers.findClass("com.admarvel.android.ads.AdMarvelInterstitialAds", lpparam.classLoader);
-            XposedBridge.hookAllMethods(interads, "requestNewInterstitialAd", new XC_MethodHook() {
-                
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    Util.log(packageName, "Detect AdMarvelInterstitialAds requestNewInterstitialAd in " + packageName);
-                    
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-                
-            });
-            
-            Util.log(packageName, packageName + " uses AdMarvelView");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "requestNewAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "requestNewInterstitialAd", lpparam, removeAd);
+
+        return result;
     }
     @Override
     public String getBannerPrefix() {

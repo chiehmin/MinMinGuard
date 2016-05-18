@@ -7,6 +7,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 
@@ -22,27 +23,9 @@ public class Clickforce extends Blocker {
 
     @Override
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            Class<?> bannerClazz = findClass(BANNER, lpparam.classLoader);
-            XposedBridge.hookAllMethods(bannerClazz, "show", new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect Clickforce AdBanner show in " + packageName);
-
-                    if (removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-
-            });
-        }
-        catch(XposedHelpers.ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "show", lpparam, removeAd);
+        return result;
     }
 
     @Override

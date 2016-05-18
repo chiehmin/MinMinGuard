@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -14,6 +15,7 @@ public class Millennial extends Blocker {
     
     public static final String BANNER = "com.millennialmedia.android.MMAdView";
     public static final String BANNER_PREFIX = "com.millennialmedia.android";
+    public static final String INTER_ADS = "com.millennialmedia.android.MMInterstitial";
 
     @Override
     public String getBannerPrefix() {
@@ -25,41 +27,10 @@ public class Millennial extends Blocker {
         return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            
-            Class<?> adView = XposedHelpers.findClass("com.millennialmedia.android.MMAdView", lpparam.classLoader);
-            
-            XposedBridge.hookAllMethods(adView, "getAd" ,new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            
-                            Util.log(packageName, "Detect MMAdView getAd in " + packageName);
-                            
-                            if(removeAd) {
-                                param.setResult(new Object());
-                                Main.removeAdView((View) param.thisObject, packageName, true);
-                            }
-                        }
-                    });
-            
-            Class<?> interAds = XposedHelpers.findClass("com.millennialmedia.android.MMInterstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(interAds, "display" ,new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    
-                    Util.log(packageName, "Detect MMInterstitial display in " + packageName);
-                    
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-            });
-            
-            Util.log(packageName, packageName + " uses Millennial");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "display", lpparam, removeAd);
+
+        return result;
     }
 }

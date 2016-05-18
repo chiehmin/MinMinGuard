@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -14,6 +15,7 @@ public class Tapfortap extends Blocker {
     
     public static final String BANNER = "com.tapfortap.AdView";
     public static final String BANNER_PREFIX = "com.tapfortap";
+    public static final String INTER_ADS = "com.tapfortap.Interstitial";
 
     @Override
     public String getBannerPrefix() {
@@ -25,41 +27,10 @@ public class Tapfortap extends Blocker {
         return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            
-            Class<?> adView = XposedHelpers.findClass("com.tapfortap.AdView", lpparam.classLoader);
-            
-            XposedBridge.hookAllMethods(adView, "loadAds" ,new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            
-                            Util.log(packageName, "Detect tapfortap AdView loadAds in " + packageName);
-                            
-                            if(removeAd) {
-                                param.setResult(new Object());
-                                Main.removeAdView((View) param.thisObject, packageName, true);
-                            }
-                        }
-                    });
-            
-            Class<?> interAds = XposedHelpers.findClass("com.tapfortap.Interstitial", lpparam.classLoader);
-            XposedBridge.hookAllMethods(interAds, "show" ,new XC_MethodHook() {
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    
-                    Util.log(packageName, "Detect tapfortap Interstitial show in " + packageName);
-                    
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-            });
-            
-            Util.log(packageName, packageName + " uses tapfortap");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAds", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+
+        return result;
     }
 }

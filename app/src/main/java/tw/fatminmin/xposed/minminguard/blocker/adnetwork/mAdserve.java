@@ -23,6 +23,7 @@ public class mAdserve extends Blocker {
         return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
+
         try {
             Class<?> adView = XposedHelpers.findClass("com.adsdk.sdk.banner.InAppWebView", lpparam.classLoader);
             XposedBridge.hookAllConstructors(adView, new XC_MethodHook() {

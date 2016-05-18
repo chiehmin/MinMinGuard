@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -24,28 +25,9 @@ public class Mobclix extends Blocker {
         return BANNER;
     }
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            
-            Class<?> adView = XposedHelpers.findClass("com.mobclix.android.sdk.MobclixMMABannerXLAdView", lpparam.classLoader);
-            
-            XposedBridge.hookAllMethods(adView, "getAd" ,new XC_MethodHook() {
-                        @Override
-                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                            
-                            Util.log(packageName, "Detect MobclixMMABannerXLAdView getAd in " + packageName);
-                            
-                            if(removeAd) {
-                                param.setResult(new Object());
-                                Main.removeAdView((View) param.thisObject, packageName, true);
-                            }
-                        }
-                    });
-            
-            Util.log(packageName, packageName + " uses Mobclix");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam, removeAd);
+
+        return result;
     }
 }

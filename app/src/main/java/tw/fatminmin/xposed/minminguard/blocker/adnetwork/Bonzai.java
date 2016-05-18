@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -16,27 +17,9 @@ public class Bonzai extends Blocker {
     public static final String BANNER_PREFIX = "com.bonzai.view";
     
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
-            Class<?> adView = XposedHelpers.findClass("com.bonzai.view.BonzaiAdView", lpparam.classLoader);
-            XposedBridge.hookAllMethods(adView, "update", new XC_MethodHook() {
-                
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    Util.log(packageName, "Detect BonzaiAdView update in " + packageName);
-                    
-                    if(removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-                
-            });
-            Util.log(packageName, packageName + " uses Bonzai");
-        }
-        catch(ClassNotFoundError e) {
-            return false;
-        }
-        return true;
+        boolean result = false;
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "update", lpparam, removeAd);
+        return result;
     }
     @Override
     public String getBannerPrefix() {

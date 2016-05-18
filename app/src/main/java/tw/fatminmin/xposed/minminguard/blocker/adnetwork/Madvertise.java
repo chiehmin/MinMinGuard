@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -28,30 +29,10 @@ public class Madvertise extends Blocker {
 		return BANNER;
 	}
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-		try {
-			Class<?> adView = XposedHelpers.findClass("de.madvertise.android.sdk.MadvertiseMraidView", lpparam.classLoader);
-			
-			XposedBridge.hookAllMethods(adView, "loadAd", new XC_MethodHook() {
-				
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
-					Util.log(packageName, "Detect Madvertise loadAd in " + packageName);
-					
-					if(removeAd) {
-						param.setResult(new Object());
-						Main.removeAdView((View) param.thisObject, packageName, true);
-					}
-					
-				}
-			});
-			
-			Util.log(packageName, packageName + " uses Madvertise");
-		}
-		catch(ClassNotFoundError e) {
-			return false;
-		}
-		return true;
+		boolean result = false;
+		result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+
+		return result;
 	}
 	public static void handleInitPackageResources(InitPackageResourcesParam resparam) {
 		
