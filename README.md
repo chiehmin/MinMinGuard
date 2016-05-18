@@ -10,12 +10,12 @@ You can find out more information [here](http://fatminmin.com/pages/minminguard.
 
 ## Adding support for a new ad network
 
-You may find some apps' ads are not blocked and removed by MinMinGuard. This may cause by the apps use non-supported ad networks(some local ads providers ex: Vpon in Taiwan). In this case you can help me by doing a reverse engineering on the app and add the non-supported ad network into support. 
+You may find some apps' ads are not blocked and removed by MinMinGuard. This may cause by the apps use non-supported ad networks(some local ads providers ex: Vpon in Taiwan). In this case you can help me by doing a reverse engineering on the app and add the non-supported ad network into support.
 
 ```java
 public abstract class Blocker {
     /**
-     * 
+     *
      * @param packageName
      * @param lpparam
      * @param removeAd
@@ -30,69 +30,39 @@ public abstract class Blocker {
 }
 ```
 
-You can implement a ad network blocker by extending `Blocker` class. Method `handleLoadPackage` is used for **API based blocking** to intercept api call for loading ads from adview. After you hook and get the adview, you can use ` Main.removeAdView(view, pkgname, true);` helper method to remove the adview from layout. Method `getBanner` and `getBannerPrefix` are used for **Name based blocking**. You can opt to return `null` and name based blocking will not be triggered. 
+You can implement a ad network blocker by extending `Blocker` class. Method `handleLoadPackage` is used for **API based blocking** to intercept api call for loading ads from adview. You can leverage `ApiBlocking.removeBanner` and `ApiBlocking.blockAdFunction` to remove banner view and block ad functions. Method `getBanner` and `getBannerPrefix` are used for **Name based blocking**. You can opt to return `null` and name based blocking will not be triggered.
 
 ```java
- */
-public class Adbert extends Blocker {
+public class Flurry extends Blocker {
 
-    public final static String banner = "com.adbert.AdbertADView";
-    public final static String bannerPrefix = "com.adbert";
-    public final static String inter = "com.adbert.AdbertInterstitialAD";
+    public static final String BANNER = "com.flurry.android.FlurryAds";
+    public static final String BANNER_PREFIX = "com.flurry.android";
 
-    @Override
-    public boolean handleLoadPackage(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+    public static final String NATIVE_AD = "com.flurry.android.ads.FlurryAdNative";
 
-        try {
+	@Override
+	public String getBannerPrefix() {
+		return BANNER_PREFIX;
+	}
 
-            Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
-            Class<?> interClazz = findClass(inter, lpparam.classLoader);
+	@Override
+	public String getBanner() {
+		return BANNER;
+	}
+	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
+		try {
 
-            XposedBridge.hookAllMethods(bannerClazz, "start", new XC_MethodHook() {
+            ApiBlocking.removeBanner(packageName, BANNER, "displayAd", lpparam, removeAd);
+            ApiBlocking.blockAdFunction(packageName, BANNER, "fetchAd", lpparam, removeAd);
+            ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "fetchAd", lpparam, removeAd);
 
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect AdbertBanner start in " + packageName);
-
-                    if (removeAd) {
-                        param.setResult(new Object());
-                        Main.removeAdView((View) param.thisObject, packageName, true);
-                    }
-                }
-
-            });
-
-            XposedBridge.hookAllMethods(interClazz, "loadAd",  new XC_MethodHook() {
-
-                @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
-                    Util.log(packageName, "Detect AdbertInter loadAd in " + packageName);
-
-                    if(removeAd) {
-                        param.setResult(new Object());
-                    }
-                }
-            });
-
-            Util.log(packageName, packageName + " uses AdbertBanner");
-        }
-        catch(XposedHelpers.ClassNotFoundError e) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String getBanner() {
-        return banner;
-    }
-
-    @Override
-    public String getBannerPrefix() {
-        return bannerPrefix;
-    }
+			Util.log(packageName, packageName + " uses FlurryAds");
+		}
+		catch(ClassNotFoundError e) {
+			return false;
+		}
+		return true;
+	}
 }
 ```
 
@@ -120,4 +90,3 @@ After you confirm the new blocker is working, you can send me a pull request. I 
 ## Contributers
 
 * FatMinMin
-
