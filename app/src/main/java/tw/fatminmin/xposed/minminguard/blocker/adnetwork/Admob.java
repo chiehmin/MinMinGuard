@@ -2,6 +2,7 @@ package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
 import android.view.View;
@@ -15,52 +16,15 @@ public class Admob extends Blocker {
     public static final String BANNER = "com.google.ads.AdView";
     public static final String BANNER_PREFIX = "com.google.ads";
 
+	public static final String INTER_ADS = "com.google.ads.InterstitialAd";
+
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		try {
-			
-			Class<?> admobBanner = findClass("com.google.ads.AdView", lpparam.classLoader);
-			Class<?> admobInter = findClass("com.google.ads.InterstitialAd", lpparam.classLoader);
-			
-			XposedBridge.hookAllMethods(admobBanner, "loadAd", new XC_MethodHook() {
-				
-						@Override
-						protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-							
-							Util.log(packageName, "Detect AdmobBanner loadAd in " + packageName);
-							
-							if(removeAd) {
-								param.setResult(new Object());
-								Main.removeAdView((View) param.thisObject, packageName, true);
-							}
-						}
-					
-					});
-			
-			XposedBridge.hookAllMethods(admobInter, "loadAd",  new XC_MethodHook() {
-				
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
-					Util.log(packageName, "Detect Admob InterstitialAd loadAd in " + packageName);
-					
-					if(removeAd) {
-						param.setResult(new Object());
-					}
-				}
-			});
-			
-			XposedBridge.hookAllMethods(admobInter, "show",  new XC_MethodHook() {
-				
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					
-					Util.log(packageName, "Detect Admob InterstitialAd show in " + packageName);
-					
-					if(removeAd) {
-						param.setResult(new Object());
-					}
-				}
-			});
+
+			ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
+			ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
+
 			
 			Util.log(packageName, packageName + " uses Admob");
 		}
