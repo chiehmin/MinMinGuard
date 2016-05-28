@@ -17,6 +17,11 @@ import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
 public class DaoMaster extends AbstractDaoMaster {
     public static final int SCHEMA_VERSION = 1;
 
+    public DaoMaster(SQLiteDatabase db) {
+        super(db, SCHEMA_VERSION);
+        registerDaoClass(AppDataDao.class);
+    }
+
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         AppDataDao.createTable(db, ifNotExists);
@@ -54,11 +59,6 @@ public class DaoMaster extends AbstractDaoMaster {
         }
     }
 
-    public DaoMaster(SQLiteDatabase db) {
-        super(db, SCHEMA_VERSION);
-        registerDaoClass(AppDataDao.class);
-    }
-    
     public DaoSession newSession() {
         return new DaoSession(db, IdentityScopeType.Session, daoConfigMap);
     }
