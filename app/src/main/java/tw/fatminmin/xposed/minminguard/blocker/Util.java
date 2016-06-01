@@ -51,7 +51,7 @@ public final class Util {
     }    
 
     static public void log(String packageName, String msg) {
-        Log.d(TAG, msg);
+        Log.d(TAG, packageName + ": " + msg);
     }
     
     static public Application getCurrentApplication() {

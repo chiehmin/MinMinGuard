@@ -197,7 +197,6 @@ public class Main implements IXposedHookZygoteInit,
     public static void removeAdView(final View view, final String packageName, final boolean first, final float heightLimit) {
 
         float adHeight = convertPixelsToDp(view.getHeight());
-
         if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
             LayoutParams params = view.getLayoutParams();
@@ -209,16 +208,13 @@ public class Main implements IXposedHookZygoteInit,
             }
             view.setLayoutParams(params);
         }
-        /*
-            adview may not have been created
-            reference: http://stackoverflow.com/questions/8170915/getheight-returns-0-for-all-android-ui-objects
-        */
-        ViewTreeObserver observer= view.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+
+        // preventing view not ready situation
+        view.post(new Runnable() {
             @Override
-            public void onGlobalLayout() {
-                float heightDp = convertPixelsToDp(view.getHeight());
-                if (first || heightDp <= heightLimit) {
+            public void run() {
+                float adHeight = convertPixelsToDp(view.getHeight());
+                if(first || (adHeight > 0 && adHeight <= heightLimit)) {
 
                     LayoutParams params = view.getLayoutParams();
                     if (params == null) {
@@ -229,24 +225,12 @@ public class Main implements IXposedHookZygoteInit,
                     }
                     view.setLayoutParams(params);
                 }
+
             }
         });
-
         if(view.getParent() != null && view.getParent() instanceof ViewGroup) {
-            float currentLimit = heightLimit;
             ViewGroup parent = (ViewGroup) view.getParent();
-            if(first)
-            {
-                currentLimit = Math.max(adHeight + 5, currentLimit);
-                /*
-                  Some adview(AdbertAdview) still showing after set height to 0
-                  In this case, I have to set its visibility to GONE
-                 */
-                if(parent.getChildCount() == 1) {
-                    view.setVisibility(View.GONE);
-                }
-            }
-            removeAdView(parent, packageName, false, currentLimit);
+            removeAdView(parent, packageName, false, heightLimit);
         }
     }
 
