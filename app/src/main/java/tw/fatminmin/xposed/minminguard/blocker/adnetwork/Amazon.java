@@ -19,7 +19,7 @@ public class Amazon extends Blocker {
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		boolean result = false;
 		result |= ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam, removeAd);
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.removeBannerWithResult(packageName, BANNER, "loadAd", new Boolean(true), lpparam, removeAd);
 
 		return result;
 	}
