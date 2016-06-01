@@ -54,6 +54,8 @@ public class MainFragment extends Fragment {
     private List<PackageInfo> mAppList;
     private SharedPreferences mPref;
 
+    public MainFragment() {
+    }
 
     private final View.OnClickListener btnModeClick = new View.OnClickListener() {
         @Override
@@ -72,9 +74,6 @@ public class MainFragment extends Fragment {
         args.putInt("mode", mode.ordinal());
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public MainFragment() {
     }
 
     @Override

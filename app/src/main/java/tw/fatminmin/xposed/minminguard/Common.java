@@ -39,6 +39,8 @@ public class Common {
                 return Common.VALUE_MODE_BLACKLIST;
             case WHITELIST:
                 return Common.VALUE_MODE_WHITELIST;
+            default:
+                break;
         }
         return Common.VALUE_MODE_BLACKLIST;
     }
