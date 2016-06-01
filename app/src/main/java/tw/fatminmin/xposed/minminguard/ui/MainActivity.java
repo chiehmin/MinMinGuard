@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("http://fatminmin.com/pages/minminguard.html")));
                     break;
+                default:
+                    break;
             }
             return true;
         }
@@ -131,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case Common.VALUE_MODE_WHITELIST:
                 mViewPager.setCurrentItem(2);
+                break;
+            default:
                 break;
         }
     }
