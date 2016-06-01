@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -163,12 +164,31 @@ public class MainFragment extends Fragment {
     }
 
     public void refresh() {
-        if (!mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.setRefreshing(true);
-        }
-        updateAppList();
-        mAdapter.notifyDataSetChanged();
-        mSwipeRefreshLayout.setRefreshing(false);
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                });
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                updateAppList();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                mAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }.execute();
     }
 
     private void updateAppList() {

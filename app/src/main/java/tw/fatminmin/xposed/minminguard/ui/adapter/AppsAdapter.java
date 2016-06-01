@@ -86,13 +86,17 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         appDataDao = daoSession.getAppDataDao();
 
         mMode = mode;
+
+        mAppDataMap = new HashMap<>();
+        mFilteredList = new ArrayList<>();
     }
 
     public void setAppList(List<PackageInfo> list) {
-        mFilteredList = mAppList = list;
+        mFilteredList = new ArrayList<>(list);
+        mAppList = new ArrayList<>(list);
 
         /* update appdata map */
-        mAppDataMap = new HashMap<>();
+        mAppDataMap.clear();
         for(PackageInfo info : mAppList) {
             final String pkgName = info.packageName;
             List<AppData> results = appDataDao.queryBuilder()
@@ -109,7 +113,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
     public void filterApp(String keyword) {
         PackageManager pm = mContext.getPackageManager();
-        mFilteredList = new ArrayList<>();
+        mFilteredList.clear();
         for (PackageInfo info : mAppList) {
             String appName = (String) info.applicationInfo.loadLabel(pm);
             // use toLowerCase to ignore case
