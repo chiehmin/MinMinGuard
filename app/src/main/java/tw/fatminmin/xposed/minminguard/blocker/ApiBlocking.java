@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Objects;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -47,6 +48,10 @@ public final class ApiBlocking {
         Used for blocking banner function and removing banner
      */
     public static boolean removeBanner(final String packageName, final String banner, final String bannerFunc, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        return removeBannerWithResult(packageName, banner, bannerFunc, new Object(), lpparam, removeAd);
+    }
+
+    public static boolean removeBannerWithResult(final String packageName, final String banner, final String bannerFunc, final Object result, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             Class<?> bannerClazz = findClass(banner, lpparam.classLoader);
             XposedBridge.hookAllMethods(bannerClazz, bannerFunc, new XC_MethodHook() {
@@ -57,7 +62,7 @@ public final class ApiBlocking {
                     String debugMsg = String.format("Detect %s %s in %s", banner, bannerFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
-                        param.setResult(new Object());
+                        param.setResult(result);
                         Main.removeAdView((View) param.thisObject, packageName, true);
                     }
                 }
@@ -68,6 +73,8 @@ public final class ApiBlocking {
         }
         return true;
     }
+
+
     /*
         Used for blocking ad functions
      */
