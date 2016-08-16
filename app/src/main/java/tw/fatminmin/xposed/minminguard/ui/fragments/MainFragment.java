@@ -167,6 +167,9 @@ public class MainFragment extends Fragment {
 
         new AsyncTask<Void, Void, Void>() {
 
+            PackageManager pm;
+            List<PackageInfo> list;
+
             @Override
             protected void onPreExecute() {
                 mSwipeRefreshLayout.post(new Runnable() {
@@ -175,11 +178,14 @@ public class MainFragment extends Fragment {
                         mSwipeRefreshLayout.setRefreshing(true);
                     }
                 });
+
             }
 
             @Override
             protected Void doInBackground(Void... voids) {
-                updateAppList();
+                pm = getActivity().getPackageManager();
+                list = pm.getInstalledPackages(0);
+                updateAppList(pm, list);
                 return null;
             }
 
@@ -191,8 +197,8 @@ public class MainFragment extends Fragment {
         }.execute();
     }
 
-    private void updateAppList() {
-        final PackageManager pm = getActivity().getPackageManager();
+    private void updateAppList(final PackageManager pm, final List<PackageInfo> list) {
+
         final SharedPreferences mUiPref = getActivity().getSharedPreferences(Common.UI_PREFS,
                 Context.MODE_PRIVATE);
 
@@ -200,7 +206,6 @@ public class MainFragment extends Fragment {
 
         boolean showSystemApps = mUiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false);
 
-        List<PackageInfo> list = pm.getInstalledPackages(0);
         for (PackageInfo info : list) {
             if (showSystemApps || (info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
                 mAppList.add(info);
