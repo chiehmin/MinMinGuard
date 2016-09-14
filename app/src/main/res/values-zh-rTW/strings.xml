@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name" translatable="false">MinMinGuard</string>
+
+    <string name="action_search">搜尋</string>
+    <string name="action_settings">設定</string>
+    <string name="action_tutorial">教程</string>
+    <string name="action_about">關於 / 幫助</string>
+    <string name="action_donate">捐贈</string>
+
+    <string name="intro_auto_title">
+        自動模式封鎖所有廣告！
+    </string>
+    <string name="intro_auto_content">
+        自動模式可以幫您阻擋裝置上所有廣告
+    </string>
+    <string name="intro_manual_title">
+        手動模式
+    </string>
+    <string name="intro_manual_content">
+        您可以選擇您要阻擋廣告的程式。 (您可以按藍色按鈕切換模式)
+    </string>
+    <string name="intro_tap_icon_title">
+        輕觸程式圖示
+    </string>
+    <string name="intro_tap_icon_content">
+        您可以按一下程式圖示來重啟該程式。
+    </string>
+    <string name="intro_app_detail_title">
+        顯示程式狀態
+    </string>
+    <string name="intro_app_detail_content">
+        輕觸程式名稱可以顯示 MinMinGuard 阻擋這個程式的狀態。
+    </string>
+
+    <string name="btn_ok">確定</string>
+
+    <string name="msg_xposed_not_enabled">Xposed 尚未啟動</string>
+    <string name="msg_enabled_crash_report">
+        啟動錯誤報告
+    </string>
+    <string name="msg_mode_manual">手動</string>
+    <string name="msg_mode_auto">自動</string>
+    <string name="msg_block_num">已阻擋 %d 個廣告</string>
+    <string name="msg_ad_networks">廣告網址： </string>
+    <string name="msg_ads_blocked">廣告阻擋： </string>
+    <string name="msg_not_detected">未發現</string>
+
+    <string name="option_enable_url_filter">啟動網址過濾</string>
+</resources>
