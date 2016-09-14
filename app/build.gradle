@@ -19,14 +19,16 @@ repositories {
 android {
     signingConfigs {
         release {
-            try {
-                keyAlias 'minminguard'
-                keyPassword System.getenv("KEYSTORE_PASS") ?: System.console()?.readLine("KeyStore password: ")
-                storeFile file('minminguard.keystore')
-                storePassword System.getenv("KEY_PASS") ?: System.console()?.readLine("Key password: ")
-            } catch (ex) {
-                throw new InvalidUserDataException("You should define KEYSTORE_PASS and KEY_PASS environment variables")
-            }
+            keyAlias 'minminguard'
+            keyPassword System.getenv("KEYSTORE_PASS")
+            storeFile file('minminguard.keystore')
+            storePassword System.getenv("KEY_PASS")
+        }
+        debug {
+            storeFile file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
         }
     }
     compileSdkVersion 23
@@ -40,11 +42,15 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.debug
         }
     }
 }
