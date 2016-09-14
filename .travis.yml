@@ -12,7 +12,7 @@ android:
 jdk:
 - oraclejdk8
 script:
-- "./gradlew assembleRelease"
+- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && ./gradlew assembleRelease || ./gradlew assembleDebug'
 before_deploy:
 - mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/MinMinGuard.apk
 deploy:
