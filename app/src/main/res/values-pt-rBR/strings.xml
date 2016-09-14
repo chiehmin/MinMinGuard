@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<resources>
+  <string name="action_search">Pesquisar</string>
+  <string name="action_settings">Configurações</string>
+  <string name="action_tutorial">Tutorial</string>
+  <string name="action_about">Sobre / Ajuda</string>
+  <string name="action_donate">Doar</string>
+  <string name="intro_auto_title">
+        modo automático de bloquear os anúncios!
+    </string>
+  <string name="intro_auto_content">
+        O modo automático pode ajudá-lo a bloquear cada anúncios para o seu dispositivo
+    </string>
+  <string name="intro_manual_title">
+        Modo Manual
+    </string>
+  <string name="intro_manual_content">
+     
+    Você pode decidir qual aplicativo que você deseja bloquear anúncios. (Pode tocar no botão azul de modo para alternar)
+    </string>
+  <string name="intro_tap_icon_title">
+        Toque no ícone do aplicativo
+    </string>
+  <string name="intro_tap_icon_content">
+        Você pode tocar no ícone do aplicativo para reiniciar o aplicativo.
+    </string>
+  <string name="intro_app_detail_title">
+        Mostrar Estatísticas no App
+    </string>
+  <string name="intro_app_detail_content">
+        Toque no nome do aplicativo para mostrar estatística do MinMinGuard de bloqueio para o aplicativo..
+    </string>
+  <string name="intro_url_filtering_title">
+        Filtrar Url
+    </string>
+  <string name="intro_url_filtering_content">
+        Se algum aplicativo ainda mostra anúncios, você pode tentar ativar o recurso de filtragem de URL. Cuidado: isso pode resultar problema para Apps baseado em webview.
+    </string>
+  <string name="btn_ok">OK</string>
+  <string name="msg_xposed_not_enabled">Xposed não está ativado</string>
+  <string name="msg_enabled_crash_report">Ativar crash report</string>
+  <string name="msg_show_system_apps">Mostrar apps do sistema</string>
+  <string name="msg_mode_apply">Aplicar</string>
+  <string name="msg_block_num">Bloqueado %d ads</string>
+  <string name="msg_ad_networks">Ad Internet: </string>
+  <string name="msg_ads_blocked">Ads Bloqueado: </string>
+  <string name="msg_not_detected">Não detectado</string>
+  <string name="option_enable_url_filter">Ativar filtro de url</string>
+</resources>
