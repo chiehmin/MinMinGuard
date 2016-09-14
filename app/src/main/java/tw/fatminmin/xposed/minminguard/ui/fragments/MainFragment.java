@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,6 +31,7 @@ import java.util.List;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
+import tw.fatminmin.xposed.minminguard.ui.MainActivity;
 import tw.fatminmin.xposed.minminguard.ui.adapter.AppsAdapter;
 
 public class MainFragment extends Fragment {
@@ -43,7 +45,6 @@ public class MainFragment extends Fragment {
     public boolean isAlive = false; // changing to true after onCreateView is called.
 
     private FragmentMode mMode;
-    private Context mContext;
 
     private TextView mTxtXposedEnabled;
     private Button mBtnMode;
@@ -54,6 +55,9 @@ public class MainFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private List<PackageInfo> mAppList;
     private SharedPreferences mPref;
+
+    private MainActivity mActivity;
+    private Handler mHandler = new Handler();
 
     public MainFragment() {
     }
@@ -81,8 +85,8 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mContext = getActivity();
-        mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
+        mActivity = (MainActivity) getActivity();
+        mPref = mActivity.modPref;
 
         mMode = FragmentMode.values()[getArguments().getInt("mode")];
     }
@@ -90,7 +94,14 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        refresh();
+
+        // waiting for the UI to load first
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+            }
+        });
     }
 
     public void refreshUI() {
@@ -144,7 +155,7 @@ public class MainFragment extends Fragment {
         }
 
 
-        mLayoutManager = new LinearLayoutManager(mContext);
+        mLayoutManager = new LinearLayoutManager(mActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAppList = new ArrayList<>();
@@ -158,7 +169,6 @@ public class MainFragment extends Fragment {
             }
         });
 
-        refresh();
         isAlive = true;
         return view;
     }
@@ -172,19 +182,13 @@ public class MainFragment extends Fragment {
 
             @Override
             protected void onPreExecute() {
-                mSwipeRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                    }
-                });
-
+                mSwipeRefreshLayout.setRefreshing(true);
+                pm = getActivity().getPackageManager();
+                list = pm.getInstalledPackages(0);
             }
 
             @Override
             protected Void doInBackground(Void... voids) {
-                pm = getActivity().getPackageManager();
-                list = pm.getInstalledPackages(0);
                 updateAppList(pm, list);
                 return null;
             }
