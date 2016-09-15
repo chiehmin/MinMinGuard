@@ -1,6 +1,5 @@
 package tw.fatminmin.xposed.minminguard.ui.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -54,7 +53,8 @@ public class MainFragment extends Fragment {
     private AppsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<PackageInfo> mAppList;
-    private SharedPreferences mPref;
+    private SharedPreferences mModPref;
+    private SharedPreferences mUiPref;
 
     private MainActivity mActivity;
     private Handler mHandler = new Handler();
@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
     private final View.OnClickListener btnModeClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mPref.edit()
+            mModPref.edit()
                     .putString(Common.KEY_MODE, Common.getModeString(mMode))
                     .commit();
             mBtnMode.setVisibility(View.GONE);
@@ -85,10 +85,6 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mActivity = (MainActivity) getActivity();
-        mPref = mActivity.modPref;
-
-        mMode = FragmentMode.values()[getArguments().getInt("mode")];
     }
 
     @Override
@@ -96,16 +92,11 @@ public class MainFragment extends Fragment {
         super.onResume();
 
         // waiting for the UI to load first
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                refresh();
-            }
-        });
+       refreshPost();
     }
 
     public void refreshUI() {
-        if(mPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+        if(mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
             mBtnMode.setVisibility(View.GONE);
         } else {
             mBtnMode.setVisibility(View.VISIBLE);
@@ -137,6 +128,12 @@ public class MainFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        mActivity = (MainActivity) getActivity();
+        mModPref = mActivity.modPref;
+        mUiPref = mActivity.uiPref;
+        mMode = FragmentMode.values()[getArguments().getInt("mode")];
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         mTxtXposedEnabled = (TextView) view.findViewById(R.id.txt_xposed_enable);
@@ -150,7 +147,7 @@ public class MainFragment extends Fragment {
 
         /* setup apply button */
         mBtnMode.setOnClickListener(btnModeClick);
-        if(mPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+        if(mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
             mBtnMode.setVisibility(View.GONE);
         }
 
@@ -165,7 +162,7 @@ public class MainFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh();
+                refreshPost();
             }
         });
 
@@ -173,8 +170,16 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public void refresh() {
 
+    public void refreshPost() {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+            }
+        });
+    }
+    private void refresh() {
         new AsyncTask<Void, Void, Void>() {
 
             PackageManager pm;
@@ -203,9 +208,6 @@ public class MainFragment extends Fragment {
 
     private void updateAppList(final PackageManager pm, final List<PackageInfo> list) {
 
-        final SharedPreferences mUiPref = getActivity().getSharedPreferences(Common.UI_PREFS,
-                Context.MODE_PRIVATE);
-
         mAppList.clear();
 
         boolean showSystemApps = mUiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false);
@@ -215,8 +217,8 @@ public class MainFragment extends Fragment {
                 mAppList.add(info);
             }
             // setting initial value for system apps
-            if((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1 && !mPref.contains(info.packageName)) {
-                mPref.edit()
+            if((info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1 && !mModPref.contains(info.packageName)) {
+                mModPref.edit()
                         .putBoolean(info.packageName, false)
                         .putBoolean(Common.getWhiteListKey(info.packageName), true)
                         .commit();

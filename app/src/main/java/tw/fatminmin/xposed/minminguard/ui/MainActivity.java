@@ -106,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
 
         // setup tabview
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mAdapter = new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this);
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
