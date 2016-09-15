@@ -1,5 +1,7 @@
 # MinMinGuard
 
+[![Join the chat at https://gitter.im/chiehmin/MinMinGuard](https://badges.gitter.im/chiehmin/MinMinGuard.svg)](https://gitter.im/chiehmin/MinMinGuard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/chiehmin/MinMinGuard.svg?branch=master)](https://travis-ci.org/chiehmin/MinMinGuard)
 
 ## Description
