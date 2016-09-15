@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name" translatable="false">MinMinGuard</string>
+
+    <string name="action_search">搜寻</string>
+    <string name="action_settings">设定</string>
+    <string name="action_tutorial">教学</string>
+    <string name="action_about">关於 / 帮助</string>
+    <string name="action_donate">捐赠</string>
+
+    <string name="intro_auto_title">
+        自动模式阻挡所有广告！
+    </string>
+    <string name="intro_auto_content">
+        自动模式可以帮助您阻挡装置上所有的广告
+    </string>
+    <string name="intro_manual_title">
+        手动模式
+    </string>
+    <string name="intro_manual_content">
+        您可以决定要阻挡那些程式的广告。(您可以按蓝色的按钮来切换模式)
+    </string>
+    <string name="intro_tap_icon_title">
+        点击应用程式图标
+    </string>
+    <string name="intro_tap_icon_content">
+        您可以透过点及应用程式图标来重启应用程式
+    </string>
+    <string name="intro_app_detail_title">
+        显示应用程式数据
+    </string>
+    <string name="intro_app_detail_content">
+        点及应用程式名称可以得知 MinMinGuard 拦截详细资讯
+    </string>
+    <string name="intro_url_filtering_title">
+        Url 过滤
+    </string>
+    <string name="intro_url_filtering_content">
+        如果应用程式仍然出现广告，您可以尝试启用 url 拦截的功能. 注意: 这可能导致某些基於 webview 的应用程式发生问题.
+    </string>
+
+    <string name="btn_ok">确认</string>
+
+    <string name="msg_xposed_not_enabled">Xposed 框架爲啓动</string>
+    <string name="msg_enabled_crash_report">开启崩溃回报</string>
+    <string name="msg_show_system_apps">显示系统应用程式</string>
+    <string name="msg_mode_apply">套用</string>
+    <string name="msg_block_num">拦截 %d 个广告</string>
+    <string name="msg_ad_networks">广告商: </string>
+    <string name="msg_ads_blocked">广告拦截数: </string>
+    <string name="msg_not_detected">未侦测到</string>
+
+    <string name="option_enable_url_filter">套用 Url 过滤</string>
+</resources>
