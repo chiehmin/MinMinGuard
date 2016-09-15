@@ -40,6 +40,12 @@
 
     <string name="btn_ok">确认</string>
 
+    <string-array name="mode_array">
+        <item>自动模式</item>
+        <item>黑名单模式</item>
+        <item>白名单模式</item>
+    </string-array>
+
     <string name="msg_xposed_not_enabled">Xposed 框架爲啓动</string>
     <string name="msg_enabled_crash_report">开启崩溃回报</string>
     <string name="msg_show_system_apps">显示系统应用程式</string>

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 /**
@@ -24,6 +25,7 @@ public final class ModeFragmentAdapter extends FragmentPagerAdapter {
     public ModeFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
+        mTabTitles = mContext.getResources().getStringArray(R.array.mode_array);
     }
 
     @Override
