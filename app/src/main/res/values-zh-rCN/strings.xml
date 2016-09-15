@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">MinMinGuard</string>
-
     <string name="action_search">搜寻</string>
     <string name="action_settings">设定</string>
     <string name="action_tutorial">教学</string>
