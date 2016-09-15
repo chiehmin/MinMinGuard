@@ -37,12 +37,11 @@ android {
         applicationId "tw.fatminmin.xposed.minminguard"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 54
-        versionName "2.0 beta2"
+        versionCode 55
+        versionName "2.0 beta3"
     }
     buildTypes {
         release {
-            minifyEnabled true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
