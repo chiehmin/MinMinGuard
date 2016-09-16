@@ -36,6 +36,13 @@
   <string name="intro_url_filtering_content">
         Se algum aplicativo ainda mostra anúncios, você pode tentar ativar o recurso de filtragem de URL. Cuidado: isso pode resultar problema para Apps baseado em webview.
     </string>
+	
+	<string-array name="mode_array">
+        <item>AUTO</item>
+        <item>LISTA NEGRA</item>
+        <item>LISTA BRANCA</item>
+    </string-array>
+	
   <string name="btn_ok">OK</string>
   <string name="msg_xposed_not_enabled">Xposed não está ativado</string>
   <string name="msg_enabled_crash_report">Ativar crash report</string>
