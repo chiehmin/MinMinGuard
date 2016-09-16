@@ -14,7 +14,7 @@ jdk:
 script:
 - '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && ./gradlew assembleRelease || ./gradlew assembleDebug'
 before_deploy:
-- mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/MinMinGuard.apk
+- '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/MinMinGuard.apk'
 deploy:
   provider: releases
   api_key:

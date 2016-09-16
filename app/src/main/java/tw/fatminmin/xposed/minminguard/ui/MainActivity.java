@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
 
-    private SharedPreferences mUiPref;
-    private SharedPreferences mModPref;
+    public SharedPreferences uiPref;
+    public SharedPreferences modPref;
 
     private final NavigationView.OnNavigationItemSelectedListener mNavListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -68,11 +68,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mUiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
-        mModPref = getSharedPreferences(Common.MOD_PREFS, MODE_WORLD_READABLE);
+        uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
+        modPref = getSharedPreferences(Common.MOD_PREFS, MODE_WORLD_READABLE);
 
-        if (mUiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
-            mUiPref.edit()
+        if (uiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
+            uiPref.edit()
                     .putBoolean(Common.KEY_FIRST_TIME, false)
                     .commit();
             showIntro();
@@ -106,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
         mToggle.syncState();
 
         // setup tabview
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mAdapter = new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this);
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
-        switch (mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST)) {
+        switch (modPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST)) {
             case Common.VALUE_MODE_AUTO:
                 mViewPager.setCurrentItem(0);
                 break;

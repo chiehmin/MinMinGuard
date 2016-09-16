@@ -1,16 +1,20 @@
-# MinMinGuard
+# ![icon](app/src/main/res/drawable-hdpi/icon.png) MinMinGuard 
 
 [![Build Status](https://travis-ci.org/chiehmin/MinMinGuard.svg?branch=master)](https://travis-ci.org/chiehmin/MinMinGuard)
-
-## Description
 
 MinMinGuard is an Ad-remover made with Xposed Framework for Android. MinMinGuard can completely remove both the ads inside apps and the empty space caused by those ads. Conventional ads removing apps are only able to block the ad content, but the space taken by the ad will still remain unused (black). MinMinGuard successfully removes that black space, which extends the app window and makes your user-experience better!
 
 ![Comparison](http://fatminmin.com/mmg/compare.png)
 
-You can find out more information [here](http://fatminmin.com/pages/minminguard.html)
+## Discussion and Supports
+If you have any idea or need some supports, you are welcome to post on the Xda Developers forum or chat in the Gitter Room.
 
-## Adding support for a new ad network
+[![](https://fatminmin.com/images/xda_link.svg)](http://forum.xda-developers.com/xposed/modules/xposed-minminguard-v1-7-0-cancelled-t2597332)
+[![Join the chat at https://gitter.im/MinMinGuard/MinMinGuard](https://badges.gitter.im/MinMinGuard/MinMinGuard.svg)](https://gitter.im/MinMinGuard/MinMinGuard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+## Developing and Contributing
+
+### Adding a new ad network into support
 
 You may find some apps' ads are not blocked and removed by MinMinGuard. This may cause by the apps use non-supported ad networks(some local ads providers ex: Vpon in Taiwan). In this case you can help me by doing a reverse engineering on the app and add the non-supported ad network into support.
 
@@ -74,3 +78,6 @@ public static Blocker[] blockers = {
 ```
 
 Above is a classic example. After you complete the new blocker, you have to remember to add it to the `blockers` array at the `Main` class to activiate the new blocker.
+
+## Legal and Licensing
+MinMinGuard is licensed under the [GPL-3.0 license](LICENSE).

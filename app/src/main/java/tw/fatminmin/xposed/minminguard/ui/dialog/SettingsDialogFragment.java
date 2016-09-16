@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.MainActivity;
-import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 /**
  * Created by fatminmin on 2015/10/3.
@@ -55,7 +54,7 @@ public class SettingsDialogFragment extends DialogFragment{
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).getCurrentFragment().refresh();
+                ((MainActivity)getActivity()).getCurrentFragment().refreshPost();
                 dismiss();
             }
         });
