@@ -1,7 +1,9 @@
 package tw.fatminmin.xposed.minminguard.ui.dialog;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +25,7 @@ public class SettingsDialogFragment extends DialogFragment{
     private SharedPreferences mUiPref;
     private Button mBtnOk;
     private CheckBox mCbShowSystemApps;
+    private CheckBox mCbShowLauncherIcon;
 
     public static SettingsDialogFragment newInstance() {
         return new SettingsDialogFragment();
@@ -46,7 +49,27 @@ public class SettingsDialogFragment extends DialogFragment{
             public void onClick(View v) {
                 mUiPref.edit()
                         .putBoolean(Common.KEY_SHOW_SYSTEM_APPS, mCbShowSystemApps.isChecked())
-                        .commit();
+                        .apply();
+            }
+        });
+
+        mCbShowLauncherIcon = (CheckBox) v.findViewById(R.id.cb_enable_launcher_icon);
+        mCbShowLauncherIcon.setChecked(mUiPref.getBoolean(Common.KEY_SHOW_LAUNCHER_ICON, true));
+        mCbShowLauncherIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUiPref.edit()
+                        .putBoolean(Common.KEY_SHOW_LAUNCHER_ICON, mCbShowLauncherIcon.isChecked())
+                        .apply();
+
+                ComponentName alias = new ComponentName(getContext(), Common.PACKAGE_NAME + ".ui.MainActivity-Alias");
+                if(mCbShowLauncherIcon.isChecked()) {
+                    getContext().getApplicationContext().getPackageManager().setComponentEnabledSetting(alias,
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+                } else {
+                    getContext().getApplicationContext().getPackageManager().setComponentEnabledSetting(alias,
+                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+                }
             }
         });
 

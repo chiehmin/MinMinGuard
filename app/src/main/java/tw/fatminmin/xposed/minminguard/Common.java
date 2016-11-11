@@ -6,12 +6,15 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
  * Created by fatminmin on 2015/10/1.
  */
 public class Common {
+    public final static String PACKAGE_NAME = BuildConfig.APPLICATION_ID;
+
     public final static String MOD_PREFS = "ModSettings";
     public final static String UI_PREFS = "UI_PREF";
 
     // UI Pref
     public final static String KEY_FIRST_TIME = "first_time_2_0_alpha_7";
     public final static String KEY_SHOW_SYSTEM_APPS = "show_system_apps";
+    public final static String KEY_SHOW_LAUNCHER_ICON = "show_launcher_icon";
 
     // Xposed Mod Pref
     public final static String KEY_MODE = "mode";
