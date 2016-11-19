@@ -54,4 +54,5 @@
     <string name="msg_not_detected">未检测到</string>
 
     <string name="option_enable_url_filter">启用 URL 过滤</string>
+    <string name="msg_show_launcher_icon">显示 App 启动图示</string>
 </resources>

@@ -1,4 +1,4 @@
-# ![icon](app/src/main/res/drawable-hdpi/icon.png) MinMinGuard 
+# ![icon](images/ic_launcher.png) MinMinGuard 
 
 [![Build Status](https://travis-ci.org/chiehmin/MinMinGuard.svg?branch=master)](https://travis-ci.org/chiehmin/MinMinGuard)
 
@@ -9,7 +9,7 @@ MinMinGuard is an Ad-remover made with Xposed Framework for Android. MinMinGuard
 ## Discussion and Supports
 If you have any idea or need some supports, you are welcome to post on the Xda Developers forum or chat in the Gitter Room.
 
-[![](https://fatminmin.com/images/xda_link.svg)](http://forum.xda-developers.com/xposed/modules/xposed-minminguard-v1-7-0-cancelled-t2597332)
+[![](images/xda_link.svg)](http://forum.xda-developers.com/xposed/modules/xposed-minminguard-v1-7-0-cancelled-t2597332)
 [![Join the chat at https://gitter.im/MinMinGuard/MinMinGuard](https://badges.gitter.im/MinMinGuard/MinMinGuard.svg)](https://gitter.im/MinMinGuard/MinMinGuard?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Developing and Contributing
