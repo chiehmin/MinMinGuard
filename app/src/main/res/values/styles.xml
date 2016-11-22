@@ -1,9 +1,27 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="TabLayoutTheme" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/TabLayoutTextTheme</item>
+        <item name="tabSelectedTextColor">@color/white</item>
     </style>
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+
+    <style name="TabLayoutTextTheme" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/white</item>
+        <item name="textAllCaps">true</item>
     </style>
+
+    <style name="MainSpinnerDialogStyle" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@drawable/dialog_background</item>
+    </style>
+
 </resources>

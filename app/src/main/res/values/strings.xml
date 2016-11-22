@@ -55,6 +55,9 @@
     <string name="msg_ad_networks">Ad Networks: </string>
     <string name="msg_ads_blocked">Ads Blocked: </string>
     <string name="msg_not_detected">Not detected</string>
+    <string name="msg_wait">Please wait&#8230;</string>
+    <string name="msg_app_launch_fail">This app cannot be launched</string>
+    <string name="nav_title">Menu</string>
 
     <string name="option_enable_url_filter">Enable Url filtering</string>
 </resources>

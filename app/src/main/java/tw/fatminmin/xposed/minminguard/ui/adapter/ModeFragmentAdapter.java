@@ -13,14 +13,15 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
  */
 public final class ModeFragmentAdapter extends FragmentPagerAdapter {
 
-    static final int PAGE_COUNT = 3;
+    public static final int PAGE_COUNT = 3;
+    private Context mContext;
+
     private String[] mTabTitles = new String[] { "AUTO", "Blacklist", "Whitelist" };
     private MainFragment[] mFragments = new MainFragment[] {
             MainFragment.newInstance(MainFragment.FragmentMode.AUTO),
             MainFragment.newInstance(MainFragment.FragmentMode.BLACKLIST),
-            MainFragment.newInstance(MainFragment.FragmentMode.WHITELIST)};
-    private Context mContext;
-
+            MainFragment.newInstance(MainFragment.FragmentMode.WHITELIST)
+    };
 
     public ModeFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);

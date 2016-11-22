@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_gravity="center"
+    android:padding="15dp">
 
     <CheckBox
         android:id="@+id/cb_enable_cr"
