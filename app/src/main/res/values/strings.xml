@@ -8,34 +8,34 @@
     <string name="action_donate">Donate</string>
 
     <string name="intro_auto_title">
-        Automatic Mode blocks all ads!
+        Auto Mode
     </string>
     <string name="intro_auto_content">
-        Auto mode can help you to block every ads for your device
+        Auto mode can help you block all ads on your device.
     </string>
     <string name="intro_manual_title">
         Manual Mode
     </string>
     <string name="intro_manual_content">
-        You can decide which app you want to block ads. (You can tap the blue button to switch mode)
+        Manually select which apps to block ads in. (toggle via the switch)
     </string>
     <string name="intro_tap_icon_title">
         Tap on the App Icon
     </string>
     <string name="intro_tap_icon_content">
-        You can tap on the app icon to restart the app.
+        You can tap on the icon to restart the app.
     </string>
     <string name="intro_app_detail_title">
-        Show App statistic
+        Show App Statistics
     </string>
     <string name="intro_app_detail_content">
-        Tap on the app name to show MinMinGuard blocking statistic for the app.
+        Tap on the app name to show blocking statistics.
     </string>
     <string name="intro_url_filtering_title">
-        Url filtering
+        Url Filtering
     </string>
     <string name="intro_url_filtering_content">
-        If some app still shows ads, you can try to enable url filtering feature. Caution: this may result problem for webview-based app.
+        If the app still shows ads, you can try and enable the url filtering feature. (This may cause problems in webview based apps)
     </string>
 
     <string name="btn_ok">OK</string>
@@ -57,7 +57,7 @@
     <string name="msg_not_detected">Not detected</string>
     <string name="msg_wait">Please wait&#8230;</string>
     <string name="msg_app_launch_fail">This app cannot be launched</string>
-    <string name="nav_title">Menu</string>
 
-    <string name="option_enable_url_filter">Enable Url filtering</string>
+    <string name="nav_title">Menu</string>
+    <string name="option_enable_url_filter">Enable url filtering</string>
 </resources>

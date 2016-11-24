@@ -17,6 +17,7 @@ public final class ModeFragmentAdapter extends FragmentPagerAdapter {
     private Context mContext;
 
     private String[] mTabTitles = new String[] { "AUTO", "Blacklist", "Whitelist" };
+
     private MainFragment[] mFragments = new MainFragment[] {
             MainFragment.newInstance(MainFragment.FragmentMode.AUTO),
             MainFragment.newInstance(MainFragment.FragmentMode.BLACKLIST),

@@ -36,7 +36,7 @@ import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ArrayList<AppDetails> masterAppList;
+    public volatile ArrayList<AppDetails> masterAppList;
     public ArrayList<AppDetails> filteredAppList;
 
     private ViewPager mViewPager;
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateAppList(final PackageManager pm) {
 
         boolean showSystemApps = uiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false);
-        masterAppList.clear();
+        ArrayList<AppDetails> temp = new ArrayList<>();
 
         for (PackageInfo info : pm.getInstalledPackages(0)) {
             if (showSystemApps || (info.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 Drawable icon = info.applicationInfo.loadIcon(pm);
                 boolean isEnabled = isPackageEnabled(packageName);
 
-                masterAppList.add(new AppDetails(name, packageName, icon, isEnabled));
+                temp.add(new AppDetails(name, packageName, icon, isEnabled));
             }
 
             // setting initial value for system apps
@@ -268,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                 return l.getName().compareToIgnoreCase(r.getName());
             }
         });
+
+        masterAppList = temp;
     }
 
     private boolean isPackageEnabled(String pkgName) {

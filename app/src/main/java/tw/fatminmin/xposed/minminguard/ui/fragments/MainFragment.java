@@ -3,13 +3,9 @@ package tw.fatminmin.xposed.minminguard.ui.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,9 +97,7 @@ public class MainFragment extends Fragment {
             mBtnMode.setVisibility(View.GONE);
         }
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mainActivity);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
         adapter = new AppsAdapter(getActivity(), mainActivity.masterAppList, mMode);
         mRecyclerView.setAdapter(adapter);
 
