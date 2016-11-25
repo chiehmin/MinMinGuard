@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Collections.sort(masterAppList, new Comparator<AppDetails>() {
+        Collections.sort(temp, new Comparator<AppDetails>() {
             @Override
             public int compare(AppDetails l, AppDetails r) {
                 return l.getName().compareToIgnoreCase(r.getName());
