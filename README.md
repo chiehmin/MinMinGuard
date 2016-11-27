@@ -79,5 +79,12 @@ public static Blocker[] blockers = {
 
 Above is a classic example. After you complete the new blocker, you have to remember to add it to the `blockers` array at the `Main` class to activiate the new blocker.
 
+## Contributors
+***Your name will be listed here if you contribute some significant changes into the project.***
+
+- FatMinMin
+- [skyguy126](https://github.com/skyguy126) 
+- [pyler](https://github.com/pylerSM)
+
 ## Legal and Licensing
 MinMinGuard is licensed under the [GPL-3.0 license](LICENSE).
