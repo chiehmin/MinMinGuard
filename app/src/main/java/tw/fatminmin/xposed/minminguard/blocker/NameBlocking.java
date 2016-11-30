@@ -147,7 +147,9 @@ public final class NameBlocking {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View root = (View) param.getResult();
-                clearAdViewInLayout(pkgName, root);
+                if(root != null){
+                    clearAdViewInLayout(pkgName, root);
+                }
             }
         });
 
