@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name" translatable="false">MinMinGuard</string>
+
+    <string name="action_search">Hľadať</string>
+    <string name="action_settings">Nastavenia</string>
+    <string name="action_tutorial">Sprievodca</string>
+    <string name="action_about">O aplikácii</string>
+    <string name="action_donate">Prispieť</string>
+
+    <string name="intro_auto_title">
+        Automatický režim blokuje všetky reklamy!
+    </string>
+    <string name="intro_auto_content">
+        Automatický režim vám pomôže blokovať každú reklamu vo vašom zariadení.
+    </string>
+    <string name="intro_manual_title">
+        Ručný režim
+    </string>
+    <string name="intro_manual_content">
+        Môžete vybrať, v ktorej aplikácii chcete blokovať reklamy. (Môžete stlačiť modré tlačidlo pre zmenu režimu)
+    </string>
+    <string name="intro_tap_icon_title">
+        Kliknutie na ikonu aplikácie
+    </string>
+    <string name="intro_tap_icon_content">
+        Kliknutím na ikonu aplikácie reštartujete aplikáciu.
+    </string>
+    <string name="intro_app_detail_title">
+        Zobraziť štatistiky o aplikácii
+    </string>
+    <string name="intro_app_detail_content">
+        Kliknutím na názov aplikácie zobrazíte štatistiky blokovania pre aplikácie.
+    </string>
+
+    <string name="btn_ok">OK</string>
+
+    <string name="msg_xposed_not_enabled">Xposed nie je povolený</string>
+    <string name="msg_enabled_crash_report">
+        Povoliť hlásenia pádov
+    </string>
+    <string name="msg_mode_manual">Ručný</string>
+    <string name="msg_mode_auto">Automatický</string>
+    <string name="msg_block_num">Zablokované reklamy: %d</string>
+    <string name="msg_ad_networks">Reklamné siete: </string>
+    <string name="msg_ads_blocked">Zablokované reklamy: </string>
+    <string name="msg_not_detected">Nezistené</string>
+</resources>
