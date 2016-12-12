@@ -1,5 +1,7 @@
 # ![icon](images/ic_launcher.png) MinMinGuard 
 
+test
+
 [![Build Status](https://travis-ci.org/chiehmin/MinMinGuard.svg?branch=master)](https://travis-ci.org/chiehmin/MinMinGuard)
 
 - [Introduction](#introduction)
