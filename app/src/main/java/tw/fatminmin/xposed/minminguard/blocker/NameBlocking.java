@@ -105,6 +105,9 @@ public final class NameBlocking {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                 View view = (View) param.args[0];
+                if(view == null) {
+                    return;
+                }
                 if (isAdView(view.getContext(), pkgName, view)) {
                     Main.removeAdView(view, pkgName, true);
                 }
@@ -113,6 +116,9 @@ public final class NameBlocking {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                 View view = (View) param.args[0];
+                if(view == null) {
+                    return;
+                }
                 if (isAdView(view.getContext(), pkgName, view)) {
                     Util.log(pkgName, "NameBasedBlocking after addView: " + view.getClass().getName());
                     Main.removeAdView(view, pkgName, true);
