@@ -3,14 +3,16 @@ android:
   components:
   - platform-tools
   - tools
-  - build-tools-23.0.3
-  - android-23
+  - build-tools-27.0.3
+  - android-27
   - extra-google-google_play_services
   - extra-google-m2repository
   - extra-android-m2repository
   - addon-google_apis-google-19
 jdk:
 - oraclejdk8
+before_install:
+- yes | sdkmanager "platforms;android-27"
 script:
 - '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && ./gradlew assembleRelease || ./gradlew assembleDebug'
 before_deploy:
