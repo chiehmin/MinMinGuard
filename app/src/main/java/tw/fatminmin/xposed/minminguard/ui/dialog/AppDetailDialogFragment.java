@@ -63,7 +63,7 @@ public class AppDetailDialogFragment extends DialogFragment {
         adNetworks = args.getString("adNetworks");
         blockNum = args.getInt("blockNum");
 
-        mPref = getActivity().getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
+        mPref = getActivity().getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
 
     }
 

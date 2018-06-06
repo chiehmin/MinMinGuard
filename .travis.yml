@@ -16,12 +16,12 @@ before_install:
 script:
 - '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && ./gradlew assembleRelease || ./gradlew assembleDebug'
 before_deploy:
-- '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && mv app/build/outputs/apk/app-release.apk app/build/outputs/apk/MinMinGuard.apk'
+- '[[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && mv app/release/app-release.apk app/release/MinMinGuard.apk'
 deploy:
   provider: releases
   api_key:
     secure: GugQWIF+bRckHz7bMd8PDE2M+pHBpEGyIZ224z8JToR373pnlO41Raw79NEg5GYK4Wy0ZhLVwkZ5qGFl9NvjBkDukJu4dAzTvqjts5Q39sl3cstohghFZAzIHF1Pj6YXWQPobJXG/4qWnr43yecxkWe+C5I5EZBEsvRgLRlryh28t3dd05zzBhaEk/1BESPMMHUB3HfK9ehO5DxYlVnQIIPywtGp25MxrDNxXxhD2Tbtv2Agfraz1CDtzerppRA4hj0NhInBPG9isyX5zhvFjKnOZVQ6ujZND47aNxj0vrUEM1fQNPC9gq5NcUvMtK+xSmbhpDEtEvOLpX+WjEQl+iQpIPz94gR/opjrHGnR88QtnRSNh+Sp3FVMBo4CS+RM8tBUKIJWxZZc9tayZmuRYLwqFJf06uMlxCORgAIg/jMXr2MG8X8cX9qBpcwuE/eEhJzkhsbMxi0+qeiZ+DKdmfIXZxlDQVq9yQNQfOkmLnJ2OOTWB5+Dn76iCAXc1dz2GZmihkYgT5jvAbrHzJ7GBYqilwe4182RwQh/prI/MLRNb1hFz0H310ojrypC7u0KWuowN8NFwtdu2IRHD8UjNX/Aa1md4Oy5Ce03IU3CotqQblba7LozQ7vvPaqlTFsRWPDRkY6foH9mIOR6Yg2JLdXgtiXfoUgM9hyGr5EiaRc=
-  file: app/build/outputs/apk/MinMinGuard.apk
+  file: app/release/MinMinGuard.apk
   skip_cleanup: true
   on:
     tags: true
