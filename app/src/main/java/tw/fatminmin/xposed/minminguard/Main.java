@@ -82,8 +82,7 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class Main implements IXposedHookZygoteInit,
-                             IXposedHookLoadPackage,
-                             IXposedHookInitPackageResources{
+                             IXposedHookLoadPackage {
 
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
@@ -240,15 +239,15 @@ public class Main implements IXposedHookZygoteInit,
         return px / (metrics.densityDpi / 160f);
     }
 
-    @Override
-    public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) throws Throwable {
-
-        pref.reload();
-
-        final String packageName = resparam.packageName;
-
-        if (isEnabled(packageName)) {
-            PeriodCalendar.handleInitPackageResources(resparam);
-        }
-    }
+//    @Override
+//    public void handleInitPackageResources(XC_InitPackageResources.InitPackageResourcesParam resparam) throws Throwable {
+//
+//        pref.reload();
+//
+//        final String packageName = resparam.packageName;
+//
+//        if (isEnabled(packageName)) {
+//            PeriodCalendar.handleInitPackageResources(resparam);
+//        }
+//    }
 }

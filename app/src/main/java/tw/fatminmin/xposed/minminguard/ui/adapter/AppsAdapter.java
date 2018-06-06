@@ -71,7 +71,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         super();
         mContext = context;
         appList = list;
-        mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_WORLD_READABLE);
+        mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
 
         helper = new DaoMaster.DevOpenHelper(context, "mmg", null);
         db = helper.getWritableDatabase();

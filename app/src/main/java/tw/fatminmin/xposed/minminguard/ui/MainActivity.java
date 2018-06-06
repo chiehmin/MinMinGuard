@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
-        modPref = getSharedPreferences(Common.MOD_PREFS, MODE_WORLD_READABLE);
+        modPref = getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
 
         if (uiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
             uiPref.edit().putBoolean(Common.KEY_FIRST_TIME, false).apply();
