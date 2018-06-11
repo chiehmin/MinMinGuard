@@ -44,7 +44,7 @@
         <item>白名單模式</item>
     </string-array>
 
-    <string name="msg_xposed_not_enabled">Xposed 框架爲啓動</string>
+    <string name="msg_xposed_not_enabled">Xposed 框架未啓動</string>
     <string name="msg_enabled_crash_report">開啟崩潰回報</string>
     <string name="msg_show_system_apps">顯示系統應用程式</string>
     <string name="msg_mode_apply">套用</string>
