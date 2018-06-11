@@ -13,7 +13,9 @@ apply plugin: 'io.fabric'
 repositories {
     maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://jitpack.io' }
-    jcenter();
+    jcenter()
+    mavenCentral()
+    google()
 }
 
 
@@ -38,8 +40,8 @@ android {
         applicationId "tw.fatminmin.xposed.minminguard"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 58
-        versionName "2.0.1 alpha1"
+        versionCode 59
+        versionName "2.0.1"
     }
     buildTypes {
         release {
