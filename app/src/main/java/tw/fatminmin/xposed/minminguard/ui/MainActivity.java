@@ -37,6 +37,7 @@ import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
 public class MainActivity extends AppCompatActivity {
 
     public volatile ArrayList<AppDetails> masterAppList;
+
     public ArrayList<AppDetails> filteredAppList;
 
     private ViewPager mViewPager;
@@ -85,6 +86,11 @@ public class MainActivity extends AppCompatActivity {
         uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
         modPref = getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
 
+        progressDialog = new ProgressDialog(this, R.style.MainSpinnerDialogStyle);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(getString(R.string.msg_wait));
+        progressDialog.setCancelable(false);
+
         if (uiPref.getBoolean(Common.KEY_FIRST_TIME, true)) {
             uiPref.edit().putBoolean(Common.KEY_FIRST_TIME, false).apply();
             showIntro();
@@ -113,13 +119,13 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
                 MainFragment fragment = (MainFragment) mAdapter.getItem(position);
                 if(fragment.isAlive) fragment.refreshUI();
+                refresh(true);
             }
 
             @Override
@@ -150,11 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
         masterAppList = new ArrayList<>();
         filteredAppList = new ArrayList<>();
-
-        progressDialog = new ProgressDialog(this, R.style.MainSpinnerDialogStyle);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(getString(R.string.msg_wait));
-        progressDialog.setCancelable(false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
