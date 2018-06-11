@@ -160,7 +160,6 @@ public class Main implements IXposedHookZygoteInit,
 
 
         if (isEnabled(packageName)) {
-
             // Api based blocking
             ApiBlocking.handle(packageName, lpparam, true);
             appSpecific(packageName, lpparam);
@@ -174,7 +173,7 @@ public class Main implements IXposedHookZygoteInit,
             }
 
         } else {
-            ApiBlocking.handle(packageName, lpparam, false);
+//            ApiBlocking.handle(packageName, lpparam, false);
         }
     }
 
