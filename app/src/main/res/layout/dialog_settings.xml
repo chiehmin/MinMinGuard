@@ -19,12 +19,6 @@
         android:layout_height="wrap_content"
         android:checked="false"
         android:text="@string/msg_show_system_apps"/>
-    <CheckBox
-        android:id="@+id/cb_enable_launcher_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="@string/msg_show_launcher_icon"/>
     <Button
         android:id="@+id/btn_ok"
         android:layout_margin="10dp"

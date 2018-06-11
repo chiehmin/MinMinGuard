@@ -38,9 +38,6 @@ public class SettingsDialogFragment extends DialogFragment{
         mCbShowSystemApps = (CheckBox) v.findViewById(R.id.cb_show_system_apps);
         mCbShowSystemApps.setChecked(mUiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false));
 
-        mCbShowLauncherIcon = (CheckBox) v.findViewById(R.id.cb_enable_launcher_icon);
-        mCbShowLauncherIcon.setChecked(mUiPref.getBoolean(Common.KEY_SHOW_LAUNCHER_ICON, true));
-
         Button mBtnOk = (Button) v.findViewById(R.id.btn_ok);
         mBtnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,19 +45,6 @@ public class SettingsDialogFragment extends DialogFragment{
                 mUiPref.edit()
                         .putBoolean(Common.KEY_SHOW_SYSTEM_APPS, mCbShowSystemApps.isChecked())
                         .apply();
-
-                mUiPref.edit()
-                        .putBoolean(Common.KEY_SHOW_LAUNCHER_ICON, mCbShowLauncherIcon.isChecked())
-                        .apply();
-
-                ComponentName alias = new ComponentName(getContext(), Common.PACKAGE_NAME + ".ui.MainActivity-Alias");
-                if(mCbShowLauncherIcon.isChecked()) {
-                    getContext().getApplicationContext().getPackageManager().setComponentEnabledSetting(alias,
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-                } else {
-                    getContext().getApplicationContext().getPackageManager().setComponentEnabledSetting(alias,
-                            PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-                }
 
                 ((MainActivity) getActivity()).refresh(true);
                 dismiss();
