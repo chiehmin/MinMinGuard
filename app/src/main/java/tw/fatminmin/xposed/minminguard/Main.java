@@ -58,6 +58,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpon;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yahoo;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yandex;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
@@ -93,7 +94,7 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(), new Aotter(), new AppBrain(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo()
+            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(), new Aotter(), new AppBrain(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo(), new Yandex()
             /* Custom Mod*/
     };
 
