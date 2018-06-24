@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AndroidAppHelper;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -25,10 +26,9 @@ import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
 
 public final class Util {
-    
-    public static XSharedPreferences pref;
-    
-    
+    // change it to false for release build
+    final static public boolean DEBUG = false;
+
     final static public String TAG = "MinMinGuard";
     final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
 
@@ -51,15 +51,15 @@ public final class Util {
     }    
 
     static public void log(String packageName, String msg) {
-        Log.d(TAG, packageName + ": " + msg);
+        if (DEBUG) {
+            Log.d(TAG, packageName + ": " + msg);
+        }
     }
     
     static public Application getCurrentApplication() {
         try {
-            return (Application)Class.forName("android.app.ActivityThread").
-                    getMethod("currentApplication", new Class[0]).invoke(null);
-        }
-        catch (Exception e) {
+            return AndroidAppHelper.currentApplication();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

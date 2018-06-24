@@ -15,9 +15,6 @@ import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
 import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
 import tw.fatminmin.xposed.minminguard.orm.DaoSession;
 
-/**
- * Created by fatminmin on 2015/10/24.
- */
 public class MinMinProvider extends ContentProvider {
 
     private DaoMaster.DevOpenHelper helper;

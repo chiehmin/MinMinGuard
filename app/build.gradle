@@ -72,6 +72,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.github.apl-devs:appintro:v4.2.3'
     implementation 'de.greenrobot:greendao:2.0.0'
+    implementation 'com.crossbowffs.remotepreferences:remotepreferences:0.5'
     implementation('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') {
         transitive = true
     }

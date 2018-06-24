@@ -65,6 +65,8 @@ import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.PeriodCalendar;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.util.DisplayMetrics;
@@ -74,6 +76,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
+import com.crossbowffs.remotepreferences.RemotePreferences;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
@@ -82,13 +86,14 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
+
 public class Main implements IXposedHookZygoteInit,
                              IXposedHookLoadPackage {
 
 
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     public static String MODULE_PATH = null;
-    public static XSharedPreferences pref;
     public static Set<String> patterns;
     public static Resources res;
 
@@ -102,11 +107,6 @@ public class Main implements IXposedHookZygoteInit,
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-
-        pref = new XSharedPreferences(MY_PACKAGE_NAME, Common.MOD_PREFS);
-        pref.makeWorldReadable();
-        Util.pref = pref;
-
         MODULE_PATH = startupParam.modulePath;
 
         res = XModuleResources.createInstance(MODULE_PATH, null);
@@ -128,7 +128,7 @@ public class Main implements IXposedHookZygoteInit,
         notifyWorker = Executors.newSingleThreadExecutor();
     }
 
-    private static boolean isEnabled(String pkgName) {
+    private static boolean isEnabled(SharedPreferences pref, String pkgName) {
         String mode = pref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST);
 
         if(mode.equals(Common.VALUE_MODE_AUTO)) {
@@ -155,30 +155,48 @@ public class Main implements IXposedHookZygoteInit,
             XposedBridge.hookAllMethods(util, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
         }
 
-        pref.reload();
+        /**
+         * https://developer.android.com/reference/android/app/Application.html#onCreate()
+         * wait for the app started to get remote preferences
+         */
+        findAndHookMethod("android.app.Application", lpparam.classLoader, "onCreate", new XC_MethodHook() {
+            @Override
+            protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                final String packageName = lpparam.packageName;
+                Context context = Util.getCurrentApplication();
 
-        final String packageName = lpparam.packageName;
+                if (null == context) {
+                    Util.log(packageName, "failed to get context");
+                    return;
+                }
 
+                SharedPreferences pref = new RemotePreferences(
+                        context,
+                        "tw.fatminmin.xposed.minminguard.modesettings",
+                        Common.MOD_PREFS);
 
-        if (isEnabled(packageName)) {
-            // Api based blocking
-            ApiBlocking.handle(packageName, lpparam, true);
-            appSpecific(packageName, lpparam);
+                if (isEnabled(pref, packageName)) {
+                    Util.log(packageName, "is enabled for mmg");
 
-            // Name based blocking
-            NameBlocking.nameBasedBlocking(packageName, lpparam);
+                    // Api based blocking
+                    ApiBlocking.handle(packageName, lpparam, true);
+                    appSpecific(packageName, lpparam);
 
-            // url filtering
-            if (Main.pref.getBoolean(packageName + "_url", false)) {
-                UrlFiltering.removeWebViewAds(packageName, lpparam);
+                    // Name based blocking
+                    NameBlocking.nameBasedBlocking(packageName, lpparam);
+
+                    // url filtering
+                    if (pref.getBoolean(packageName + "_url", false)) {
+                        UrlFiltering.removeWebViewAds(packageName, lpparam);
+                    }
+
+                } else {
+                    // ApiBlocking.handle(packageName, lpparam, false);
+                }
             }
+        });
 
-        } else {
-//            ApiBlocking.handle(packageName, lpparam, false);
-        }
     }
-
-
 
     private static void appSpecific(String packageName, LoadPackageParam lpparam) {
         _2chMate.handleLoadPackage(packageName, lpparam, true);
