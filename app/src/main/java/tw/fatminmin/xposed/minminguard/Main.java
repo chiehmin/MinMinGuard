@@ -5,9 +5,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
@@ -63,10 +61,9 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yandex;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod.PeriodCalendar;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.Viafree;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -75,16 +72,12 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.crossbowffs.remotepreferences.RemotePreferences;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
