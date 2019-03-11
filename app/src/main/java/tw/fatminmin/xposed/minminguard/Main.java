@@ -5,9 +5,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.XC_MethodReplacement;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
@@ -31,6 +29,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Clickforce;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Domob;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Facebook;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Freewheel;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.GmsDoubleClick;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Hodo;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.ImpAct;
@@ -62,9 +61,9 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yandex;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod.PeriodCalendar;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.Viafree;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -73,16 +72,12 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 
 import com.crossbowffs.remotepreferences.RemotePreferences;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -99,8 +94,13 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(), new Aotter(), new AppBrain(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Flurry(), new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo(), new Yandex()
+            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(),
+            new Aotter(), new AppBrain(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Freewheel(), new Flurry(),
+            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(),
+            new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(),
+            new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo(), new Yandex(),
             /* Custom Mod*/
+
     };
 
     public static ExecutorService notifyWorker;
@@ -151,8 +151,7 @@ public class Main implements IXposedHookZygoteInit,
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 
         if (lpparam.packageName.equals(MY_PACKAGE_NAME)) {
-            Class<?> util = XposedHelpers.findClass("tw.fatminmin.xposed.minminguard.blocker.Util", lpparam.classLoader);
-            XposedBridge.hookAllMethods(util, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
+            XposedHelpers.findAndHookMethod("tw.fatminmin.xposed.minminguard.blocker.Util",lpparam.classLoader, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
         }
 
         /**
@@ -179,7 +178,7 @@ public class Main implements IXposedHookZygoteInit,
                     Util.log(packageName, "is enabled for mmg");
 
                     // Api based blocking
-                    ApiBlocking.handle(packageName, lpparam, true);
+                    ApiBlocking.handle(packageName, lpparam, param, true);
                     appSpecific(packageName, lpparam);
 
                     // Name based blocking
@@ -191,7 +190,7 @@ public class Main implements IXposedHookZygoteInit,
                     }
 
                 } else {
-                    // ApiBlocking.handle(packageName, lpparam, false);
+                    //ApiBlocking.handle(packageName, lpparam, false);
                 }
             }
         });
@@ -202,6 +201,7 @@ public class Main implements IXposedHookZygoteInit,
         _2chMate.handleLoadPackage(packageName, lpparam, true);
         OneWeather.handleLoadPackage(packageName, lpparam, true);
         NextMedia.handleLoadPackage(packageName, lpparam, true);
+        Viafree.handleLoadPackage(packageName, lpparam, true);
     }
 
     public static void removeAdView(View view, String packageName, boolean remove) {

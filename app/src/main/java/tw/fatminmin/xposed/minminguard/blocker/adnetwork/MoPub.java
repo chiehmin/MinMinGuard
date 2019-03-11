@@ -27,6 +27,7 @@ public class MoPub extends Blocker {
     public String getBanner() {
         return BANNER;
     }
+
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         boolean result = false;
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
