@@ -86,7 +86,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s() in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -101,14 +101,55 @@ public final class ApiBlocking {
         return true;
     }
 
-    public static boolean blockAdFunction(final String packageName, final String ad, final String adFunc, final Class<?> parameter, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+    public static boolean blockAdFunction(final String packageName, final String ad, final String adFunc, final Object parameter, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
             XposedHelpers.findAndHookMethod(ad, lpparam.classLoader, adFunc, parameter, new XC_MethodHook() {
-
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(Object) in %s", ad, adFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        Util.notifyRemoveAdView(null, packageName, 1);
+                        param.setResult(new Object());
+                    }
+                }
+            });
+        }
+        catch(ClassNotFoundError|NoSuchMethodError e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean blockAdFunction(final String packageName, final String ad, final String adFunc, final Object parameter1, final Object parameter2, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+            XposedHelpers.findAndHookMethod(ad, lpparam.classLoader, adFunc, parameter1, parameter2, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        Util.notifyRemoveAdView(null, packageName, 1);
+                        param.setResult(new Object());
+                    }
+                }
+            });
+        }
+        catch(ClassNotFoundError|NoSuchMethodError e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean blockAdFunction(final String packageName, final String ad, final String adFunc, final Object parameter1, final Object parameter2, final Object parameter3, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+            XposedHelpers.findAndHookMethod(ad, lpparam.classLoader, adFunc, parameter1, parameter2, parameter3, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -131,7 +172,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s() in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -146,7 +187,7 @@ public final class ApiBlocking {
         return true;
     }
 
-    public static boolean blockAdFunctionWithResult(final String packageName, final String ad, final String adFunc, final Class<?> parameter, final Object result, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+    public static boolean blockAdFunctionWithResult(final String packageName, final String ad, final String adFunc, final Object parameter, final Object result, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
 
             XposedHelpers.findAndHookMethod(ad, lpparam.classLoader, adFunc, parameter, new XC_MethodHook() {
@@ -154,7 +195,30 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(Object) in %s", ad, adFunc, packageName);
+                    Util.log(packageName, debugMsg);
+                    if (removeAd) {
+                        Util.notifyRemoveAdView(null, packageName, 1);
+                        param.setResult(result);
+                    }
+                }
+            });
+        }
+        catch(ClassNotFoundError|NoSuchMethodError e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean blockAdFunctionWithResult(final String packageName, final String ad, final String adFunc, final Object parameter1, final Object parameter2, final Object result, final XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
+        try {
+
+            XposedHelpers.findAndHookMethod(ad, lpparam.classLoader, adFunc, parameter1, parameter2, new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+
+                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);

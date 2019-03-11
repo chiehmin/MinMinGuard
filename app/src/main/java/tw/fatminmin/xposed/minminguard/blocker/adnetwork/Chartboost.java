@@ -16,7 +16,10 @@ public class Chartboost extends Blocker {
     
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		boolean result = false;
-		result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showInterstitial", lpparam, removeAd);
+		result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showInterstitial", String.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showRewardedVideo", String.class, lpparam, removeAd);
+		result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasInterstitial", String.class, false, lpparam, removeAd);
+		result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasRewardedVideo", String.class, false, lpparam, removeAd);
 		return result;
 	}
 	@Override

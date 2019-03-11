@@ -33,6 +33,8 @@ public class MoPub extends Blocker {
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", String.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", String.class, "com.mopub.nativeads.RequestParameters", lpparam, removeAd);
 
         return result;
 	}

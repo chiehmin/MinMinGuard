@@ -22,12 +22,13 @@ import android.widget.Toast;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
+import tw.fatminmin.xposed.minminguard.BuildConfig;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
 
 public final class Util {
     // change it to false for release build
-    final static public boolean DEBUG = false;
+    final static public boolean DEBUG = BuildConfig.DEBUG;
 
     final static public String TAG = "MinMinGuard";
     final static public String PACKAGE = "tw.fatminmin.xposed.minminguard";
@@ -52,7 +53,8 @@ public final class Util {
 
     static public void log(String packageName, String msg) {
         if (DEBUG) {
-            Log.d(TAG, packageName + ": " + msg);
+            //Log.d(TAG, packageName + ": " + msg);
+            XposedBridge.log(packageName + ": " + msg);
         }
     }
     
