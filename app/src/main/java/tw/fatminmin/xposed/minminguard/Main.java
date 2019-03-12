@@ -14,6 +14,7 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ad2iction;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AdMarvel;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adbert;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adcolony;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adfurikun;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Admob;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AdmobGms;
@@ -22,6 +23,8 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Amazon;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Amobee;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Aotter;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AppBrain;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Applovin;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Appnext;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Avocarrot;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Bonzai;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Chartboost;
@@ -35,6 +38,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Hodo;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.ImpAct;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Inmobi;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Intowow;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ironsource;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.KuAd;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Madvertise;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MasAd;
@@ -55,6 +59,7 @@ import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Tapfortap;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.UnityAds;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpadn;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpon;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vungle;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Waystorm;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yahoo;
 import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yandex;
@@ -94,11 +99,11 @@ public class Main implements IXposedHookZygoteInit,
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(),
-            new Aotter(), new AppBrain(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Freewheel(), new Flurry(),
-            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(),
+            new Ad2iction(), new Adbert(), new Adcolony(), new Adfurikun(), new AdMarvel(), new Admob(), new AdmobGms(), new Adtech(), new Amazon(), new Amobee(),
+            new Aotter(), new AppBrain(), new Applovin(), new Appnext(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Freewheel(), new Flurry(),
+            new GmsDoubleClick(), new Hodo(), new ImpAct(), new Inmobi(), new Intowow(), new Ironsource(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(),
             new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(),
-            new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Waystorm(), new Yahoo(), new Yandex(),
+            new Smarti(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Vungle(), new Waystorm(), new Yahoo(), new Yandex(),
             /* Custom Mod*/
 
     };

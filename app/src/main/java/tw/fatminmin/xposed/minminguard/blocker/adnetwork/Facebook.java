@@ -1,5 +1,6 @@
 package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 
+import android.os.Bundle;
 import android.view.View;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -19,6 +20,7 @@ public class Facebook extends Blocker {
     public static final String BANNER_PREFIX = "com.facebook.ads";
     public static final String INTER = "com.facebook.ads.InterstitialAd";
     public static final String NATIVE_AD = "com.facebook.ads.NativeAd";
+    public static final String AUDIENCE_NETWORK = "com.facebook.ads.AudienceNetworkActivity";
 
     @Override
     public String getBannerPrefix() {
@@ -29,6 +31,7 @@ public class Facebook extends Blocker {
     public String getBanner() {
         return BANNER;
     }
+
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
 
         boolean result = false;
@@ -42,7 +45,7 @@ public class Facebook extends Blocker {
 
     public boolean customHandle(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
         try {
-            Class<?> facebookNativeAd = findClass(NATIVE_AD, lpparam.classLoader);
+            /*Class<?> facebookNativeAd = findClass(NATIVE_AD, lpparam.classLoader);
 
             XposedBridge.hookAllMethods(facebookNativeAd, "registerViewForInteraction", new XC_MethodHook() {
 
@@ -57,7 +60,21 @@ public class Facebook extends Blocker {
                         param.setResult(new Object());
                     }
                 }
-            });
+            });*/
+
+            XposedHelpers.findAndHookMethod(AUDIENCE_NETWORK,
+                    lpparam.classLoader,
+                    "onCreate",
+                    Bundle.class,
+                    new XC_MethodHook()
+                    {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                        {
+                            Util.log(packageName, "Set Bundle to new Bundle()");
+                            param.args[0] = new Bundle();
+                        }
+                    });
 
         }
         catch(XposedHelpers.ClassNotFoundError e) {
