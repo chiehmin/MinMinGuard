@@ -90,6 +90,7 @@ Above is a classic example. After you complete the new blocker, you have to reme
 ***Your name will be listed here if you contribute some significant changes into the project.***
 
 - FatMinMin
+- [MSkjel](https://github.com/MSkjel)
 - [skyguy126](https://github.com/skyguy126) 
 - [pyler](https://github.com/pylerSM)
 
