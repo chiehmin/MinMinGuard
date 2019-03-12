@@ -16,6 +16,8 @@ public class GmsDoubleClick extends Blocker {
     public static final String BANNER = "com.google.android.gms.ads.doubleclick.PublisherAdView";
     public static final String BANNER_PREFIX = "com.google.android.gms.ads.doubleclick";
 
+    public static final String INTER_ADS = "com.google.android.gms.ads.doubleclick.PublisherInterstitialAd";
+
 	@Override
 	public String getBannerPrefix() {
 		return BANNER_PREFIX;
@@ -25,9 +27,16 @@ public class GmsDoubleClick extends Blocker {
 	public String getBanner() {
 		return BANNER;
 	}
+
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		boolean result = false;
-		result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+
+		//This wont do anything. The loadAd method takes an argument. Therefor it cannot be hooked with removeBanner
+        //result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+
+		result |= ApiBlocking.blockAdFunction(packageName, BANNER, "loadAd", "com.google.android.gms.ads.doubleclick.PublisherAdRequest", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", "com.google.android.gms.ads.doubleclick.PublisherAdRequest", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
 
 		return result;
 	}

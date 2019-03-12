@@ -3,6 +3,8 @@ package tw.fatminmin.xposed.minminguard.blocker.adnetwork;
 import android.os.Bundle;
 import android.view.View;
 
+import java.util.EnumSet;
+
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -15,11 +17,11 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class Facebook extends Blocker {
-    private static final String LOAD_AD = "loadAd";
     public static final String BANNER = "com.facebook.ads.AdView";
     public static final String BANNER_PREFIX = "com.facebook.ads";
     public static final String INTER = "com.facebook.ads.InterstitialAd";
     public static final String NATIVE_AD = "com.facebook.ads.NativeAd";
+    public static final String NATIVE_ADS_MGR = "com.facebook.ads.NativeAdsManager";
     public static final String AUDIENCE_NETWORK = "com.facebook.ads.AudienceNetworkActivity";
 
     @Override
@@ -33,13 +35,25 @@ public class Facebook extends Blocker {
     }
 
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd) {
-
         boolean result = false;
-        result |= ApiBlocking.removeBanner(packageName, BANNER, LOAD_AD, lpparam, removeAd);
+
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
         result |= ApiBlocking.removeBanner(packageName, BANNER, "setAdListener", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER, LOAD_AD, lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, LOAD_AD, lpparam, removeAd);
+
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAd", EnumSet.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAdFromBid", String.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAdFromBid", EnumSet.class, String.class, lpparam, removeAd);
+
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAd", EnumSet.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAdFromBid", String.class, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAdFromBid", EnumSet.class, String.class, lpparam, removeAd);
+
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS_MGR, "loadAds", EnumSet.class, lpparam, removeAd);
+
         result |= customHandle(packageName, lpparam, removeAd);
+
         return result;
     }
 

@@ -10,7 +10,12 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers.ClassNotFoundError;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-
+/**
+ * Is not used anymore.
+ *
+ * @deprecated Doesnt do anything anymore. All Ads are loaded from GMS.
+ */
+@Deprecated
 public class Admob extends Blocker {
     
     public static final String BANNER = "com.google.ads.AdView";

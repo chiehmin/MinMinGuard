@@ -15,13 +15,20 @@ public class Amazon extends Blocker {
     
     public static final String BANNER = "com.amazon.device.ads.AdLayout";
     public static final String BANNER_PREFIX = "com.amazon.device.ads";
+
+    public static final String AD_REQUEST = "com.amazon.device.ads.DTBAdRequest";
     
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
 		boolean result = false;
+
 		result |= ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam, removeAd);
         result |= ApiBlocking.removeBannerWithResult(packageName, BANNER, "loadAd", new Boolean(true), lpparam, removeAd);
 
-		return result;
+        result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAd", "com.amazon.device.ads.DTBAdCallback", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "internalLoadAd", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAdRequest", lpparam, removeAd);
+
+        return result;
 	}
 	@Override
 	public String getBannerPrefix() {

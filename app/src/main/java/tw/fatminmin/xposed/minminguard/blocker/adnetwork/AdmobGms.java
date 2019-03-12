@@ -24,11 +24,17 @@ public class AdmobGms extends Blocker {
 
 	public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
         boolean result = false;
+
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+
         result |= ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam, removeAd);
+
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", "com.google.android.gms.ads.AdRequest", lpparam, removeAd);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam, removeAd);
+
+        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", "com.google.android.gms.ads.AdRequest", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAds", "com.google.android.gms.ads.AdRequest", int.class, lpparam, removeAd);
+
 		return result;
 	}
 	@Override
