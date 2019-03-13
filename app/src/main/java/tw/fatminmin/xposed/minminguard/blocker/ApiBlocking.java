@@ -107,7 +107,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s(Object) in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(%s) in %s", ad, adFunc, parameter.toString(), packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -128,7 +128,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(%s, %s) in %s", ad, adFunc, parameter1.toString(), parameter2.toString(), packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -149,7 +149,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(%s, %s, %s) in %s", ad, adFunc, parameter1.toString(), parameter2.toString(), parameter3.toString(), packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -195,7 +195,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s(Object) in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(%s) in %s", ad, adFunc, parameter.toString(), packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);
@@ -218,7 +218,7 @@ public final class ApiBlocking {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                    String debugMsg = String.format("Detect %s %s(Object, Object) in %s", ad, adFunc, packageName);
+                    String debugMsg = String.format("Detect %s %s(%s, %s) in %s", ad, adFunc, parameter1.toString(), parameter2.toString(), packageName);
                     Util.log(packageName, debugMsg);
                     if (removeAd) {
                         Util.notifyRemoveAdView(null, packageName, 1);

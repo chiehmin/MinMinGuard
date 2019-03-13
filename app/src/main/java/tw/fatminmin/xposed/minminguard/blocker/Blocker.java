@@ -14,8 +14,11 @@ public abstract class Blocker {
      * @return True if currrent handling app using this adnetwork. False otherwise.
      */
     abstract public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam, final boolean removeAd);
+
     abstract public String getBanner();
+
     abstract public String getBannerPrefix();
+
     public String getName() {
         return getClass().getSimpleName();
     }
