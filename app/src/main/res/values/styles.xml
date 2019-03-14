@@ -1,7 +1,7 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 
     <style name="TabLayoutTheme" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/orange</item>

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+>
     <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:icon="@drawable/ic_settings_black_24dp" />
+          android:title="@string/action_settings"
+          android:icon="@drawable/ic_settings_black_24dp"/>
     <item android:id="@+id/action_tutorial"
-        android:title="@string/action_tutorial"
-        android:icon="@drawable/tutorial" />
+          android:title="@string/action_tutorial"
+          android:icon="@drawable/tutorial"/>
     <item android:id="@+id/action_donate"
-        android:title="@string/action_donate"
-        android:icon="@drawable/donate" />
+          android:title="@string/action_donate"
+          android:icon="@drawable/donate"/>
     <item android:id="@+id/action_about"
-        android:title="@string/action_about"
-        android:icon="@drawable/about" />
+          android:title="@string/action_about"
+          android:icon="@drawable/about"/>
 </menu>

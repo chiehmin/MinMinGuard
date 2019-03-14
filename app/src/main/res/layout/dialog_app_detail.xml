@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
     <ImageView
-        android:id="@+id/detail_app_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        tools:src="@drawable/icon"/>
+            android:id="@+id/detail_app_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:src="@drawable/icon"/>
     <TextView
-        android:id="@+id/detail_app_name"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/detail_app_icon"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="8dp"
-        tools:text="MinMinGuard"/>
+            android:id="@+id/detail_app_name"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/detail_app_icon"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8dp"
+            tools:text="MinMinGuard"/>
     <TextView
-        android:id="@+id/detail_pkg_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/detail_app_name"
-        android:layout_alignLeft="@+id/detail_app_name"
-        tools:text="tw.fatminmin.xposed.minminguard"/>
+            android:id="@+id/detail_pkg_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/detail_app_name"
+            android:layout_alignLeft="@+id/detail_app_name"
+            tools:text="tw.fatminmin.xposed.minminguard"/>
 
     <TextView
-        android:id="@+id/holder_networks"
-        android:text="@string/msg_ad_networks"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/detail_app_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            android:id="@+id/holder_networks"
+            android:text="@string/msg_ad_networks"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/detail_app_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/txt_ad_networks"
-        android:text="@string/msg_not_detected"
-        android:textColor="@color/red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@+id/holder_networks"
-        android:layout_alignTop="@+id/holder_networks" />
+            android:id="@+id/txt_ad_networks"
+            android:text="@string/msg_not_detected"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/holder_networks"
+            android:layout_alignTop="@+id/holder_networks"/>
 
     <TextView
-        android:id="@+id/holder_blocked"
-        android:text="@string/msg_ads_blocked"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/txt_ad_networks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            android:id="@+id/holder_blocked"
+            android:text="@string/msg_ads_blocked"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/txt_ad_networks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/txt_ads_blocked"
-        android:text="0"
-        android:textColor="@color/red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@+id/holder_blocked"
-        android:layout_alignTop="@+id/holder_blocked"/>
+            android:id="@+id/txt_ads_blocked"
+            android:text="0"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/holder_blocked"
+            android:layout_alignTop="@+id/holder_blocked"/>
 
     <Switch
-        android:id="@+id/switch_url_filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/option_enable_url_filter"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:layout_below="@+id/holder_blocked" />
+            android:id="@+id/switch_url_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option_enable_url_filter"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/holder_blocked"/>
 
 </RelativeLayout>

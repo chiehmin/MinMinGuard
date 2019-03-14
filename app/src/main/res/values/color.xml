@@ -1,11 +1,11 @@
 <resources>
 
     <!-- grayscale -->
-    <color name="white"     >#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="gray_light">#DBDBDB</color>
-    <color name="gray"      >#939393</color>
-    <color name="gray_dark" >#5F5F5F</color>
-    <color name="black"     >#323232</color>
+    <color name="gray">#939393</color>
+    <color name="gray_dark">#5F5F5F</color>
+    <color name="black">#323232</color>
 
     <!-- basic colors -->
     <color name="green">#27D34D</color>

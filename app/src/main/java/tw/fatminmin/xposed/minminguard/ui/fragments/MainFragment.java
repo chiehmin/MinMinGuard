@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.blocker.Util;
@@ -21,32 +18,30 @@ import tw.fatminmin.xposed.minminguard.ui.MainActivity;
 import tw.fatminmin.xposed.minminguard.ui.adapter.AppsAdapter;
 import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
 
-public class MainFragment extends Fragment {
+import java.util.ArrayList;
 
-    public enum FragmentMode {
-        AUTO,
-        BLACKLIST,
-        WHITELIST
-    }
+public class MainFragment extends Fragment
+{
 
     public boolean isAlive = false;
-
     private MainActivity mainActivity;
     private FragmentMode mMode;
     private Button mBtnMode;
     private AppsAdapter adapter;
     private SharedPreferences mModPref;
-
-    private final View.OnClickListener btnModeClick = new View.OnClickListener() {
+    private final View.OnClickListener btnModeClick = new View.OnClickListener()
+    {
         @Override
-        public void onClick(View v) {
+        public void onClick(View v)
+        {
             mModPref.edit().putString(Common.KEY_MODE, Common.getModeString(mMode)).apply();
             mBtnMode.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
         }
     };
 
-    public static MainFragment newInstance(FragmentMode mode) {
+    public static MainFragment newInstance(FragmentMode mode)
+    {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         args.putInt("mode", mode.ordinal());
@@ -55,26 +50,33 @@ public class MainFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
-    public void refreshUI() {
-        if(mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+    public void refreshUI()
+    {
+        if (mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode)))
+        {
             mBtnMode.setVisibility(View.GONE);
-        } else {
+        }
+        else
+        {
             mBtnMode.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         return super.onOptionsItemSelected(item);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
 
         mainActivity = (MainActivity) getActivity();
         mModPref = mainActivity.modPref;
@@ -87,13 +89,15 @@ public class MainFragment extends Fragment {
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
-        if (!Util.xposedEnabled()) {
+        if (!Util.xposedEnabled())
+        {
             mTxtXposedEnabled.setVisibility(View.VISIBLE);
         }
 
         /* setup apply button */
         mBtnMode.setOnClickListener(btnModeClick);
-        if(mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode))) {
+        if (mModPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST).equals(Common.getModeString(mMode)))
+        {
             mBtnMode.setVisibility(View.GONE);
         }
 
@@ -105,12 +109,19 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public FragmentMode getMode() {
+    public FragmentMode getMode()
+    {
         return mMode;
     }
 
-    public void updateAndNotify(ArrayList<AppDetails> list) {
+    public void updateAndNotify(ArrayList<AppDetails> list)
+    {
         adapter.setAppList(list);
         adapter.notifyDataSetChanged();
+    }
+
+    public enum FragmentMode
+    {
+        AUTO, BLACKLIST, WHITELIST
     }
 }

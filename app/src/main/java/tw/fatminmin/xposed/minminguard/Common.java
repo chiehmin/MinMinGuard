@@ -5,7 +5,8 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 /**
  * Created by fatminmin on 2015/10/1.
  */
-public class Common {
+public class Common
+{
     public final static String PACKAGE_NAME = BuildConfig.APPLICATION_ID;
 
     public final static String MOD_PREFS = "ModSettings";
@@ -30,12 +31,15 @@ public class Common {
     public final static String KEY_NETWORK = "AD_NETWORKS";
     public final static String KEY_BLOCK_NUM = "BLOCK_NUM";
 
-    private Common() throws InstantiationException {
+    private Common() throws InstantiationException
+    {
         throw new InstantiationException("This class is not for instantiation");
     }
 
-    public static String getModeString(MainFragment.FragmentMode mode) {
-        switch (mode) {
+    public static String getModeString(MainFragment.FragmentMode mode)
+    {
+        switch (mode)
+        {
             case AUTO:
                 return Common.VALUE_MODE_AUTO;
             case BLACKLIST:
@@ -47,7 +51,9 @@ public class Common {
         }
         return Common.VALUE_MODE_BLACKLIST;
     }
-    public static String getWhiteListKey(String pkgName) {
+
+    public static String getWhiteListKey(String pkgName)
+    {
         return pkgName + "_whitelist";
     }
 }
