@@ -13,6 +13,7 @@ public class Adfurikun extends Blocker
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
+
         result |= ApiBlocking.removeBanner(packageName, BANNER, "a", lpparam);
 
         return result;

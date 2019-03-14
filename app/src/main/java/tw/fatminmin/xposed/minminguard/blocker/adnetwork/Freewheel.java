@@ -18,7 +18,7 @@ public class Freewheel extends Blocker
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, Ad, "parse", Element.class, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, Ad, "parse", lpparam);
         /*result |= ApiBlocking.blockAdFunctionWithResult(packageName, AdInstace, "isPlayable", false, lpparam, removeAd);
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, AdInstace, "isRequiredToShow", false, lpparam, removeAd);
         */

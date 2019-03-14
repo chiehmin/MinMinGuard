@@ -15,7 +15,7 @@ public class Adcolony extends Blocker
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, Adcolony_Storage, "a", String.class, 0.0d, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResultExact(packageName, Adcolony_Storage, "a", String.class, 0.0d, lpparam);
 
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, INTER_ADS, "isExpired", true, lpparam);
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, INTER_ADS, "show", true, lpparam);

@@ -14,10 +14,10 @@ public class Chartboost extends Blocker
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showInterstitial", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showRewardedVideo", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasInterstitial", String.class, false, lpparam);
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasRewardedVideo", String.class, false, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showInterstitial", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "showRewardedVideo", lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasInterstitial", false, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, BANNER, "hasRewardedVideo", false, lpparam);
 
         return result;
     }

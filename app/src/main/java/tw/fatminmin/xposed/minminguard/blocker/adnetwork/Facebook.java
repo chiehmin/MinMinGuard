@@ -24,16 +24,12 @@ public class Facebook extends Blocker
         result |= ApiBlocking.removeBanner(packageName, BANNER, "setAdListener", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAd", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAd", EnumSet.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAdFromBid", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAdFromBid", EnumSet.class, String.class, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER, "loadAdFromBid", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAd", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAd", EnumSet.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAdFromBid", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAdFromBid", EnumSet.class, String.class, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAdFromBid", lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS_MGR, "loadAds", EnumSet.class, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS_MGR, "loadAds", lpparam);
 
         return result;
     }

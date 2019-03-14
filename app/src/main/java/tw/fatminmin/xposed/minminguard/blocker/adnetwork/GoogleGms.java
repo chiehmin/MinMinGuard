@@ -4,7 +4,7 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
-public class AdmobGms extends Blocker
+public class GoogleGms extends Blocker
 {
 
     public static final String BANNER = "com.google.android.gms.ads.AdView";
@@ -19,17 +19,14 @@ public class AdmobGms extends Blocker
     {
         boolean result = false;
 
-        //result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
-        //result |= ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam);
+        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result |= ApiBlocking.removeBanner(packageName, SEARCH_BANNER, "loadAd", lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "loadAd", "com.google.android.gms.ads.AdRequest", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, SEARCH_BANNER, "loadAd", "com.google.android.gms.ads.search.SearchAdRequest", lpparam);
-
-        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", "com.google.android.gms.ads.AdRequest", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", "com.google.android.gms.ads.AdRequest", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAds", "com.google.android.gms.ads.AdRequest", int.class, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAd", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_LOADER, "loadAds", lpparam);
 
         return result;
     }

@@ -14,8 +14,8 @@ public class Waystorm extends Blocker
     {
         boolean result = false;
 
-        //TODO Does this need to use removeBanner?
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
 
         return result;

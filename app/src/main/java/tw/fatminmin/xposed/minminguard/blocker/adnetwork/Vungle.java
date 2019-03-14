@@ -17,12 +17,11 @@ public class Vungle extends Blocker
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, VUNGLE_WARREN_STORAGE, "findValidAdvertisementForPlacement", String.class, null, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_WARREN, "loadAd", String.class, "com.vungle.warren.LoadAdCallback", "com.vungle.warren.PublisherDirectDownload", lpparam);
-        //result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_WARREN, "canPlayAd", String.class, lpparam);
-        //result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_WARREN, "canPlayAd", "com.vungle.warren.model.Advertisement", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_PUBLISHER, "loadAd", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_PUBLISHER, "isAdPlayable", String.class, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, VUNGLE_WARREN_STORAGE, "findValidAdvertisementForPlacement", null, lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_WARREN, "loadAd", lpparam);
+
+        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_PUBLISHER, "loadAd", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, VUNGLE_PUBLISHER, "isAdPlayable", lpparam);
 
         return result;
     }

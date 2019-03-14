@@ -49,12 +49,12 @@ public final class ApiBlocking
     {
         try
         {
-            XposedHelpers.findAndHookMethod(bannerClass, lpparam.classLoader, bannerFunc, new XC_MethodHook()
+            Util.hookAllMethods(bannerClass, lpparam.classLoader, bannerFunc, new XC_MethodHook()
             {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable
                 {
-                    String debugMsg = String.format("Detect %s %s in %s", bannerClass, bannerFunc, packageName);
+                    String debugMsg = String.format("removeBannerWithResult: Detect %s %s in %s", bannerClass, bannerFunc, packageName);
 
                     Util.log(packageName, debugMsg);
 
@@ -68,7 +68,7 @@ public final class ApiBlocking
         {
             if (e instanceof NoSuchMethodError)
             {
-                Util.log(packageName, String.format("removeBannerWithResult: Method %s() not found in %s.", bannerFunc, bannerClass));
+                Util.log(packageName, String.format("removeBannerWithResult: Method %s not found in %s.", bannerFunc, bannerClass));
             }
 
             return false;
@@ -83,13 +83,13 @@ public final class ApiBlocking
     {
         try
         {
-            XposedHelpers.findAndHookMethod(adClass, lpparam.classLoader, adFunc, new XC_MethodHook()
+            Util.hookAllMethods(adClass, lpparam.classLoader, adFunc, new XC_MethodHook()
             {
 
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable
                 {
-                    String debugMsg = String.format("Detect %s %s() in %s", adClass, adFunc, packageName);
+                    String debugMsg = String.format("blockAdFunction: Detect %s %s in %s", adClass, adFunc, packageName);
 
                     Util.log(packageName, debugMsg);
                     Util.notifyRemoveAdView(null, packageName, 1);
@@ -102,7 +102,7 @@ public final class ApiBlocking
         {
             if (e instanceof NoSuchMethodError)
             {
-                Util.log(packageName, String.format("blockAdFunction: Method %s() not found in %s.", adFunc, adFunc));
+                Util.log(packageName, String.format("blockAdFunction: Method %s not found in %s.", adFunc, adFunc));
             }
 
             return false;
@@ -111,7 +111,7 @@ public final class ApiBlocking
         return true;
     }
 
-    public static boolean blockAdFunction(final String packageName, final String adClass, final String adFunc, final Object parameter, final XC_LoadPackage.LoadPackageParam lpparam)
+    public static boolean blockAdFunctionExact(final String packageName, final String adClass, final String adFunc, final Object parameter, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         try
         {
@@ -143,7 +143,7 @@ public final class ApiBlocking
         return true;
     }
 
-    public static boolean blockAdFunction(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final XC_LoadPackage.LoadPackageParam lpparam)
+    public static boolean blockAdFunctionExact(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         try
         {
@@ -175,7 +175,7 @@ public final class ApiBlocking
         return true;
     }
 
-    public static boolean blockAdFunction(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final Object parameter3, final XC_LoadPackage.LoadPackageParam lpparam)
+    public static boolean blockAdFunctionExact(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final Object parameter3, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         try
         {
@@ -217,7 +217,7 @@ public final class ApiBlocking
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable
                 {
-                    String debugMsg = String.format("Detect %s %s() in %s", adClass, adFunc, packageName);
+                    String debugMsg = String.format("blockAdFunctionWithResult: Detect %s %s in %s", adClass, adFunc, packageName);
 
                     Util.log(packageName, debugMsg);
 
@@ -231,7 +231,7 @@ public final class ApiBlocking
         {
             if (e instanceof NoSuchMethodError)
             {
-                Util.log(packageName, String.format("blockAdFunctionWithResult: Method %s() not found in %s.", adFunc, adClass));
+                Util.log(packageName, String.format("blockAdFunctionWithResult: Method %s not found in %s.", adFunc, adClass));
             }
 
             return false;
@@ -240,7 +240,8 @@ public final class ApiBlocking
         return true;
     }
 
-    public static boolean blockAdFunctionWithResult(final String packageName, final String adClass, final String adFunc, final Object parameter, final Object result, final XC_LoadPackage.LoadPackageParam lpparam)
+
+    public static boolean blockAdFunctionWithResultExact(final String packageName, final String adClass, final String adFunc, final Object parameter, final Object result, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         try
         {
@@ -273,8 +274,8 @@ public final class ApiBlocking
         return true;
     }
 
-    //TODO Lets do some if checks, and not just catch exceptions
-    public static boolean blockAdFunctionWithResult(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final Object result, final XC_LoadPackage.LoadPackageParam lpparam)
+
+    public static boolean blockAdFunctionWithResultExact(final String packageName, final String adClass, final String adFunc, final Object parameter1, final Object parameter2, final Object result, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         try
         {
@@ -298,7 +299,7 @@ public final class ApiBlocking
         {
             if (e instanceof NoSuchMethodError)
             {
-                Util.log(packageName, String.format("blockAdFunctionWithResult: Method %s(%s, %s) not found in %s.", adFunc, parameter1.toString(), parameter2.toString(), adClass));
+                Util.log(packageName, String.format("blockAdFunctionWithResultExact: Method %s(%s, %s) not found in %s.", adFunc, parameter1.toString(), parameter2.toString(), adClass));
             }
 
             return false;

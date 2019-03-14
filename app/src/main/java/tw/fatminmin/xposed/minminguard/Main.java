@@ -23,7 +23,6 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 
 public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 {
-
     public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     public static String MODULE_PATH = null;
     public static Set<String> patterns;
@@ -31,7 +30,11 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adcolony(), new Adfurikun(), new AdMarvel(), /*new Admob(),*/ new AdmobGms(), new Adtech(), new Amazon(), new Amobee(), new Aotter(), new AppBrain(), new Applovin(), new Appnext(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(), new Freewheel(), new Flurry(), new GmsDoubleClick(), new Hodo(), new Inmobi(), new Intowow(), new Ironsource(), new KuAd(), new mAdserve(), new Madvertise(), new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Vungle(), new Waystorm(), new Yandex(),
+            new Ad2iction(), new Adbert(), new Adcolony(), new Adfurikun(), new AdMarvel(), new GoogleAdmob(), new GoogleGms(), new Adtech(), new Amazon(), new Amobee(),
+            new Aotter(), new AppBrain(), new Applovin(), new Appnext(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(),
+            new Freewheel(), new Flurry(), new GoogleGmsDoubleClick(), new Hodo(), new Inmobi(), new Intowow(), new Ironsource(), new KuAd(), new mAdserve(), new Madvertise(),
+            new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(),
+            new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Vungle(), new Waystorm(), new Yandex(),
             /* Custom Mod*/
     };
 
@@ -72,15 +75,17 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
         byte[] array = XposedHelpers.assetAsByteArray(resources, "host/output_file");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-
         patterns = new HashSet<>();
+
         for (String url : sUrls)
         {
             patterns.add(url);
         }
+
         array = XposedHelpers.assetAsByteArray(resources, "host/mmg_pattern");
         decoded = new String(array);
         sUrls = decoded.split("\n");
+
         for (String url : sUrls)
         {
             patterns.add(url);
@@ -94,15 +99,13 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
     {
 
         if (lpparam.packageName.equals(MY_PACKAGE_NAME))
-        {
             XposedHelpers.findAndHookMethod("tw.fatminmin.xposed.minminguard.blocker.Util", lpparam.classLoader, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
-        }
 
         /**
          * https://developer.android.com/reference/android/app/Application.html#onCreate()
          * wait for the app started to get remote preferences
          */
-        findAndHookMethod("android.app.Application", lpparam.classLoader, "onCreate", new XC_MethodHook()
+        XposedHelpers.findAndHookMethod("android.app.Application", lpparam.classLoader, "onCreate", new XC_MethodHook()
         {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable

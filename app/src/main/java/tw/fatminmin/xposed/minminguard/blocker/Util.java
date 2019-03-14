@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Handler;
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.BuildConfig;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
@@ -117,7 +120,7 @@ public final class Util
         }).start();
     }
 
-    static public void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum)
+    public static void notifyRemoveAdView(final Context context, final String pkgName, final int blockNum)
     {
         final Context mContext;
 
@@ -149,5 +152,12 @@ public final class Util
         };
 
         Main.notifyWorker.submit(task);
+    }
+
+    public static void hookAllMethods(String className, ClassLoader classLoader, String method, XC_MethodHook callBack)
+    {
+        Class<?> clazz = XposedHelpers.findClass(className, classLoader);
+
+        XposedBridge.hookAllMethods(clazz, method, callBack);
     }
 }
