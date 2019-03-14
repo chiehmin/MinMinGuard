@@ -35,7 +35,8 @@
         Url Filtering
     </string>
     <string name="intro_url_filtering_content">
-        If the app still shows ads, you can try and enable the url filtering feature. (This may cause problems in webview based apps)
+        If the app still shows ads, you can try and enable the url filtering feature. (This may cause problems in
+        webview based apps)
     </string>
 
     <string name="btn_ok">OK</string>
@@ -49,11 +50,12 @@
     <string name="msg_xposed_not_enabled">Xposed is not enabled</string>
     <string name="msg_enabled_crash_report">Enable crash report</string>
     <string name="msg_show_system_apps">Show system apps</string>
+    <string name="msg_show_debug">Show debug info in Xposed log</string>
     <string name="msg_show_launcher_icon">Show launcher icon</string>
     <string name="msg_mode_apply">Apply</string>
     <string name="msg_block_num">Blocked %d ads</string>
-    <string name="msg_ad_networks">Ad Networks: </string>
-    <string name="msg_ads_blocked">Ads Blocked: </string>
+    <string name="msg_ad_networks">Ad Networks:</string>
+    <string name="msg_ads_blocked">Ads Blocked:</string>
     <string name="msg_not_detected">Not detected</string>
     <string name="msg_wait">Please wait&#8230;</string>
     <string name="msg_app_launch_fail">This app cannot be launched</string>

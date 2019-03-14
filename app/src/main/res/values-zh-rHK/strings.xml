@@ -47,10 +47,11 @@
     <string name="msg_xposed_not_enabled">Xposed 框架未啓動</string>
     <string name="msg_enabled_crash_report">開啟崩潰回報</string>
     <string name="msg_show_system_apps">顯示系統應用程式</string>
+    <string name="msg_show_debug">Show debug info in Xposed log</string>
     <string name="msg_mode_apply">套用</string>
     <string name="msg_block_num">攔截 %d 個廣告</string>
-    <string name="msg_ad_networks">廣告商: </string>
-    <string name="msg_ads_blocked">廣告攔截數: </string>
+    <string name="msg_ad_networks">廣告商:</string>
+    <string name="msg_ads_blocked">廣告攔截數:</string>
     <string name="msg_not_detected">未偵測到</string>
 
     <string name="option_enable_url_filter">套用 Url 過濾</string>

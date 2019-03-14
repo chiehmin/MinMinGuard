@@ -6,16 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import java.util.List;
-
 import tw.fatminmin.xposed.minminguard.orm.AppData;
 import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
 import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
 import tw.fatminmin.xposed.minminguard.orm.DaoSession;
 
-public class MinMinProvider extends ContentProvider {
+import java.util.List;
+
+public class MinMinProvider extends ContentProvider
+{
 
     private DaoMaster.DevOpenHelper helper;
     private SQLiteDatabase db;
@@ -24,7 +23,8 @@ public class MinMinProvider extends ContentProvider {
     private AppDataDao appDataDao;
 
     @Override
-    public boolean onCreate() {
+    public boolean onCreate()
+    {
 
         helper = new DaoMaster.DevOpenHelper(getContext(), "mmg", null);
         db = helper.getWritableDatabase();
@@ -37,60 +37,70 @@ public class MinMinProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
+    {
         return null;
     }
 
     @Nullable
     @Override
-    public String getType(Uri uri) {
+    public String getType(Uri uri)
+    {
         return null;
     }
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(Uri uri, ContentValues values)
+    {
         return null;
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(Uri uri, String selection, String[] selectionArgs)
+    {
         return 0;
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
+    {
         String pkgName = values.getAsString(Common.KEY_PKG_NAME);
 
         String network = values.getAsString(Common.KEY_NETWORK);
         Integer blockNum = values.getAsInteger(Common.KEY_BLOCK_NUM);
 
-        List<AppData> list = appDataDao.queryBuilder()
-                                .where(AppDataDao.Properties.PkgName.eq(pkgName))
-                                .list();
+        List<AppData> list = appDataDao.queryBuilder().where(AppDataDao.Properties.PkgName.eq(pkgName)).list();
         AppData appData;
-        if (list.size() == 1) {
+        if (list.size() == 1)
+        {
             appData = list.get(0);
         }
-        else {
+        else
+        {
             appData = new AppData(pkgName, "", 0);
         }
-        if (blockNum != null) {
+        if (blockNum != null)
+        {
             appData.setBlockNum(appData.getBlockNum() + blockNum);
         }
-        if (network != null && !appData.getAdNetworks().contains(network)) {
+        if (network != null && !appData.getAdNetworks().contains(network))
+        {
             String cur = appData.getAdNetworks();
-            if (cur.length() > 0) {
+            if (cur.length() > 0)
+            {
                 cur += " ";
             }
             cur += network;
             appData.setAdNetworks(cur);
         }
 
-        if (list.size() == 1) {
+        if (list.size() == 1)
+        {
             appDataDao.update(appData);
         }
-        else {
+        else
+        {
             appDataDao.insert(appData);
         }
 

@@ -14,7 +14,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.orm.AppData;
@@ -22,7 +21,8 @@ import tw.fatminmin.xposed.minminguard.orm.AppData;
 /**
  * Created by fatminmin on 2015/10/25.
  */
-public class AppDetailDialogFragment extends DialogFragment {
+public class AppDetailDialogFragment extends DialogFragment
+{
 
     private ImageView imgAppIcon;
     private TextView txtAppName;
@@ -38,11 +38,13 @@ public class AppDetailDialogFragment extends DialogFragment {
 
     private SharedPreferences mPref;
 
-    public static AppDetailDialogFragment newInstance(String appName, String pkgName, AppData appData) {
+    public static AppDetailDialogFragment newInstance(String appName, String pkgName, AppData appData)
+    {
         Bundle args = new Bundle();
         args.putString("appName", appName);
         args.putString("pkgName", pkgName);
-        if (appData != null) {
+        if (appData != null)
+        {
             args.putString("adNetworks", appData.getAdNetworks());
             args.putInt("blockNum", appData.getBlockNum());
         }
@@ -54,7 +56,8 @@ public class AppDetailDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
@@ -64,12 +67,12 @@ public class AppDetailDialogFragment extends DialogFragment {
         blockNum = args.getInt("blockNum");
 
         mPref = getActivity().getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
-
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
@@ -83,29 +86,37 @@ public class AppDetailDialogFragment extends DialogFragment {
 
         txtAppName.setText(appName);
         txtPkgName.setText(pkgName);
-        if(adNetworks != null && adNetworks.length() > 0) {
+        if (adNetworks != null && adNetworks.length() > 0)
+        {
             txtAdNetworks.setText(adNetworks);
         }
-        if(blockNum != null) {
+        if (blockNum != null)
+        {
             txtAdsBlocked.setText(blockNum.toString());
         }
 
         /* set appicon */
         final PackageManager pm = v.getContext().getPackageManager();
-        try {
+        try
+        {
             Drawable appIcon = pm.getApplicationIcon(pkgName);
-            if (appIcon != null) imgAppIcon.setImageDrawable(appIcon);
-        } catch (PackageManager.NameNotFoundException e) {
+            if (appIcon != null)
+            {
+                imgAppIcon.setImageDrawable(appIcon);
+            }
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
             e.printStackTrace();
         }
 
         swtUrlFilter.setChecked(mPref.getBoolean(pkgName + "_url", false));
-        swtUrlFilter.setOnClickListener(new View.OnClickListener() {
+        swtUrlFilter.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                mPref.edit()
-                        .putBoolean(pkgName + "_url", swtUrlFilter.isChecked())
-                        .commit();
+            public void onClick(View v)
+            {
+                mPref.edit().putBoolean(pkgName + "_url", swtUrlFilter.isChecked()).commit();
             }
         });
 

@@ -9,53 +9,61 @@ import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResou
 import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public final class OneWeather {
+//FIXME Use newer XposedHelper class
+public final class OneWeather
+{
     private static final String LAYOUT = "com.handmark.expressweather";
 
-    private OneWeather() throws InstantiationException {
+    private OneWeather() throws InstantiationException
+    {
         throw new InstantiationException("This class is not for instantiation");
     }
 
-    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam, final boolean removeAd) {
-        try {
+    public static boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
+    {
+        try
+        {
             Class<?> adView = XposedHelpers.findClass("com.handmark.expressweather.billing.BillingUtils", lpparam.classLoader);
-            XposedBridge.hookAllMethods(adView, "isPurchased", new XC_MethodHook() {
-                
+            XposedBridge.hookAllMethods(adView, "isPurchased", new XC_MethodHook()
+            {
+
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                    
-                    if(removeAd) {
-                        param.setResult(Boolean.valueOf(true));
-                    }
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                {
+
+                    param.setResult(Boolean.valueOf(true));
                 }
-                
             });
         }
-        catch(ClassNotFoundError e) {
+        catch (ClassNotFoundError e)
+        {
             return false;
         }
         return true;
     }
-    public static void handleInitPackageResources(InitPackageResourcesParam resparam) {
-        if(!resparam.packageName.equals(LAYOUT)) {
+
+    public static void handleInitPackageResources(InitPackageResourcesParam resparam)
+    {
+        if (!resparam.packageName.equals(LAYOUT))
+        {
             return;
         }
-        
-        resparam.res.hookLayout(LAYOUT, "layout", "main_phone", new XC_LayoutInflated() {
-                
-                @Override
-                public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable {
-  
-                        View ad = (View) liparam.view.findViewById(
-                                        liparam.res.getIdentifier("adview", "id", LAYOUT));
-                        
-                        ad.setVisibility(View.GONE);
-                        
-                        ad = (View) liparam.view.findViewById(
-                                liparam.res.getIdentifier("share_ad_cover", "id", LAYOUT));
-                
-                        ad.setVisibility(View.GONE);
-                }
+
+        resparam.res.hookLayout(LAYOUT, "layout", "main_phone", new XC_LayoutInflated()
+        {
+
+            @Override
+            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable
+            {
+
+                View ad = (View) liparam.view.findViewById(liparam.res.getIdentifier("adview", "id", LAYOUT));
+
+                ad.setVisibility(View.GONE);
+
+                ad = (View) liparam.view.findViewById(liparam.res.getIdentifier("share_ad_cover", "id", LAYOUT));
+
+                ad.setVisibility(View.GONE);
+            }
         });
     }
 }

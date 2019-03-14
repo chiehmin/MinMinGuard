@@ -7,17 +7,18 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Ironsource extends Blocker
 {
     public static final String SuperSonicAdsAdapter = "com.ironsource.adapters.supersonicads.SupersonicAdsAdapter";
+
     @Override
-    public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam, boolean removeAd)
+    public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", "org.json.JSONObject", "com.ironsource.mediationsdk.f.t", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showInterstitial", "org.json.JSONObject", "com.ironsource.mediationsdk.f.k", lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showOfferwall", String.class, "org.json.JSONObject", lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", "org.json.JSONObject", "com.ironsource.mediationsdk.f.t", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showInterstitial", "org.json.JSONObject", "com.ironsource.mediationsdk.f.k", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showOfferwall", String.class, "org.json.JSONObject", lpparam);
 
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isRewardedVideoAvailable", "org.json.JSONObject", false, lpparam, removeAd);
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isInterstitialReady", "org.json.JSONObject", false, lpparam, removeAd);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isRewardedVideoAvailable", "org.json.JSONObject", false, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isInterstitialReady", "org.json.JSONObject", false, lpparam);
 
         return result;
     }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@color/black">
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/black">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
-            android:text="@string/nav_title"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:text="@string/nav_title"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
 
     </LinearLayout>
 

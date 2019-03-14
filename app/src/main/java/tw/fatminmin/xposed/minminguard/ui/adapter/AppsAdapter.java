@@ -12,12 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.orm.AppData;
@@ -29,45 +23,30 @@ import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by fatminmin on 2015/10/1.
  */
-public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
+public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>
+{
 
     private final Context mContext;
     private final SharedPreferences mPref;
-
-    private ArrayList<AppDetails> appList;
-
-    private Map<String, AppData> mAppDataMap; // retrieved AppData from sqlite
-    private MainFragment.FragmentMode mMode;
-
     private final DaoMaster.DevOpenHelper helper;
     private final SQLiteDatabase db;
     private final DaoMaster daoMaster;
     private final DaoSession daoSession;
     private final AppDataDao appDataDao;
+    private ArrayList<AppDetails> appList;
+    private Map<String, AppData> mAppDataMap; // retrieved AppData from sqlite
+    private MainFragment.FragmentMode mMode;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public View card;
-        public ImageView imgAppIcon;
-        public TextView txtAppName;
-        public TextView txtBlockNum;
-        public Switch switchEnable;
-
-        public ViewHolder(View v) {
-            super(v);
-
-            card = v;
-            imgAppIcon = (ImageView) v.findViewById(R.id.img_app_icon);
-            txtAppName = (TextView) v.findViewById(R.id.txt_app_name);
-            txtBlockNum = (TextView) v.findViewById(R.id.txt_block_num);
-            switchEnable = (Switch) v.findViewById(R.id.switch_enable);
-        }
-    }
-
-    public AppsAdapter(Context context, ArrayList<AppDetails> list, MainFragment.FragmentMode mode) {
+    public AppsAdapter(Context context, ArrayList<AppDetails> list, MainFragment.FragmentMode mode)
+    {
         super();
         mContext = context;
         appList = list;
@@ -84,20 +63,21 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
         mAppDataMap = new HashMap<>();
     }
 
-    public void setAppList(ArrayList<AppDetails> list) {
+    public void setAppList(ArrayList<AppDetails> list)
+    {
         appList = list;
 
         /* update appdata map */
         mAppDataMap.clear();
-        for (AppDetails info : appList) {
+        for (AppDetails info : appList)
+        {
             final String pkgName = info.getPackageName();
             AppData appData = null;
 
-            List<AppData> results = appDataDao.queryBuilder()
-                    .where(AppDataDao.Properties.PkgName.eq(pkgName))
-                    .list();
+            List<AppData> results = appDataDao.queryBuilder().where(AppDataDao.Properties.PkgName.eq(pkgName)).list();
 
-            if (results.size() == 1) {
+            if (results.size() == 1)
+            {
                 appData = results.get(0);
                 appDataDao.refresh(appData);
             }
@@ -107,72 +87,116 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_app, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_app, parent, false);
         return new ViewHolder(v);
     }
 
-    private void setState(String pkgName, boolean checked) {
+    private void setState(String pkgName, boolean checked)
+    {
         /* auto mode */
-        if (mMode == MainFragment.FragmentMode.AUTO) return;
+        if (mMode == MainFragment.FragmentMode.AUTO)
+        {
+            return;
+        }
 
-        if (mMode == MainFragment.FragmentMode.BLACKLIST) {
+        if (mMode == MainFragment.FragmentMode.BLACKLIST)
+        {
             /* blacklist mode */
             mPref.edit().putBoolean(pkgName, checked).apply();
-        } else {
+        }
+        else
+        {
             /* whitelist mode */
             mPref.edit().putBoolean(Common.getWhiteListKey(pkgName), checked).apply();
         }
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
 
         final AppDetails currentAppDetails = appList.get(position);
 
         final AppData appData = mAppDataMap.get(currentAppDetails.getPackageName());
         if (appData != null && appData.getBlockNum() != 0)
+        {
             holder.txtBlockNum.setText(mContext.getString(R.string.msg_block_num, appData.getBlockNum()));
+        }
         else
+        {
             holder.txtBlockNum.setText("");
+        }
 
         holder.imgAppIcon.setImageDrawable(currentAppDetails.getIcon());
         holder.txtAppName.setText(currentAppDetails.getName());
 
         if (mMode == MainFragment.FragmentMode.AUTO)
+        {
             holder.switchEnable.setVisibility(View.GONE);
+        }
         else
+        {
             holder.switchEnable.setVisibility(View.VISIBLE);
+        }
 
         holder.switchEnable.setChecked(currentAppDetails.isEnabled());
-        holder.switchEnable.setOnClickListener(new View.OnClickListener() {
+        holder.switchEnable.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Switch sw = (Switch) v;
                 setState(currentAppDetails.getPackageName(), sw.isChecked());
             }
         });
 
-        holder.card.setOnClickListener(new View.OnClickListener() {
+        holder.card.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 DialogFragment dialog = AppDetailDialogFragment.newInstance(currentAppDetails.getName(), currentAppDetails.getPackageName(), appData);
                 AppCompatActivity activity = (AppCompatActivity) mContext;
                 dialog.show(activity.getSupportFragmentManager(), "dialog");
             }
         });
 
-        holder.imgAppIcon.setOnClickListener(new View.OnClickListener() {
+        holder.imgAppIcon.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 UIUtils.restartApp(mContext, currentAppDetails.getPackageName());
             }
         });
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return appList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder
+    {
+
+        public View card;
+        public ImageView imgAppIcon;
+        public TextView txtAppName;
+        public TextView txtBlockNum;
+        public Switch switchEnable;
+
+        public ViewHolder(View v)
+        {
+            super(v);
+
+            card = v;
+            imgAppIcon = (ImageView) v.findViewById(R.id.img_app_icon);
+            txtAppName = (TextView) v.findViewById(R.id.txt_app_name);
+            txtBlockNum = (TextView) v.findViewById(R.id.txt_block_num);
+            switchEnable = (Switch) v.findViewById(R.id.switch_enable);
+        }
     }
 }
