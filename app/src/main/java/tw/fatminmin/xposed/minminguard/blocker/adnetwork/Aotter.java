@@ -17,8 +17,10 @@ public class Aotter extends Blocker
     public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
+
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "setAdListener", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam);
+
         return result;
     }
 

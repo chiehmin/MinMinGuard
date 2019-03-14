@@ -4,10 +4,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
-public class GmsDoubleClick extends Blocker
+public class GoogleGmsDoubleClick extends Blocker
 {
-
-    public static final String BANNER = "com.google.android.gms.ads.doubleclick.PublisherAdView";
+    public static final String PUBLISHER_BANNER = "com.google.android.gms.ads.doubleclick.PublisherAdView";
     public static final String BANNER_PREFIX = "com.google.android.gms.ads.doubleclick";
 
     public static final String INTER_ADS = "com.google.android.gms.ads.doubleclick.PublisherInterstitialAd";
@@ -16,11 +15,9 @@ public class GmsDoubleClick extends Blocker
     {
         boolean result = false;
 
-        //This wont do anything. The loadAd method takes an argument. Therefor it cannot be hooked with removeBanner
-        //result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam, removeAd);
+        result |= ApiBlocking.removeBanner(packageName, PUBLISHER_BANNER, "loadAd", lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, BANNER, "loadAd", "com.google.android.gms.ads.doubleclick.PublisherAdRequest", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", "com.google.android.gms.ads.doubleclick.PublisherAdRequest", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam);
 
         return result;
@@ -35,6 +32,6 @@ public class GmsDoubleClick extends Blocker
     @Override
     public String getBanner()
     {
-        return BANNER;
+        return PUBLISHER_BANNER;
     }
 }

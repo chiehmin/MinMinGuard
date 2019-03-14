@@ -18,12 +18,10 @@ public class MoPub extends Blocker
     {
         boolean result = false;
 
-        //TODO Does this need to use removeBanner?
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", String.class, lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", String.class, "com.mopub.nativeads.RequestParameters", lpparam);
 
         return result;
     }

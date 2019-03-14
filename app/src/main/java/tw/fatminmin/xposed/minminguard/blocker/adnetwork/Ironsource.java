@@ -13,12 +13,12 @@ public class Ironsource extends Blocker
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", "org.json.JSONObject", "com.ironsource.mediationsdk.f.t", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showInterstitial", "org.json.JSONObject", "com.ironsource.mediationsdk.f.k", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showOfferwall", String.class, "org.json.JSONObject", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showInterstitial", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showOfferwall", lpparam);
 
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isRewardedVideoAvailable", "org.json.JSONObject", false, lpparam);
-        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isInterstitialReady", "org.json.JSONObject", false, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isRewardedVideoAvailable", false, lpparam);
+        result |= ApiBlocking.blockAdFunctionWithResult(packageName, SuperSonicAdsAdapter, "isInterstitialReady", false, lpparam);
 
         return result;
     }

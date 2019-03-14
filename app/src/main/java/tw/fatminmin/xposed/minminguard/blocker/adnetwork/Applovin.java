@@ -26,8 +26,8 @@ public class Applovin extends Blocker
         result |= ApiBlocking.blockAdFunction(packageName, MAX_REWARDED, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, SDK_ENABLED, "isEnabled", false, lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "loadNativeAds", Integer.class, String.class, "com.applovin.nativeAds.AppLovinNativeAdLoadListener", lpparam);
-        result |= ApiBlocking.blockAdFunction(packageName, APPLOVIN_ADS_NESTED, "adReceived", "com.applovin.sdk.AppLovinAd", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "loadNativeAds", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, APPLOVIN_ADS_NESTED, "adReceived", lpparam);
         return result;
     }
 

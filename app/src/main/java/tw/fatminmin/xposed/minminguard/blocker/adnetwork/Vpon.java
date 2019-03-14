@@ -15,8 +15,8 @@ public class Vpon extends Blocker
     {
         boolean result = false;
 
-        //TODO Does this need to use removebanner?
         result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam);
 
         return result;

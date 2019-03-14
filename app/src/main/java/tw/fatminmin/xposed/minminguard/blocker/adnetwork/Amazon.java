@@ -17,9 +17,9 @@ public class Amazon extends Blocker
         boolean result = false;
 
         result |= ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam);
-        result |= ApiBlocking.removeBannerWithResult(packageName, BANNER, "loadAd", new Boolean(true), lpparam);
+        result |= ApiBlocking.removeBannerWithResult(packageName, BANNER, "loadAd", true, lpparam);
 
-        result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAd", "com.amazon.device.ads.DTBAdCallback", lpparam);
+        result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "internalLoadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAdRequest", lpparam);
 
