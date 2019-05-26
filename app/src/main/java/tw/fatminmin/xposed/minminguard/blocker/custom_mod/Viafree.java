@@ -28,7 +28,7 @@ public final class Viafree
         XposedHelpers.findAndHookMethod(className, lpparam.classLoader, method, new XC_MethodHook()
         {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 param.setResult(new ArrayList<Object>());
                 Util.notifyRemoveAdView(null, packageName, 1);

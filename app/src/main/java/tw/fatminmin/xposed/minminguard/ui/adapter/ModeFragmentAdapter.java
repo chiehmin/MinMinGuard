@@ -13,7 +13,7 @@ import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 public final class ModeFragmentAdapter extends FragmentPagerAdapter
 {
 
-    public static final int PAGE_COUNT = 3;
+    private static final int PAGE_COUNT = 3;
     private Context mContext;
 
     private String[] mTabTitles = new String[]{"AUTO", "Blacklist", "Whitelist"};

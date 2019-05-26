@@ -27,7 +27,7 @@ public final class HostBlock
         XposedBridge.hookAllConstructors(socketClz, new XC_MethodHook()
         {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 Object obj = param.args[0];
                 String host = "";
@@ -50,7 +50,7 @@ public final class HostBlock
         XC_MethodHook inetAddrHookSingleResult = new XC_MethodHook()
         {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 String host = (String) param.args[0];
 
@@ -63,7 +63,7 @@ public final class HostBlock
             }
 
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 String host = (String) param.args[0];
 
@@ -84,7 +84,7 @@ public final class HostBlock
         XposedBridge.hookAllConstructors(inetSockAddrClz, new XC_MethodHook()
         {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 String host = (String) param.args[0];
                 if (Main.patterns.contains(host))
@@ -103,7 +103,7 @@ public final class HostBlock
         XC_MethodHook ioBridgeHook = new XC_MethodHook()
         {
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 InetAddress addr = (InetAddress) param.args[1];
                 String host = addr.getHostName();
@@ -119,7 +119,7 @@ public final class HostBlock
             }
 
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 InetAddress addr = (InetAddress) param.args[1];
                 String host = addr.getHostName();

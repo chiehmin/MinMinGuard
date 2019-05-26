@@ -7,14 +7,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Bonzai extends Blocker
 {
 
-    public static final String BANNER = "com.bonzai.view.BonzaiAdView";
-    public static final String BANNER_PREFIX = "com.bonzai.view";
+    private static final String BANNER = "com.bonzai.view.BonzaiAdView";
+    private static final String BANNER_PREFIX = "com.bonzai.view";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "update", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "update", lpparam);
 
         return result;
     }

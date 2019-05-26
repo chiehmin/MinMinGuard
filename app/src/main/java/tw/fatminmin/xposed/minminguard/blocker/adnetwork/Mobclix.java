@@ -6,14 +6,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Mobclix extends Blocker
 {
-    public static final String BANNER = "com.mobclix.android.sdk.MobclixMMABannerXLAdView";
-    public static final String BANNER_PREFIX = "com.mobclix.android.sdk";
+    private static final String BANNER = "com.mobclix.android.sdk.MobclixMMABannerXLAdView";
+    private static final String BANNER_PREFIX = "com.mobclix.android.sdk";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam);
 
         return result;
     }

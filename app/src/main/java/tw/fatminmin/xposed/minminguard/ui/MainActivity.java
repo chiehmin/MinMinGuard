@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity
 
     public volatile ArrayList<AppDetails> masterAppList;
 
-    public ArrayList<AppDetails> filteredAppList;
-    public SharedPreferences uiPref;
+    private ArrayList<AppDetails> filteredAppList;
+    private SharedPreferences uiPref;
     public SharedPreferences modPref;
     private ViewPager mViewPager;
     private ModeFragmentAdapter mAdapter;
@@ -104,17 +104,17 @@ public class MainActivity extends AppCompatActivity
         }
 
         // drawer view and navigation view setup
-        NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(mNavListener);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
         // setup tab view
         mAdapter = new ModeFragmentAdapter(getSupportFragmentManager(), MainActivity.this);
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager = findViewById(R.id.viewpager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener()
         {
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        TabLayout mTabLayout = findViewById(R.id.sliding_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
         switch (modPref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST))
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity
         masterAppList = new ArrayList<>();
         filteredAppList = new ArrayList<>();
 
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
         {
             @Override
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity
         return mToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
-    public MainFragment getCurrentFragment()
+    private MainFragment getCurrentFragment()
     {
         return (MainFragment) mAdapter.getItem(mViewPager.getCurrentItem());
     }
@@ -330,7 +330,7 @@ public class MainActivity extends AppCompatActivity
         return modPref.getBoolean(Common.getWhiteListKey(pkgName), false);
     }
 
-    public void filterAppList(String keyword)
+    private void filterAppList(String keyword)
     {
         filteredAppList.clear();
 

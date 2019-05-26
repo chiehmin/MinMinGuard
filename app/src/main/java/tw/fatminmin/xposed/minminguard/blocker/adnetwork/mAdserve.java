@@ -11,8 +11,8 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 public class mAdserve extends Blocker
 {
 
-    public static final String BANNER = "com.adsdk.sdk.banner.InAppWebView";
-    public static final String BANNER_PREFIX = "com.adsdk.sdk.banner";
+    private static final String BANNER = "com.adsdk.sdk.banner.InAppWebView";
+    private static final String BANNER_PREFIX = "com.adsdk.sdk.banner";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
@@ -25,7 +25,7 @@ public class mAdserve extends Blocker
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     Util.log(packageName, "Detect mAdserve InAppWebView constructor in " + packageName);
 

@@ -10,15 +10,15 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Clickforce extends Blocker
 {
 
-    public static final String BANNER = "com.adcustom.sdk.ads.AdBanner";
-    public static final String BANNER_PREFIX = "com.adcustom.sdk.ads";
+    private static final String BANNER = "com.adcustom.sdk.ads.AdBanner";
+    private static final String BANNER_PREFIX = "com.adcustom.sdk.ads";
 
     @Override
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "show", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "show", lpparam);
 
         return result;
     }

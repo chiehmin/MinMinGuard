@@ -7,16 +7,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Amazon extends Blocker
 {
 
-    public static final String BANNER = "com.amazon.device.ads.AdLayout";
-    public static final String BANNER_PREFIX = "com.amazon.device.ads";
+    private static final String BANNER = "com.amazon.device.ads.AdLayout";
+    private static final String BANNER_PREFIX = "com.amazon.device.ads";
 
-    public static final String AD_REQUEST = "com.amazon.device.ads.DTBAdRequest";
+    private static final String AD_REQUEST = "com.amazon.device.ads.DTBAdRequest";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam);
         result |= ApiBlocking.removeBannerWithResult(packageName, BANNER, "loadAd", true, lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, AD_REQUEST, "loadAd", lpparam);

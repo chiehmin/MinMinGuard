@@ -9,7 +9,8 @@
             android:id="@+id/detail_app_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            tools:src="@drawable/icon"/>
+            tools:src="@drawable/icon"
+        android:contentDescription="Detail app icon" />
     <TextView
             android:id="@+id/detail_app_name"
             android:textSize="16sp"

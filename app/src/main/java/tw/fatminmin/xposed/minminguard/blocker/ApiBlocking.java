@@ -52,7 +52,7 @@ public final class ApiBlocking
             Util.hookAllMethods(bannerClass, lpparam.classLoader, bannerFunc, new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("removeBannerWithResult: Detect %s %s in %s", bannerClass, bannerFunc, packageName);
 
@@ -87,7 +87,7 @@ public final class ApiBlocking
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("blockAdFunction: Detect %s %s in %s", adClass, adFunc, packageName);
 
@@ -118,7 +118,7 @@ public final class ApiBlocking
             XposedHelpers.findAndHookMethod(adClass, lpparam.classLoader, adFunc, parameter, new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("Detect %s %s(%s) in %s", adClass, adFunc, parameter.toString(), packageName);
 
@@ -150,7 +150,7 @@ public final class ApiBlocking
             XposedHelpers.findAndHookMethod(adClass, lpparam.classLoader, adFunc, parameter1, parameter2, new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("Detect %s %s(%s, %s) in %s", adClass, adFunc, parameter1.toString(), parameter2.toString(), packageName);
 
@@ -182,7 +182,7 @@ public final class ApiBlocking
             XposedHelpers.findAndHookMethod(adClass, lpparam.classLoader, adFunc, parameter1, parameter2, parameter3, new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("Detect %s %s(%s, %s, %s) in %s", adClass, adFunc, parameter1.toString(), parameter2.toString(), parameter3.toString(), packageName);
 
@@ -215,7 +215,7 @@ public final class ApiBlocking
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("blockAdFunctionWithResult: Detect %s %s in %s", adClass, adFunc, packageName);
 
@@ -249,7 +249,7 @@ public final class ApiBlocking
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("Detect %s %s(%s) in %s", adClass, adFunc, parameter.toString(), packageName);
 
@@ -283,7 +283,7 @@ public final class ApiBlocking
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String debugMsg = String.format("Detect %s %s(%s, %s) in %s", adClass, adFunc, parameter1.toString(), parameter2.toString(), packageName);
 

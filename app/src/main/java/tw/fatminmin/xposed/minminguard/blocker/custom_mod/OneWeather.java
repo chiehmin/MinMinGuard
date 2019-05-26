@@ -28,7 +28,7 @@ public final class OneWeather
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
 
                     param.setResult(Boolean.valueOf(true));
@@ -53,14 +53,14 @@ public final class OneWeather
         {
 
             @Override
-            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable
+            public void handleLayoutInflated(LayoutInflatedParam liparam)
             {
 
-                View ad = (View) liparam.view.findViewById(liparam.res.getIdentifier("adview", "id", LAYOUT));
+                View ad = liparam.view.findViewById(liparam.res.getIdentifier("adview", "id", LAYOUT));
 
                 ad.setVisibility(View.GONE);
 
-                ad = (View) liparam.view.findViewById(liparam.res.getIdentifier("share_ad_cover", "id", LAYOUT));
+                ad = liparam.view.findViewById(liparam.res.getIdentifier("share_ad_cover", "id", LAYOUT));
 
                 ad.setVisibility(View.GONE);
             }

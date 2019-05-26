@@ -10,15 +10,15 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Aotter extends Blocker
 {
 
-    public static final String BANNER_PREFIX = "com.aotter.net.trek.ads";
-    public static final String NATIVE_ADS = "com.aotter.net.trek.ads.TKAdN";
+    private static final String BANNER_PREFIX = "com.aotter.net.trek.ads";
+    private static final String NATIVE_ADS = "com.aotter.net.trek.ads.TKAdN";
 
     @Override
     public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "setAdListener", lpparam);
+        result = ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "setAdListener", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "registerViewForInteraction", lpparam);
 
         return result;

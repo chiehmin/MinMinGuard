@@ -6,14 +6,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Hodo extends Blocker
 {
-    public static final String BANNER = "com.hodo.HodoADView";
-    public static final String BANNER_PREFIX = "com.hodo";
+    private static final String BANNER = "com.hodo.HodoADView";
+    private static final String BANNER_PREFIX = "com.hodo";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "requestAD", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "requestAD", lpparam);
         result |= ApiBlocking.removeBanner(packageName, BANNER, "setListener", lpparam);
 
         return result;

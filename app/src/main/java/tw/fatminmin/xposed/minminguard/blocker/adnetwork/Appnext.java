@@ -6,16 +6,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Appnext extends Blocker
 {
-    public static final String INTER_ADS = "com.appnext.ads.interstitial.Interstitial";
+    private static final String INTER_ADS = "com.appnext.ads.interstitial.Interstitial";
 
-    public static final String VIDEO_ADS = "com.appnext.ads.fullscreen.";
+    private static final String VIDEO_ADS = "com.appnext.ads.fullscreen.";
 
     @Override
     public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
+        result = ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "showAd", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, VIDEO_ADS, "loadAd", lpparam);

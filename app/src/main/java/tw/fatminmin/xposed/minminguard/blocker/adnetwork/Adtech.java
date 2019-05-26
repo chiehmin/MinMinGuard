@@ -11,17 +11,17 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Adtech extends Blocker
 {
 
-    public static final String BANNER = "com.adtech.mobilesdk.publisher.view.AdtechBannerView";
-    public static final String BANNER_PREFIX = "com.adtech.mobilesdk.publisher.view";
+    private static final String BANNER = "com.adtech.mobilesdk.publisher.view.AdtechBannerView";
+    private static final String BANNER_PREFIX = "com.adtech.mobilesdk.publisher.view";
 
-    public static final String INTER_ADS = "com.adtech.mobilesdk.publisher.view.AdtechInterstitialView";
+    private static final String INTER_ADS = "com.adtech.mobilesdk.publisher.view.AdtechInterstitialView";
 
     @Override
     public boolean handleLoadPackage(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "load", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "load", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam);
 
         return result;

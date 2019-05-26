@@ -8,32 +8,32 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Intowow extends Blocker
 {
 
-    public static final String BANNER = "com.intowow.sdk.BannerAD";
-    public static final String BANNER_FUNC = "onStart";
-    public static final String BANNER_PREFIX = "com.intowow.sdk";
+    private static final String BANNER = "com.intowow.sdk.BannerAD";
+    private static final String BANNER_FUNC = "onStart";
+    private static final String BANNER_PREFIX = "com.intowow.sdk";
 
-    public static final String SPLASH_AD = "com.intowow.sdk.SplashAD";
-    public static final String SPLASH_AD_FUNC = "show";
+    private static final String SPLASH_AD = "com.intowow.sdk.SplashAD";
+    private static final String SPLASH_AD_FUNC = "show";
 
-    public static final String I2WAPI = "com.intowow.sdk.I2WAPI";
-    public static final String API_FUNC_1 = "requesSingleOfferAD";
-    public static final String API_FUNC_2 = "requesSplashAD";
-    public static final String API_FUNC_3 = "requestHybridSplashAD";
+    private static final String I2WAPI = "com.intowow.sdk.I2WAPI";
+    private static final String API_FUNC_1 = "requesSingleOfferAD";
+    private static final String API_FUNC_2 = "requesSplashAD";
+    private static final String API_FUNC_3 = "requestHybridSplashAD";
 
-    public static final String CONTENT_AD_HELPER = "com.intowow.sdk.ContentADHelper";
-    public static final String HELPER_FUNC = "requestAD";
+    private static final String CONTENT_AD_HELPER = "com.intowow.sdk.ContentADHelper";
+    private static final String HELPER_FUNC = "requestAD";
 
-    public static final String STREAM_HELPER = "com.intowow.sdk.StreamHelper";
+    private static final String STREAM_HELPER = "com.intowow.sdk.StreamHelper";
 
     public static final String STREAM_HELPER_FUNC_1 = "getAD";
-    public static final String STREAM_HELPER_FUNC_2 = "setActive";
-    public static final String STREAM_HELPER_FUNC_3 = "setListener";
+    private static final String STREAM_HELPER_FUNC_2 = "setActive";
+    private static final String STREAM_HELPER_FUNC_3 = "setListener";
 
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, BANNER_FUNC, lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, BANNER_FUNC, lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, SPLASH_AD, SPLASH_AD_FUNC, lpparam);
 
         result |= ApiBlocking.blockAdFunctionWithResult(packageName, I2WAPI, API_FUNC_1, null, lpparam);

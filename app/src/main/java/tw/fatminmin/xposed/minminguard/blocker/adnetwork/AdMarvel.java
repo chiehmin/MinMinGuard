@@ -7,16 +7,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class AdMarvel extends Blocker
 {
 
-    public static final String BANNER = "com.admarvel.android.ads.AdMarvelView";
-    public static final String BANNER_PREFIX = "com.admarvel.android.ads";
+    private static final String BANNER = "com.admarvel.android.ads.AdMarvelView";
+    private static final String BANNER_PREFIX = "com.admarvel.android.ads";
 
-    public static final String INTER_ADS = "com.admarvel.android.ads.AdMarvelInterstitialAds";
+    private static final String INTER_ADS = "com.admarvel.android.ads.AdMarvelInterstitialAds";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "requestNewAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "requestNewAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "requestNewInterstitialAd", lpparam);
 
         return result;

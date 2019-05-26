@@ -7,15 +7,15 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class OpenX extends Blocker
 {
 
-    public static final String BANNER = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
-    public static final String BANNER_PREFIX = "com.openx.ad.mobile.sdk.interfaces";
+    private static final String BANNER = "com.openx.ad.mobile.sdk.interfaces.OXMAdBannerView";
+    private static final String BANNER_PREFIX = "com.openx.ad.mobile.sdk.interfaces";
 
     //TODO Does this need to use removeBanner?
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         return result;
     }

@@ -14,27 +14,26 @@ import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod.Viafree;
 import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
-
 public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 {
-    public static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
-    public static String MODULE_PATH = null;
+    private static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
+    private static String MODULE_PATH = null;
     public static Set<String> patterns;
     public static Resources resources;
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
-            new Ad2iction(), new Adbert(), new Adcolony(), new Adfurikun(), new AdMarvel(), new GoogleAdmob(), new GoogleGms(), new Adtech(), new Amazon(), new Amobee(),
+            new Ad2iction(), new Adbert(), new Adcolony(), new Adfurikun(), new AdMarvel(), new AppodealMRAID(), new GoogleAdmob(), new GoogleGms(), new Adtech(), new Amazon(), new Amobee(),
             new Aotter(), new AppBrain(), new Applovin(), new Appnext(), new Avocarrot(), new Bonzai(), new Chartboost(), new Clickforce(), new Domob(), new Facebook(),
             new Freewheel(), new Flurry(), new GoogleGmsDoubleClick(), new Hodo(), new Inmobi(), new Intowow(), new Ironsource(), new KuAd(), new mAdserve(), new Madvertise(),
-            new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(),
-            new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Vungle(), new Waystorm(), new Yandex(),new Mraid(),new Mraid2(),
+            new MasAd(), new MdotM(), new Millennial(), new Mobclix(), new MobFox(), new MoPub(), new Nend(), new Og(), new Onelouder(), new OpenX(), new SmartAdserver(), new SourcekitMRAID(),
+            new Startapp(), new Tapfortap(), new TWMads(), new UnityAds(), new Vpadn(), new Vpon(), new Vungle(), new Waystorm(), new Yandex(),
             /* Custom Mod*/
     };
 
@@ -77,25 +76,19 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
         String[] sUrls = decoded.split("\n");
         patterns = new HashSet<>();
 
-        for (String url : sUrls)
-        {
-            patterns.add(url);
-        }
+        Collections.addAll(patterns, sUrls);
 
         array = XposedHelpers.assetAsByteArray(resources, "host/mmg_pattern");
         decoded = new String(array);
         sUrls = decoded.split("\n");
 
-        for (String url : sUrls)
-        {
-            patterns.add(url);
-        }
+        Collections.addAll(patterns, sUrls);
 
         notifyWorker = Executors.newSingleThreadExecutor();
     }
 
     @Override
-    public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable
+    public void handleLoadPackage(final LoadPackageParam lpparam)
     {
 
         if (lpparam.packageName.equals(MY_PACKAGE_NAME))
@@ -108,7 +101,7 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
         XposedHelpers.findAndHookMethod("android.app.Application", lpparam.classLoader, "onCreate", new XC_MethodHook()
         {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 final String packageName = lpparam.packageName;
                 Context context = Util.getCurrentApplication();

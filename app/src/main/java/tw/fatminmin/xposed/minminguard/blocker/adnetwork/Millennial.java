@@ -7,16 +7,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Millennial extends Blocker
 {
 
-    public static final String BANNER = "com.millennialmedia.android.MMAdView";
-    public static final String BANNER_PREFIX = "com.millennialmedia.android";
+    private static final String BANNER = "com.millennialmedia.android.MMAdView";
+    private static final String BANNER_PREFIX = "com.millennialmedia.android";
 
-    public static final String INTER_ADS = "com.millennialmedia.android.MMInterstitial";
+    private static final String INTER_ADS = "com.millennialmedia.android.MMInterstitial";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "getAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "display", lpparam);
 
         return result;

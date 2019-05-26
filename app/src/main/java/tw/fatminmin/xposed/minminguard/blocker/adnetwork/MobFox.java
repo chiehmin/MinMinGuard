@@ -10,8 +10,8 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class MobFox extends Blocker
 {
 
-    public static final String BANNER = "com.adsdk.sdk.waterfall.Banner";
-    public static final String BANNER_PREFIX = "com.adsdk.sdk.waterfall";
+    private static final String BANNER = "com.adsdk.sdk.waterfall.Banner";
+    private static final String BANNER_PREFIX = "com.adsdk.sdk.waterfall";
 
     @Override
     //TODO Check if this needs to use removeBanner

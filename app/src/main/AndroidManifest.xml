@@ -33,11 +33,13 @@
         <provider
                 android:name=".MinMinProvider"
                 android:authorities="tw.fatminmin.xposed.minminguard"
+                android:enabled="true"
                 android:exported="true"/>
 
         <provider
                 android:name=".ModSettingsProvider"
                 android:authorities="tw.fatminmin.xposed.minminguard.modesettings"
+                android:enabled="true"
                 android:exported="true"/>
 
         <meta-data

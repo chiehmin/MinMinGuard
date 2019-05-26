@@ -14,8 +14,8 @@ import java.lang.reflect.Method;
 public class Onelouder extends Blocker
 {
 
-    public static final String BANNER = "com.onelouder.adlib.AdView";
-    public static final String BANNER_PREFIX = "com.onelouder.adlib";
+    private static final String BANNER = "com.onelouder.adlib.AdView";
+    private static final String BANNER_PREFIX = "com.onelouder.adlib";
 
     //TODO Use APIBlocking
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
@@ -27,7 +27,7 @@ public class Onelouder extends Blocker
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     Util.log(packageName, "Detect onelouder AdView setVisibility in " + packageName);
 
@@ -35,7 +35,7 @@ public class Onelouder extends Blocker
                 }
             });
 
-            final Method method = XposedHelpers.findMethodBestMatch(adView, "setVisibility", new Class[]{Integer.class});
+            final Method method = XposedHelpers.findMethodBestMatch(adView, "setVisibility", Integer.class);
 
             XposedBridge.hookAllMethods(adView, "addProxiedAdView", new XC_MethodHook()
             {
@@ -68,7 +68,7 @@ public class Onelouder extends Blocker
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     Util.log(packageName, "Detect onelouder AdInterstitial displayInterstitial in " + packageName);
                     param.setResult(new Object());

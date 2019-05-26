@@ -7,17 +7,17 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Tapfortap extends Blocker
 {
 
-    public static final String BANNER = "com.tapfortap.AdView";
-    public static final String BANNER_PREFIX = "com.tapfortap";
+    private static final String BANNER = "com.tapfortap.AdView";
+    private static final String BANNER_PREFIX = "com.tapfortap";
 
-    public static final String INTER_ADS = "com.tapfortap.Interstitial";
+    private static final String INTER_ADS = "com.tapfortap.Interstitial";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
         //TODO Does this need to use removeBanner????
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAds", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAds", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam);
 
         return result;

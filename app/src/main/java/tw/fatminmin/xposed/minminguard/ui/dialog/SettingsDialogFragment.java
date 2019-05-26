@@ -37,13 +37,13 @@ public class SettingsDialogFragment extends DialogFragment
 
         View v = inflater.inflate(R.layout.dialog_settings, container, false);
 
-        mCbShowSystemApps = (CheckBox) v.findViewById(R.id.cb_show_system_apps);
+        mCbShowSystemApps = v.findViewById(R.id.cb_show_system_apps);
         mCbShowSystemApps.setChecked(mUiPref.getBoolean(Common.KEY_SHOW_SYSTEM_APPS, false));
 
-        mCbShowDebugInfo = (CheckBox) v.findViewById(R.id.cb_show_debug_info);
+        mCbShowDebugInfo = v.findViewById(R.id.cb_show_debug_info);
         mCbShowDebugInfo.setChecked(Util.DEBUG);
 
-        Button mBtnOk = (Button) v.findViewById(R.id.btn_ok);
+        Button mBtnOk = v.findViewById(R.id.btn_ok);
 
         mBtnOk.setOnClickListener(new View.OnClickListener()
         {

@@ -11,7 +11,6 @@ import android.os.Handler;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.BuildConfig;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
@@ -24,7 +23,7 @@ public final class Util
     public static boolean DEBUG = BuildConfig.DEBUG;
 
     public static final String TAG = "MinMinGuard";
-    public static final String PACKAGE = "tw.fatminmin.xposed.minminguard";
+    private static final String PACKAGE = "tw.fatminmin.xposed.minminguard";
 
     private Util() throws InstantiationException
     {

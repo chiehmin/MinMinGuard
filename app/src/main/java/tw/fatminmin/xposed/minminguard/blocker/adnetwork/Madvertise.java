@@ -12,8 +12,8 @@ import tw.fatminmin.xposed.minminguard.blocker.Util;
 public class Madvertise extends Blocker
 {
 
-    public static final String BANNER = "de.madvertise.android.sdk.MadvertiseMraidView";
-    public static final String BANNER_PREFIX = "de.madvertise.android.sdk";
+    private static final String BANNER = "de.madvertise.android.sdk.MadvertiseMraidView";
+    private static final String BANNER_PREFIX = "de.madvertise.android.sdk";
 
     //TODO Check if we are using an Xposed version that doesnt support Resource hooking. What is SS????
     public static void handleInitPackageResources(InitPackageResourcesParam resparam)
@@ -35,11 +35,11 @@ public class Madvertise extends Blocker
             resparam.res.hookLayout(packageName, "layout", file, new XC_LayoutInflated()
             {
                 @Override
-                public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable
+                public void handleLayoutInflated(LayoutInflatedParam liparam)
                 {
 
                     Util.log(packageName, "Set view gone");
-                    final ViewGroup root = (ViewGroup) liparam.view.findViewById(liparam.res.getIdentifier("ll_adcontainer", "id", packageName));
+                    final ViewGroup root = liparam.view.findViewById(liparam.res.getIdentifier("ll_adcontainer", "id", packageName));
 
                     root.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener()
                     {
@@ -86,7 +86,7 @@ public class Madvertise extends Blocker
 
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         return result;
     }

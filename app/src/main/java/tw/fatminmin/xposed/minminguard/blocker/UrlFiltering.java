@@ -28,7 +28,7 @@ public final class UrlFiltering
             XposedBridge.hookAllMethods(adView, "loadUrl", new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
 
                     String url = (String) param.args[0];
@@ -44,7 +44,7 @@ public final class UrlFiltering
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
 
                     String data = (String) param.args[0];
@@ -59,7 +59,7 @@ public final class UrlFiltering
             XposedBridge.hookAllMethods(adView, "loadDataWithBaseURL", new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     String url = (String) param.args[0];
                     String data = (String) param.args[1];

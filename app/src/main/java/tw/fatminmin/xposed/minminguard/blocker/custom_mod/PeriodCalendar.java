@@ -8,10 +8,10 @@ import tw.fatminmin.xposed.minminguard.blocker.ViewBlocking;
 /**
  * Created by fatminmin on 2015/10/30.
  */
-public final class PeriodCalendar
+final class PeriodCalendar
 {
 
-    public static String pkgName = "com.popularapp.periodcalendar";
+    private static String pkgName = "com.popularapp.periodcalendar";
 
     private PeriodCalendar() throws InstantiationException
     {
@@ -30,10 +30,10 @@ public final class PeriodCalendar
         {
 
             @Override
-            public void handleLayoutInflated(LayoutInflatedParam liparam) throws Throwable
+            public void handleLayoutInflated(LayoutInflatedParam liparam)
             {
 
-                View ad = (View) liparam.view.findViewById(liparam.res.getIdentifier("native_layout", "id", pkgName));
+                View ad = liparam.view.findViewById(liparam.res.getIdentifier("native_layout", "id", pkgName));
 
                 ViewBlocking.removeAdView(pkgName, ad);
             }

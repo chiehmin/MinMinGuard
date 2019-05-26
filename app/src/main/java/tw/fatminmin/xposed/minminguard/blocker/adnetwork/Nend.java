@@ -7,15 +7,15 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Nend extends Blocker
 {
 
-    public static final String BANNER = "net.nend.android.NendAdView";
-    public static final String BANNER_PREFIX = "net.nend.android";
+    private static final String BANNER = "net.nend.android.NendAdView";
+    private static final String BANNER_PREFIX = "net.nend.android";
 
     //TODO Does this need to use removeBanner?
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         return result;
     }

@@ -10,7 +10,7 @@ import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
 public final class NextMedia
 {
 
-    public static final String AD_UTILS = "com.nextmediatw.data.AdUtils";
+    private static final String AD_UTILS = "com.nextmediatw.data.AdUtils";
 
     private NextMedia() throws InstantiationException
     {

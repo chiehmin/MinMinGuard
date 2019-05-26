@@ -22,7 +22,6 @@ public class AppDataDao extends AbstractDao<AppData, String>
         super(config);
     }
 
-    ;
 
     public AppDataDao(DaoConfig config, DaoSession daoSession)
     {

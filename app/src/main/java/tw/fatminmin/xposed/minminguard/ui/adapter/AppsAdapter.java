@@ -182,21 +182,21 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
 
-        public View card;
-        public ImageView imgAppIcon;
-        public TextView txtAppName;
-        public TextView txtBlockNum;
-        public Switch switchEnable;
+        View card;
+        ImageView imgAppIcon;
+        TextView txtAppName;
+        TextView txtBlockNum;
+        Switch switchEnable;
 
-        public ViewHolder(View v)
+        ViewHolder(View v)
         {
             super(v);
 
             card = v;
-            imgAppIcon = (ImageView) v.findViewById(R.id.img_app_icon);
-            txtAppName = (TextView) v.findViewById(R.id.txt_app_name);
-            txtBlockNum = (TextView) v.findViewById(R.id.txt_block_num);
-            switchEnable = (Switch) v.findViewById(R.id.switch_enable);
+            imgAppIcon = v.findViewById(R.id.img_app_icon);
+            txtAppName = v.findViewById(R.id.txt_app_name);
+            txtBlockNum = v.findViewById(R.id.txt_block_num);
+            switchEnable = v.findViewById(R.id.switch_enable);
         }
     }
 }

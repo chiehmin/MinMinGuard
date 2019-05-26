@@ -84,10 +84,10 @@ public class MainFragment extends Fragment
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        TextView mTxtXposedEnabled = (TextView) view.findViewById(R.id.txt_xposed_enable);
-        mBtnMode = (Button) view.findViewById(R.id.btn_mode);
+        TextView mTxtXposedEnabled = view.findViewById(R.id.txt_xposed_enable);
+        mBtnMode = view.findViewById(R.id.btn_mode);
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerView = view.findViewById(R.id.recycler_view);
 
         if (!Util.xposedEnabled())
         {

@@ -11,16 +11,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Adbert extends Blocker
 {
 
-    public static final String BANNER = "com.adbert.AdbertADView";
-    public static final String BANNER_PREFIX = "com.adbert";
+    private static final String BANNER = "com.adbert.AdbertADView";
+    private static final String BANNER_PREFIX = "com.adbert";
 
-    public static final String INTER_ADS = "com.adbert.AdbertInterstitialAD";
+    private static final String INTER_ADS = "com.adbert.AdbertInterstitialAD";
 
     @Override
     public boolean handleLoadPackage(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "start", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "start", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
 
         return result;

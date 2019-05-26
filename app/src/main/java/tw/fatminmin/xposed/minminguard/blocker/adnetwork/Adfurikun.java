@@ -7,14 +7,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class Adfurikun extends Blocker
 {
 
-    public static final String BANNER = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
-    public static final String BANNER_PREFIX = "jp.tjkapp.adfurikunsdk";
+    private static final String BANNER = "jp.tjkapp.adfurikunsdk.AdfurikunBase";
+    private static final String BANNER_PREFIX = "jp.tjkapp.adfurikunsdk";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "a", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "a", lpparam);
 
         return result;
     }

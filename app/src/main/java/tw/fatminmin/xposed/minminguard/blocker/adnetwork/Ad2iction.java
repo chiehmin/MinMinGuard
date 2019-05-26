@@ -6,16 +6,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Ad2iction extends Blocker
 {
-    public static final String BANNER = "com.ad2iction.mobileads.Ad2ictionView";
-    public static final String BANNER_PREFIX = "com.ad2iction.mobileads";
+    private static final String BANNER = "com.ad2iction.mobileads.Ad2ictionView";
+    private static final String BANNER_PREFIX = "com.ad2iction.mobileads";
 
-    public static final String INTER_ADS = "com.ad2iction.mobileads.Ad2ictionInterstitial";
+    private static final String INTER_ADS = "com.ad2iction.mobileads.Ad2ictionInterstitial";
 
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam);
 
         return result;

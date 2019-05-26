@@ -16,7 +16,8 @@
                 android:id="@+id/img_app_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                tools:src="@drawable/icon"/>
+                tools:src="@drawable/icon"
+            android:contentDescription="Card app icon" />
 
         <TextView
                 android:id="@+id/txt_app_name"

@@ -7,14 +7,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class KuAd extends Blocker
 {
 
-    public static final String BANNER = "com.waystorm.ads.WSAdBanner";
-    public static final String BANNER_PREFIX = "com.waystorm.ads";
+    private static final String BANNER = "com.waystorm.ads.WSAdBanner";
+    private static final String BANNER_PREFIX = "com.waystorm.ads";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "setWSAdListener", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "setWSAdListener", lpparam);
         result |= ApiBlocking.removeBanner(packageName, BANNER, "setApplicationId", lpparam);
         result |= ApiBlocking.removeBanner(packageName, BANNER, "mediationLoadAd", lpparam);
 

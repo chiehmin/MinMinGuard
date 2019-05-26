@@ -8,17 +8,17 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class MoPub extends Blocker
 {
 
-    public static final String BANNER = "com.mopub.mobileads.MoPubView";
-    public static final String BANNER_PREFIX = "com.mopub.mobileads";
+    private static final String BANNER = "com.mopub.mobileads.MoPubView";
+    private static final String BANNER_PREFIX = "com.mopub.mobileads";
 
-    public static final String INTER_ADS = "com.mopub.mobileads.MoPubInterstitial";
-    public static final String NATIVE_AD = "com.mopub.nativeads.MoPubAdAdapter";
+    private static final String INTER_ADS = "com.mopub.mobileads.MoPubInterstitial";
+    private static final String NATIVE_AD = "com.mopub.nativeads.MoPubAdAdapter";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "load", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_AD, "loadAds", lpparam);

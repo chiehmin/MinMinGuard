@@ -77,12 +77,12 @@ public class AppDetailDialogFragment extends DialogFragment
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         View v = inflater.inflate(R.layout.dialog_app_detail, container, false);
-        imgAppIcon = (ImageView) v.findViewById(R.id.detail_app_icon);
-        txtAppName = (TextView) v.findViewById(R.id.detail_app_name);
-        txtPkgName = (TextView) v.findViewById(R.id.detail_pkg_name);
-        txtAdNetworks = (TextView) v.findViewById(R.id.txt_ad_networks);
-        txtAdsBlocked = (TextView) v.findViewById(R.id.txt_ads_blocked);
-        swtUrlFilter = (Switch) v.findViewById(R.id.switch_url_filter);
+        imgAppIcon = v.findViewById(R.id.detail_app_icon);
+        txtAppName = v.findViewById(R.id.detail_app_name);
+        txtPkgName = v.findViewById(R.id.detail_pkg_name);
+        txtAdNetworks = v.findViewById(R.id.txt_ad_networks);
+        txtAdsBlocked = v.findViewById(R.id.txt_ads_blocked);
+        swtUrlFilter = v.findViewById(R.id.switch_url_filter);
 
         txtAppName.setText(appName);
         txtPkgName.setText(pkgName);

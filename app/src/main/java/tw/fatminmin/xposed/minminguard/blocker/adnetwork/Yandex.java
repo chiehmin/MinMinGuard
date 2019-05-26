@@ -11,17 +11,17 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Yandex extends Blocker
 {
-    public static final String BANNER = "com.yandex.mobile.ads.AdView";
-    public static final String BANNER_PREFIX = "com.yandex.mobile.ads";
+    private static final String BANNER = "com.yandex.mobile.ads.AdView";
+    private static final String BANNER_PREFIX = "com.yandex.mobile.ads";
 
-    public static final String INTERSTITIAL = "com.yandex.mobile.ads.InterstitialAd";
+    private static final String INTERSTITIAL = "com.yandex.mobile.ads.InterstitialAd";
 
-    public static final String NATIVE = "com.yandex.mobile.ads.nativeads.NativeAdLoader";
+    private static final String NATIVE = "com.yandex.mobile.ads.nativeads.NativeAdLoader";
     //public static final String NATIVE_APP_INSTALL = "com.yandex.mobile.ads.nativeads.NativeAppInstallAdView";
     //public static final String NATIVE_CONTENT = "com.yandex.mobile.ads.nativeads.NativeContentAdView";
     //public static final String NATIVE_IMAGE = "com.yandex.mobile.ads.nativeads.NativeImageAdView";
 
-    public static final String VIDEO = "com.yandex.mobile.ads.video.YandexVideoAds";
+    private static final String VIDEO = "com.yandex.mobile.ads.video.YandexVideoAds";
 
     @Override
     public boolean handleLoadPackage(final String packageName, final XC_LoadPackage.LoadPackageParam lpparam)
@@ -29,7 +29,7 @@ public class Yandex extends Blocker
         boolean result = false;
 
         //TODO Does this need to use removeBanner?
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTERSTITIAL, "loadAd", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE, "loadAd", lpparam);

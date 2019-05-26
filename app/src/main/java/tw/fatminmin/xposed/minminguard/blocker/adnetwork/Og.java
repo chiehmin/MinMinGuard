@@ -13,8 +13,8 @@ import tw.fatminmin.xposed.minminguard.blocker.ViewBlocking;
 public class Og extends Blocker
 {
 
-    public static final String BANNER = "com.og.wa.AdWebView";
-    public static final String BANNER_PREFIX = "com.og.wa";
+    private static final String BANNER = "com.og.wa.AdWebView";
+    private static final String BANNER_PREFIX = "com.og.wa";
 
     //FIXME Use APIBlocking Please....... Use fields for classNames
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
@@ -27,7 +27,7 @@ public class Og extends Blocker
             {
 
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     if (adView.isInstance(param.thisObject))
                     {

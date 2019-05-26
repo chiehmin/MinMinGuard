@@ -8,16 +8,16 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 public class MdotM extends Blocker
 {
 
-    public static final String BANNER = "com.mdotm.android.view.MdotMAdView";
-    public static final String BANNER_PREFIX = "com.mdotm.android.view";
+    private static final String BANNER = "com.mdotm.android.view.MdotMAdView";
+    private static final String BANNER_PREFIX = "com.mdotm.android.view";
 
-    public static final String INTER_ADS = "com.mdotm.android.view.MdotMInterstitial";
+    private static final String INTER_ADS = "com.mdotm.android.view.MdotMInterstitial";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadBannerAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadBannerAd", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadInterstitial", lpparam);
 
         return result;

@@ -29,7 +29,7 @@ public final class _2chMate
             XposedBridge.hookAllMethods(viewGroupClass, "addView", new XC_MethodHook()
             {
                 @Override
-                protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+                protected void beforeHookedMethod(MethodHookParam param)
                 {
                     final View view = (View) param.args[0];
                     if (view.getClass().getName().equals("jp.syoboi.a2chMate.view.MyAdView"))

@@ -7,17 +7,17 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 //TODO Fix formatting
 public class Vpadn extends Blocker
 {
-    public static final String BANNER = "com.vpadn.ads.VpadnBanner";
-    public static final String BANNER_PREFIX = "com.vpadn.ads";
+    private static final String BANNER = "com.vpadn.ads.VpadnBanner";
+    private static final String BANNER_PREFIX = "com.vpadn.ads";
 
-    public static final String INTER_ADS = "com.vpadn.ads.VpadnInterstitialAd";
-    public static final String NATIVE_ADS = "com.vpadn.ads.VpadnNativeAd";
+    private static final String INTER_ADS = "com.vpadn.ads.VpadnInterstitialAd";
+    private static final String NATIVE_ADS = "com.vpadn.ads.VpadnNativeAd";
 
     public boolean handleLoadPackage(final String packageName, LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "show", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, NATIVE_ADS, "loadAd", lpparam);

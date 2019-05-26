@@ -13,7 +13,7 @@ public class ViewBlocking
         removeAdView(packageName, view, true, 51);
     }
 
-    public static void removeAdView(final String packageName, final View view, final boolean first, final float heightLimit)
+    private static void removeAdView(final String packageName, final View view, final boolean first, final float heightLimit)
     {
         float adHeight = convertPixelsToDp(view.getHeight());
 

@@ -6,14 +6,14 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Ironsource extends Blocker
 {
-    public static final String SuperSonicAdsAdapter = "com.ironsource.adapters.supersonicads.SupersonicAdsAdapter";
+    private static final String SuperSonicAdsAdapter = "com.ironsource.adapters.supersonicads.SupersonicAdsAdapter";
 
     @Override
     public boolean handleLoadPackage(String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", lpparam);
+        result = ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showRewardedVideo", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showInterstitial", lpparam);
         result |= ApiBlocking.blockAdFunction(packageName, SuperSonicAdsAdapter, "showOfferwall", lpparam);
 

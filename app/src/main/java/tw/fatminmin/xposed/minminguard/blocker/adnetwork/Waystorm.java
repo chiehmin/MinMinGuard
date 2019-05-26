@@ -6,15 +6,15 @@ import tw.fatminmin.xposed.minminguard.blocker.Blocker;
 
 public class Waystorm extends Blocker
 {
-    public static final String BANNER = "com.waystorm.ads.WSAdBanner";
-    public static final String BANNER_PREFIX = "com.waystorm.ads";
-    public static final String INTER_ADS = "com.waystorm.ads.WSAdInterstitial";
+    private static final String BANNER = "com.waystorm.ads.WSAdBanner";
+    private static final String BANNER_PREFIX = "com.waystorm.ads";
+    private static final String INTER_ADS = "com.waystorm.ads.WSAdInterstitial";
 
     public boolean handleLoadPackage(final String packageName, XC_LoadPackage.LoadPackageParam lpparam)
     {
         boolean result = false;
 
-        result |= ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
+        result = ApiBlocking.removeBanner(packageName, BANNER, "loadAd", lpparam);
 
         result |= ApiBlocking.blockAdFunction(packageName, INTER_ADS, "loadAd", lpparam);
 

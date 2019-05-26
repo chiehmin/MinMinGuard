@@ -5,8 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tw.fatminmin.xposed.minminguard.Main;
 
@@ -24,12 +22,7 @@ public final class NameBlocking
             return true;
         }
 
-        if (bannerPrefix != null && clazzName.startsWith(bannerPrefix))
-        {
-            return true;
-        }
-
-        return false;
+        return bannerPrefix != null && clazzName.startsWith(bannerPrefix);
     }
 
     // return adnetwork name
@@ -79,7 +72,7 @@ public final class NameBlocking
         return false;
     }
 
-    public static void clearAdViewInLayout(final String packageName, final View view)
+    private static void clearAdViewInLayout(final String packageName, final View view)
     {
 
         if (isAdView(view.getContext(), packageName, view))
@@ -105,7 +98,7 @@ public final class NameBlocking
         {
 
             @Override
-            protected void beforeHookedMethod(MethodHookParam param) throws Throwable
+            protected void beforeHookedMethod(MethodHookParam param)
             {
                 View view = (View) param.args[0];
 
@@ -117,7 +110,7 @@ public final class NameBlocking
             }
 
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 View view = (View) param.args[0];
 
@@ -132,7 +125,7 @@ public final class NameBlocking
         Util.hookAllMethods("android.app.Activity", lpparam.classLoader, "setContentView", new XC_MethodHook()
         {
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 Activity ac = (Activity) (param.thisObject);
                 ViewGroup root = ac.getWindow().getDecorView().findViewById(android.R.id.content);
@@ -157,7 +150,7 @@ public final class NameBlocking
              */
 
             @Override
-            protected void afterHookedMethod(MethodHookParam param) throws Throwable
+            protected void afterHookedMethod(MethodHookParam param)
             {
                 View root = (View) param.getResult();
 
