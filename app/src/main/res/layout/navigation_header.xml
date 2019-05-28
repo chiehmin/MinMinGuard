@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@color/black">
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -14,7 +15,7 @@
         <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/ic_launcher"
+                app:srcCompat="@mipmap/ic_launcher"
             android:contentDescription="Navigation header icon" />
 
         <TextView

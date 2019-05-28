@@ -18,7 +18,6 @@
                 android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS"/>
             </intent-filter>
@@ -56,5 +55,4 @@
                 android:name="io.fabric.ApiKey"
                 android:value="11b3bd0c3467e4848618141b36a73619c7ef4843"/>
     </application>
-
 </manifest>
