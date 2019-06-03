@@ -37,12 +37,11 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        vectorDrawables.useSupportLibrary = true
         applicationId "tw.fatminmin.xposed.minminguard"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 65
-        versionName "2.0.6"
+        versionCode 66
+        versionName "2.0.7"
     }
     buildTypes {
         release {
@@ -66,11 +65,11 @@ dependencies {
     compileOnly 'de.robv.android.xposed:api:82'
     compileOnly 'de.robv.android.xposed:api:82:sources'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.apl-devs:appintro:v4.2.3'
     implementation 'de.greenrobot:greendao:2.0.0'
     implementation 'com.crossbowffs.remotepreferences:remotepreferences:0.5'

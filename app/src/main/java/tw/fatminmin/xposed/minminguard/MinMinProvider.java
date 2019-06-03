@@ -5,7 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import tw.fatminmin.xposed.minminguard.orm.AppData;
 import tw.fatminmin.xposed.minminguard.orm.AppDataDao;
 import tw.fatminmin.xposed.minminguard.orm.DaoMaster;
