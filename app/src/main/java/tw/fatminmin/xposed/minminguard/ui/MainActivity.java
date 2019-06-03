@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -23,6 +24,7 @@ import androidx.appcompat.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import tw.fatminmin.xposed.minminguard.Common;
+import tw.fatminmin.xposed.minminguard.Main;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.adapter.ModeFragmentAdapter;
 import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
@@ -79,6 +81,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        //Workaround for EdXposed
+        Main.resources = getResources();
 
         uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
         modPref = getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);

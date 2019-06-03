@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.blocker;
 
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import tw.fatminmin.xposed.minminguard.Main;
@@ -61,6 +62,9 @@ public class ViewBlocking
 
     private static float convertPixelsToDp(float px)
     {
+        if(Main.resources == null)
+            return 0;
+
         DisplayMetrics metrics = Main.resources.getDisplayMetrics();
 
         return px / (metrics.densityDpi / 160f);

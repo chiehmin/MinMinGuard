@@ -2,17 +2,13 @@ package tw.fatminmin.xposed.minminguard;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.XModuleResources;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.crossbowffs.remotepreferences.RemotePreferences;
-import de.robv.android.xposed.*;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
-import tw.fatminmin.xposed.minminguard.blocker.*;
-import tw.fatminmin.xposed.minminguard.blocker.adnetwork.*;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod.Viafree;
-import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,11 +16,79 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
+import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
+import tw.fatminmin.xposed.minminguard.blocker.Blocker;
+import tw.fatminmin.xposed.minminguard.blocker.NameBlocking;
+import tw.fatminmin.xposed.minminguard.blocker.UrlFiltering;
+import tw.fatminmin.xposed.minminguard.blocker.Util;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ad2iction;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AdMarvel;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adbert;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adcolony;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adfurikun;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Adtech;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Amazon;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Amobee;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Aotter;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AppBrain;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Applovin;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Appnext;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.AppodealMRAID;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Avocarrot;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Bonzai;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Chartboost;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Clickforce;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Domob;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Facebook;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Flurry;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Freewheel;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.GoogleAdmob;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.GoogleGms;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.GoogleGmsDoubleClick;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Hodo;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Inmobi;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Intowow;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Ironsource;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.KuAd;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Madvertise;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MasAd;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MdotM;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Millennial;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MoPub;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.MobFox;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Mobclix;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Nend;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Og;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Onelouder;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.OpenX;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.SmartAdserver;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.SourcekitMRAID;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Startapp;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.TWMads;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Tapfortap;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.UnityAds;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpadn;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vpon;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Vungle;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Waystorm;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.Yandex;
+import tw.fatminmin.xposed.minminguard.blocker.adnetwork.mAdserve;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.NextMedia;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.OneWeather;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod.Viafree;
+import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
+
 public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 {
     private static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
     private static String MODULE_PATH = null;
-    public static Set<String> patterns;
+    public static Set<String> patterns = new HashSet<>();
     public static Resources resources;
 
     public static Blocker[] blockers = {
@@ -69,12 +133,11 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
     public void initZygote(StartupParam startupParam) throws Throwable
     {
         MODULE_PATH = startupParam.modulePath;
-
-        resources = XModuleResources.createInstance(MODULE_PATH, null);
-        byte[] array = XposedHelpers.assetAsByteArray(resources, "host/output_file");
+        //Workaround for EdXposed
+        //resources = XModuleResources.createInstance(MODULE_PATH, null);
+        /*byte[] array = XposedHelpers.assetAsByteArray(resources, "host/output_file");
         String decoded = new String(array);
         String[] sUrls = decoded.split("\n");
-        patterns = new HashSet<>();
 
         Collections.addAll(patterns, sUrls);
 
@@ -84,7 +147,7 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
         Collections.addAll(patterns, sUrls);
 
-        notifyWorker = Executors.newSingleThreadExecutor();
+        notifyWorker = Executors.newSingleThreadExecutor();*/
     }
 
     @Override
