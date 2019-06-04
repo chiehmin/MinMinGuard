@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.content.res.XModuleResources;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -20,6 +21,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import tw.fatminmin.xposed.minminguard.blocker.ApiBlocking;
@@ -87,9 +89,10 @@ import tw.fatminmin.xposed.minminguard.blocker.custom_mod._2chMate;
 public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 {
     private static final String MY_PACKAGE_NAME = Main.class.getPackage().getName();
-    private static String MODULE_PATH = null;
+    private static String MODULE_PATH;
     public static Set<String> patterns = new HashSet<>();
     public static Resources resources;
+    public static Integer xposedVersionCode;
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
@@ -129,31 +132,55 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
         Viafree.handleLoadPackage(packageName, lpparam);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable
     {
+        try
+        {
+            xposedVersionCode = XposedBridge.getXposedVersion();
+        }
+        catch(Exception e)
+        {
+            xposedVersionCode = XposedBridge.XPOSED_BRIDGE_VERSION;
+        }
+
         MODULE_PATH = startupParam.modulePath;
-        //Workaround for EdXposed
-        //resources = XModuleResources.createInstance(MODULE_PATH, null);
-        /*byte[] array = XposedHelpers.assetAsByteArray(resources, "host/output_file");
-        String decoded = new String(array);
-        String[] sUrls = decoded.split("\n");
 
-        Collections.addAll(patterns, sUrls);
+        if(xposedVersionCode < 90)
+            UnpackResources();
+        else
+            Util.log(MY_PACKAGE_NAME, "Skipping resource unpacking for now");
 
-        array = XposedHelpers.assetAsByteArray(resources, "host/mmg_pattern");
-        decoded = new String(array);
-        sUrls = decoded.split("\n");
+        notifyWorker = Executors.newSingleThreadExecutor();
+    }
 
-        Collections.addAll(patterns, sUrls);
+    private void UnpackResources()
+    {
+        try
+        {
+            resources = XModuleResources.createInstance(MODULE_PATH, null);
+            byte[] array = XposedHelpers.assetAsByteArray(resources, "host/output_file");
+            String decoded = new String(array);
+            String[] sUrls = decoded.split("\n");
 
-        notifyWorker = Executors.newSingleThreadExecutor();*/
+            Collections.addAll(patterns, sUrls);
+
+            array = XposedHelpers.assetAsByteArray(resources, "host/mmg_pattern");
+            decoded = new String(array);
+            sUrls = decoded.split("\n");
+
+            Collections.addAll(patterns, sUrls);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam)
     {
-
         if (lpparam.packageName.equals(MY_PACKAGE_NAME))
             XposedHelpers.findAndHookMethod("tw.fatminmin.xposed.minminguard.blocker.Util", lpparam.classLoader, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
 
