@@ -82,9 +82,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
 
-        //Workaround for EdXposed
-        Main.resources = getResources();
-
         uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
         modPref = getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
 
@@ -185,6 +182,17 @@ public class MainActivity extends AppCompatActivity
         });
 
         refresh(true);
+
+        //Workaround for EdXposed
+        try
+        {
+            if (Main.resources == null)
+                Main.resources = getResources();
+        }
+        catch(Exception e)
+        {
+
+        }
     }
 
     @Override
