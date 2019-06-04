@@ -182,17 +182,6 @@ public class MainActivity extends AppCompatActivity
         });
 
         refresh(true);
-
-        //Workaround for EdXposed
-        try
-        {
-            if (Main.resources == null)
-                Main.resources = getResources();
-        }
-        catch(Exception e)
-        {
-
-        }
     }
 
     @Override

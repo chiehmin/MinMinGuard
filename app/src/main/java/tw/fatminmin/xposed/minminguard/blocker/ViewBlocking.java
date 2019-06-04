@@ -60,12 +60,12 @@ public class ViewBlocking
         }
     }
 
+    private static DisplayMetrics metrics = new DisplayMetrics();;
+
     private static float convertPixelsToDp(float px)
     {
-        if(Main.resources == null)
-            return 0;
-
-        DisplayMetrics metrics = Main.resources.getDisplayMetrics();
+        if(Main.resources != null)
+            metrics = Main.resources.getDisplayMetrics();
 
         return px / (metrics.densityDpi / 160f);
     }
