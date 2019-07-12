@@ -1,6 +1,7 @@
 package tw.fatminmin.xposed.minminguard.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -13,6 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.viewpager.widget.ViewPager;
@@ -25,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.Main;
+import tw.fatminmin.xposed.minminguard.PrefFileManager;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.adapter.ModeFragmentAdapter;
 import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
@@ -76,14 +80,40 @@ public class MainActivity extends AppCompatActivity
     private ActionBarDrawerToggle mToggle;
     private ProgressDialog progressDialog;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private PrefFileManager prefFileManager;
+
+    @Override
+    public void attachBaseContext(Context newBase)
+    {
+        super.attachBaseContext(newBase);
+        prefFileManager = PrefFileManager.getInstance(this);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        prefFileManager.onResume();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        prefFileManager.onPause();
+        super.onStop();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        prefFileManager.fixFolderPermissionsAsync();
+
+        Context ctx = ContextCompat.createDeviceProtectedStorageContext(this);
+        if (ctx == null) ctx = this;
 
         uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
-        modPref = getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
+        modPref = ctx.getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
 
         progressDialog = new ProgressDialog(this, R.style.MainSpinnerDialogStyle);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

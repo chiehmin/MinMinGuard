@@ -3,6 +3,8 @@ package tw.fatminmin.xposed.minminguard.ui.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,7 +52,11 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>
         super();
         mContext = context;
         appList = list;
-        mPref = mContext.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
+
+        Context ctx = ContextCompat.createDeviceProtectedStorageContext(context);
+        if (ctx == null) ctx = context;
+
+        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
 
         helper = new DaoMaster.DevOpenHelper(context, "mmg", null);
         db = helper.getWritableDatabase();

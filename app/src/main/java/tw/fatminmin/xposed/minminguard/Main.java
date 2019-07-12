@@ -9,8 +9,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.crossbowffs.remotepreferences.RemotePreferences;
-
+import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +20,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -93,6 +93,7 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
     public static Set<String> patterns = new HashSet<>();
     public static Resources resources;
     public static Integer xposedVersionCode;
+    private SharedPreferences pref;
 
     public static Blocker[] blockers = {
             /* Popular adnetwork */
@@ -153,6 +154,12 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
             Util.log(MY_PACKAGE_NAME, "Skipping resource unpacking for now");
 
         notifyWorker = Executors.newSingleThreadExecutor();
+
+        String dataDir = "data/";
+        if (Build.VERSION.SDK_INT > 23) dataDir = "user_de/0/";
+
+        File f = new File("/data/" + dataDir + MY_PACKAGE_NAME + "/shared_prefs/" + Common.MOD_PREFS + ".xml");
+        pref = new XSharedPreferences(f);
     }
 
     private void UnpackResources()
@@ -201,8 +208,6 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
                     Util.log(packageName, "failed to get context");
                     return;
                 }
-
-                SharedPreferences pref = new RemotePreferences(context, "tw.fatminmin.xposed.minminguard.modesettings", Common.MOD_PREFS);
 
                 if (isEnabled(pref, packageName))
                 {
