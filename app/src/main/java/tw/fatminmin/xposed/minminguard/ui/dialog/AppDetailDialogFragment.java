@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,10 @@ public class AppDetailDialogFragment extends DialogFragment
         adNetworks = args.getString("adNetworks");
         blockNum = args.getInt("blockNum");
 
-        mPref = getActivity().getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
+        Context ctx = ContextCompat.createDeviceProtectedStorageContext(getActivity());
+        if (ctx == null) ctx = getActivity();
+
+        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
     }
 
     @Nullable
