@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name" translatable="false">MinMinGuard</string>
+
+    <string name="action_search">Ara</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="action_tutorial">Öğretici</string>
+    <string name="action_about">Hakkında / Yardım</string>
+    <string name="action_donate">Bağış yap</string>
+
+    <string name="intro_auto_title">
+        Otomatik Mod
+    </string>
+    <string name="intro_auto_content">
+        Otomatik mod, cihazınızdaki tüm reklamları engellemenize yardımcı olabilir.
+    </string>
+    <string name="intro_manual_title">
+        Manuel Mod
+    </string>
+    <string name="intro_manual_content">
+        Reklamları engelleyeceğiniz uygulamaları elle seçin. (Anahtarla açıp kapayın)
+    </string>
+    <string name="intro_tap_icon_title">
+        Uygulama simgesine dokun
+    </string>
+    <string name="intro_tap_icon_content">
+        Uygulamayı yeniden başlatmak için simgeye dokunabilirsiniz.
+    </string>
+    <string name="intro_app_detail_title">
+        Uygulama İstatistiklerini Göster
+    </string>
+    <string name="intro_app_detail_content">
+        Engelleme istatistiklerini göstermek için uygulama adına dokunun.
+    </string>
+    <string name="intro_url_filtering_title">
+        URL Filtreleme
+    </string>
+    <string name="intro_url_filtering_content">
+        Uygulama hala reklam gösteriyorsa, url filtreleme özelliğini etkinleştirmeyi deneyebilirsiniz. (Bu web görünümü tabanlı uygulamalarda sorunlara neden olabilir)
+    </string>
+
+    <string name="btn_ok">TAMAM</string>
+
+    <string-array name="mode_array">
+        <item>OTOMATİK</item>
+        <item>KARA LİSTE</item>
+        <item>BEYAZ LİSTE</item>
+    </string-array>
+
+    <string name="msg_xposed_not_enabled">Xposed etkin değil</string>
+    <string name="msg_enabled_crash_report">Hata raporlamayı etkinleştir</string>
+    <string name="msg_show_system_apps">Sistem uygulamalarını göster</string>
+    <string name="msg_show_debug">Xposed günlüğünde hata ayıklama bilgilerini göster</string>
+    <string name="msg_show_launcher_icon">Başlatıcı simgesini göster</string>
+    <string name="msg_mode_apply">Uygula</string>
+    <string name="msg_block_num">%d reklam engellendi</string>
+    <string name="msg_ad_networks">Reklam Ağları:</string>
+    <string name="msg_ads_blocked">Engellenen Reklamlar:</string>
+    <string name="msg_not_detected">Algılanmadı</string>
+    <string name="msg_wait">Lütfen bekleyin&#8230;</string>
+    <string name="msg_app_launch_fail">Bu uygulama başlatılamıyor</string>
+
+    <string name="nav_title">Menü</string>
+    <string name="option_enable_url_filter">URL filtrelemeyi etkinleştir</string>
+</resources>
