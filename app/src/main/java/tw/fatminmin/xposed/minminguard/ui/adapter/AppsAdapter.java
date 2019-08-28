@@ -3,17 +3,23 @@ package tw.fatminmin.xposed.minminguard.ui.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import tw.fatminmin.xposed.minminguard.Common;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.orm.AppData;
@@ -24,11 +30,6 @@ import tw.fatminmin.xposed.minminguard.ui.UIUtils;
 import tw.fatminmin.xposed.minminguard.ui.dialog.AppDetailDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by fatminmin on 2015/10/1.
@@ -135,7 +136,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>
             holder.txtBlockNum.setText("");
         }
 
-        holder.imgAppIcon.setImageDrawable(currentAppDetails.getIcon());
+        currentAppDetails.loadIcon(holder.imgAppIcon);
         holder.txtAppName.setText(currentAppDetails.getName());
 
         if (mMode == MainFragment.FragmentMode.AUTO)
