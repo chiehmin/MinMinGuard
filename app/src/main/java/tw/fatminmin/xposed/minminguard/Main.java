@@ -2,18 +2,14 @@ package tw.fatminmin.xposed.minminguard;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.XModuleResources;
 import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -105,8 +101,6 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
             /* Custom Mod*/
     };
 
-    public static ExecutorService notifyWorker;
-
     private static boolean isEnabled(SharedPreferences pref, String pkgName)
     {
         String mode = pref.getString(Common.KEY_MODE, Common.VALUE_MODE_BLACKLIST);
@@ -153,7 +147,7 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
         else
             Util.log(MY_PACKAGE_NAME, "Skipping resource unpacking for now");
 
-        notifyWorker = Executors.newSingleThreadExecutor();
+        Util.notifyWorker = Executors.newSingleThreadExecutor();
 
         String dataDir = "data/";
         if (Build.VERSION.SDK_INT > 23) dataDir = "user_de/0/";

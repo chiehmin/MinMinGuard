@@ -7,37 +7,36 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuItem;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import tw.fatminmin.xposed.minminguard.Common;
-import tw.fatminmin.xposed.minminguard.Main;
 import tw.fatminmin.xposed.minminguard.PrefFileManager;
 import tw.fatminmin.xposed.minminguard.R;
 import tw.fatminmin.xposed.minminguard.ui.adapter.ModeFragmentAdapter;
 import tw.fatminmin.xposed.minminguard.ui.dialog.SettingsDialogFragment;
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 import tw.fatminmin.xposed.minminguard.ui.models.AppDetails;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -322,10 +321,9 @@ public class MainActivity extends AppCompatActivity
             {
                 String name = (String) info.applicationInfo.loadLabel(pm);
                 String packageName = info.packageName;
-                Drawable icon = info.applicationInfo.loadIcon(pm);
                 boolean isEnabled = isPackageEnabled(packageName);
 
-                temp.add(new AppDetails(name, packageName, icon, isEnabled));
+                temp.add(new AppDetails(name, packageName, info.applicationInfo, isEnabled));
             }
 
             // setting initial value for system apps

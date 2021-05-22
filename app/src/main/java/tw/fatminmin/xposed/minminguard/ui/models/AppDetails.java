@@ -1,20 +1,23 @@
 package tw.fatminmin.xposed.minminguard.ui.models;
 
-import android.graphics.drawable.Drawable;
+import android.content.pm.ApplicationInfo;
+import android.widget.ImageView;
+
+import tw.fatminmin.xposed.minminguard.ui.image.GlideModule;
 
 public class AppDetails
 {
 
     private String name;
     private String packageName;
-    private Drawable icon;
+    private ApplicationInfo applicationInfo;
     private boolean isEnabled;
 
-    public AppDetails(String name, String packageName, Drawable icon, boolean isEnabled)
+    public AppDetails(String name, String packageName, ApplicationInfo applicationInfo, boolean isEnabled)
     {
         this.name = name;
+        this.applicationInfo = applicationInfo;
         this.packageName = packageName;
-        this.icon = icon;
         this.isEnabled = isEnabled;
     }
 
@@ -28,9 +31,8 @@ public class AppDetails
         return packageName;
     }
 
-    public Drawable getIcon()
-    {
-        return icon;
+    public void loadIcon(ImageView imageView) {
+        GlideModule.loadApplicationIcon(imageView.getContext(), applicationInfo, imageView);
     }
 
     public boolean isEnabled()
