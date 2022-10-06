@@ -31,7 +31,7 @@ public class SettingsDialogFragment extends DialogFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
 
-        mUiPref = getActivity().getSharedPreferences(Common.UI_PREFS, Context.MODE_PRIVATE);
+        mUiPref = getActivity().getSharedPreferences(Common.UI_PREFS, Common.getPrefMode());
 
         getDialog().setTitle(R.string.action_settings);
 

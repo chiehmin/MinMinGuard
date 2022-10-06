@@ -70,7 +70,7 @@ public class AppDetailDialogFragment extends DialogFragment
         Context ctx = ContextCompat.createDeviceProtectedStorageContext(getActivity());
         if (ctx == null) ctx = getActivity();
 
-        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
+        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Common.getPrefMode());
     }
 
     @Nullable

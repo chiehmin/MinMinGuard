@@ -44,9 +44,14 @@
         <meta-data
                 android:name="xposeddescription"
                 android:value="Ads blocker"/>
-
         <meta-data
+                android:name="xposedsharedprefs"
+                android:value="true"/>
+        <meta-data
+                android:name="xposedscope"
+                android:value="android"/>
+        <!--<meta-data
                 android:name="io.fabric.ApiKey"
-                android:value="11b3bd0c3467e4848618141b36a73619c7ef4843"/>
+                android:value="11b3bd0c3467e4848618141b36a73619c7ef4843"/>-->
     </application>
 </manifest>
