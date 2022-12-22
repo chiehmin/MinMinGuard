@@ -9,6 +9,7 @@ import android.os.Build;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Executors;
 
@@ -149,11 +150,19 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
 
         Util.notifyWorker = Executors.newSingleThreadExecutor();
 
-        String dataDir = "data/";
-        if (Build.VERSION.SDK_INT > 23) dataDir = "user_de/0/";
+        if (xposedVersionCode < 93) {
+            /* This doesn't work in LSPosed API >=93 because prefs are stored in a random directory
+               https://github.com/LSPosed/LSPosed/wiki/New-XSharedPreferences#for-the-hooked-app */
+            String dataDir = "data/";
+            if (Build.VERSION.SDK_INT > 23) dataDir = "user_de/0/";
 
-        File f = new File("/data/" + dataDir + MY_PACKAGE_NAME + "/shared_prefs/" + Common.MOD_PREFS + ".xml");
-        pref = new XSharedPreferences(f);
+            File f = new File("/data/" + dataDir + MY_PACKAGE_NAME + "/shared_prefs/" + Common.MOD_PREFS + ".xml");
+            pref = new XSharedPreferences(f);
+            Util.log(MY_PACKAGE_NAME, "Using LEGACY XSharedPreferences");
+        } else {
+            pref = new XSharedPreferences(MY_PACKAGE_NAME, Common.MOD_PREFS);
+            Util.log(MY_PACKAGE_NAME, "Using NEW XSharedPreferences");
+        }
     }
 
     private void UnpackResources()
@@ -182,8 +191,62 @@ public class Main implements IXposedHookZygoteInit, IXposedHookLoadPackage
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam)
     {
-        if (lpparam.packageName.equals(MY_PACKAGE_NAME))
+        if (lpparam.packageName.equals(MY_PACKAGE_NAME)) {
             XposedHelpers.findAndHookMethod("tw.fatminmin.xposed.minminguard.blocker.Util", lpparam.classLoader, "xposedEnabled", XC_MethodReplacement.returnConstant(true));
+            if (xposedVersionCode >= 93)
+                XposedHelpers.findAndHookMethod("tw.fatminmin.xposed.minminguard.Common", lpparam.classLoader, "getPrefMode", XC_MethodReplacement.returnConstant(Context.MODE_WORLD_READABLE));
+        }
+
+        /**
+         * https://developer.android.com/about/versions/11/privacy/package-visibility
+         * API30 adds new restrictions limiting apps from seeing our custom content provider at content://tw.fatminmin.xposed.minminguard/
+         * used to report back ad networks and removed ads.
+         *
+         * To get around this the target app needs:
+         * ...
+         *    <queries>
+         *        <package android:name="tw.fatminmin.xposed.minminguard" />
+         *    </queries>
+         * ...
+         * OR
+         * ...
+         *    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+         * ...
+         * in its AndroidManifest.xml, this hack does tha latter.
+         *
+         * Note that this implies a) hooking System Framework in LSposed Manager and b) needs a reboot after enabling an app in MinMinGuard
+         * because only android can access com.android.server.pm.permission.PermissionManagerService !!!
+         *
+         * The implementation is based on Mino260806's snippet (Thanks!)
+         * https://forum.xda-developers.com/t/xposed-for-devs-how-to-dynamically-declare-permissions-for-a-target-app-without-altering-its-manifest-and-changing-its-signature.4440379/post-86833435
+         *
+         * More:
+         * https://stackoverflow.com/questions/63563995/failed-to-find-content-provider-in-api-30
+         * https://github.com/Lawiusz/xposed_lockscreen_visualizer/blob/master/app/src/main/java/pl/lawiusz/lockscreenvisualizerxposed/PermGrant.java
+         */
+        if (Build.VERSION.SDK_INT > 29) {
+            if (lpparam.packageName.equals("android")) {
+                try {
+                    XposedBridge.hookAllMethods(XposedHelpers.findClass("com.android.server.pm.permission.PermissionManagerService", lpparam.classLoader), "restorePermissionState", new XC_MethodHook() {
+                        @Override
+                        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                            String pkgName = (String) XposedHelpers.getObjectField(param.args[0], "packageName");
+                            Util.log(MY_PACKAGE_NAME, "Package  " + pkgName + " is requesting permissions");
+                            if (isEnabled(pref, pkgName)) {
+                                List<String> permissions = (List<String>) XposedHelpers.getObjectField(param.args[0], "requestedPermissions");
+                                String query_all_perm = "android.permission.QUERY_ALL_PACKAGES";
+                                if (!permissions.contains(query_all_perm)) {
+                                    permissions.add(query_all_perm);
+                                    Util.log(MY_PACKAGE_NAME, "Added " + query_all_perm + " permission to " + pkgName);
+                                }
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Util.log(MY_PACKAGE_NAME, "PermissionManagerService -> " + e);
+                }
+            }
+        }
 
         /**
          * https://developer.android.com/reference/android/app/Application.html#onCreate()

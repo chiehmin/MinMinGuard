@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity
         Context ctx = ContextCompat.createDeviceProtectedStorageContext(this);
         if (ctx == null) ctx = this;
 
-        uiPref = getSharedPreferences(Common.UI_PREFS, MODE_PRIVATE);
-        modPref = ctx.getSharedPreferences(Common.MOD_PREFS, MODE_PRIVATE);
+        uiPref = getSharedPreferences(Common.UI_PREFS, Common.getPrefMode());
+        modPref = ctx.getSharedPreferences(Common.MOD_PREFS, Common.getPrefMode());
 
         progressDialog = new ProgressDialog(this, R.style.MainSpinnerDialogStyle);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);

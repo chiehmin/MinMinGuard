@@ -1,5 +1,7 @@
 package tw.fatminmin.xposed.minminguard;
 
+import android.content.Context;
+
 import tw.fatminmin.xposed.minminguard.ui.fragments.MainFragment;
 
 /**
@@ -56,4 +58,6 @@ public class Common
     {
         return pkgName + "_whitelist";
     }
+
+    public static Integer getPrefMode() { return Context.MODE_PRIVATE; }
 }

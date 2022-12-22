@@ -57,7 +57,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder>
         Context ctx = ContextCompat.createDeviceProtectedStorageContext(context);
         if (ctx == null) ctx = context;
 
-        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Context.MODE_PRIVATE);
+        mPref = ctx.getSharedPreferences(Common.MOD_PREFS, Common.getPrefMode());
 
         helper = new DaoMaster.DevOpenHelper(context, "mmg", null);
         db = helper.getWritableDatabase();
